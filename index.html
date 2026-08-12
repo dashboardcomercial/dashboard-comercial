@@ -141,14 +141,14 @@ body.sidebar-collapsed .sidebar-toggle:hover{transform:rotate(180deg) scale(1.06
 .rank-value{ color:var(--muted); font-size:13px; margin-top:4px; } 
 
 /* ==========================================
-   AVATARES MAIORES - 100% NÍTIDOS
+   AVATARES MAIORES E ARREDONDADOS (16px)
 ========================================== */
 .avatar {
-  width: 75px; 
-  height: 75px; 
-  border-radius: 50%; 
-  background: linear-gradient(145deg, var(--blue-dark), var(--bg2));
-  border: 2px solid var(--blue);
+  width: 90px; 
+  height: 90px; 
+  border-radius: 16px; /* Fotos arredondadas, mas não totalmente circulares */
+  background: transparent;
+  border: none;
   display: flex; 
   align-items: center; 
   justify-content: center;
@@ -158,11 +158,11 @@ body.sidebar-collapsed .sidebar-toggle:hover{transform:rotate(180deg) scale(1.06
 }
 
 .consultant-goal-avatar {
-  width: 60px; 
-  height: 60px;
-  border-radius: 50%; 
-  background: linear-gradient(145deg, var(--blue-dark), var(--bg2));
-  border: 2px solid var(--blue);
+  width: 80px; 
+  height: 80px;
+  border-radius: 14px; /* Proporcional ao tamanho menor */
+  background: transparent;
+  border: none;
   display: flex; 
   align-items: center; 
   justify-content: center;
@@ -171,7 +171,7 @@ body.sidebar-collapsed .sidebar-toggle:hover{transform:rotate(180deg) scale(1.06
   flex-shrink: 0;
 }
 
-/* IMAGEM NATIVA */
+/* IMAGEM NATIVA: Cobre a área mantendo a proporção original */
 .avatar img, .consultant-goal-avatar img {
   width: 100%;
   height: 100%;
@@ -211,7 +211,7 @@ body.sidebar-collapsed .sidebar-toggle:hover{transform:rotate(180deg) scale(1.06
 .goal-progress-wrap{position:relative;padding-top:13px}.goal-bar{height:9px;border-radius:99px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.03);overflow:hidden}.goal-fill{height:100%;border-radius:inherit;background:linear-gradient(90deg,var(--blue-dark),var(--blue));box-shadow:0 0 17px rgba(0,133,202,.4);transition:width .55s cubic-bezier(.22,.8,.25,1)}.goal-achieved .goal-fill{background:linear-gradient(90deg,#20ad7c,#62e7b0);box-shadow:0 0 17px rgba(38,197,139,.22)}.goal-elite .goal-fill{background:linear-gradient(90deg,var(--blue),#c4efff);box-shadow:0 0 20px rgba(0,133,202,.4)}
 .goal-milestones{position:absolute;left:0;right:0;top:0;height:20px}.goal-milestone{position:absolute;top:6px;width:8px;height:8px;margin-left:-4px;border-radius:50%;background:var(--card2);border:2px solid var(--card);box-shadow:0 0 0 1px rgba(0,133,202,.3)}.goal-milestone.done{background:var(--blue);box-shadow:0 0 0 2px rgba(0,133,202,.15),0 0 9px rgba(0,133,202,.6)}.goal-milestone-label{position:absolute;top:-7px;transform:translate(-50%,-100%);color:var(--muted);font-size:8px;font-weight:800}.goal-milestone.done .goal-milestone-label{color:var(--blue)}
 .goal-reward{display:flex;align-items:center;gap:8px;min-height:43px;margin-top:12px;padding:8px 9px;border:1px solid rgba(255,255,255,.05);border-radius:10px;background:rgba(0,0,0,.15);color:var(--muted);font-size:9px;line-height:1.25}.goal-reward-icon{width:25px;height:25px;flex-shrink:0;display:flex;align-items:center;justify-content:center;border-radius:7px;background:rgba(255,255,255,.04);color:var(--muted);font-size:12px}.goal-reward strong{display:block;margin-top:2px;color:#fff;font-size:9px}.goal-reward.unlocked{border-color:rgba(38,197,139,.2);background:linear-gradient(90deg,rgba(38,197,139,.08),rgba(255,255,255,.01));color:#89bca9}.goal-reward.unlocked .goal-reward-icon{background:rgba(38,197,139,.15);color:#60e5ad;box-shadow:0 0 15px rgba(38,197,139,.15)}.goal-reward.unlocked strong{color:#6ce9b3}.goal-reward.elite{border-color:rgba(0,133,202,.3);background:linear-gradient(90deg,rgba(0,133,202,.15),rgba(0,133,202,.03))}.goal-reward.elite .goal-reward-icon{background:rgba(0,133,202,.2);color:var(--blue);box-shadow:0 0 18px rgba(0,133,202,.3)}.goal-reward.elite strong{color:#a6e5ff}
-.individual-goals{margin-top:18px}.individual-goals-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:11px}.individual-goals-head h3{margin:0;font-size:13px}.individual-goals-head span{color:var(--muted);font-size:10px}.individual-goals-grid{display:grid;grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));gap:13px}.consultant-goal-card{background:linear-gradient(145deg,var(--card),var(--bg2));border:1px solid var(--border);border-radius:15px;padding:15px;box-shadow:var(--shadow);min-width:0}.consultant-goal-card.selected{border-color:var(--blue);box-shadow:0 0 0 1px rgba(0,133,202,.2),var(--shadow)}.consultant-goal-head{display:flex;align-items:center;gap:12px;padding-bottom:12px;margin-bottom:8px;border-bottom:1px solid rgba(255,255,255,.05)}.consultant-goal-name{font-size:14px;font-weight:900;color:#fff;}.consultant-goal-role{font-size:9px;color:var(--blue);text-transform:uppercase;letter-spacing:1px;margin-top:3px;font-weight:700;}.mini-goal{padding:9px 0;border-bottom:1px solid rgba(255,255,255,.05)}.mini-goal:last-child{border-bottom:0;padding-bottom:1px}.mini-goal-top{display:flex;justify-content:space-between;gap:8px;margin-bottom:6px}.mini-goal-name{font-size:10px;color:#fff;font-weight:750}.mini-goal-percent{font-size:10px;color:var(--blue);font-weight:900}.mini-goal-bar{height:5px;border-radius:99px;background:rgba(255,255,255,.08);overflow:hidden}.mini-goal-fill{height:100%;border-radius:99px;background:linear-gradient(90deg,var(--blue-dark),var(--blue))}.mini-goal-fill.done{background:linear-gradient(90deg,#20ad7c,#62e7b0)}.mini-goal-fill.elite{background:linear-gradient(90deg,var(--blue),#c4efff);box-shadow:0 0 9px rgba(0,133,202,.4)}.mini-goal-values{display:flex;justify-content:space-between;margin-top:4px;color:var(--muted);font-size:9px}.mini-goal-values strong{color:#fff}
+.individual-goals{margin-top:18px}.individual-goals-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:11px}.individual-goals-head h3{margin:0;font-size:13px}.individual-goals-head span{color:var(--muted);font-size:10px}.individual-goals-grid{display:grid;grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));gap:13px}.consultant-goal-card{background:linear-gradient(145deg,var(--card),var(--bg2));border:1px solid var(--border);border-radius:15px;padding:15px;box-shadow:var(--shadow);min-width:0}.consultant-goal-card.selected{border-color:var(--blue);box-shadow:0 0 0 1px rgba(0,133,202,.2),var(--shadow)}.consultant-goal-head{display:flex;align-items:center;gap:15px;padding-bottom:12px;margin-bottom:8px;border-bottom:1px solid rgba(255,255,255,.05)}.consultant-goal-name{font-size:14px;font-weight:900;color:#fff;}.consultant-goal-role{font-size:9px;color:var(--blue);text-transform:uppercase;letter-spacing:1px;margin-top:3px;font-weight:700;}.mini-goal{padding:9px 0;border-bottom:1px solid rgba(255,255,255,.05)}.mini-goal:last-child{border-bottom:0;padding-bottom:1px}.mini-goal-top{display:flex;justify-content:space-between;gap:8px;margin-bottom:6px}.mini-goal-name{font-size:10px;color:#fff;font-weight:750}.mini-goal-percent{font-size:10px;color:var(--blue);font-weight:900}.mini-goal-bar{height:5px;border-radius:99px;background:rgba(255,255,255,.08);overflow:hidden}.mini-goal-fill{height:100%;border-radius:99px;background:linear-gradient(90deg,var(--blue-dark),var(--blue))}.mini-goal-fill.done{background:linear-gradient(90deg,#20ad7c,#62e7b0)}.mini-goal-fill.elite{background:linear-gradient(90deg,var(--blue),#c4efff);box-shadow:0 0 9px rgba(0,133,202,.4)}.mini-goal-values{display:flex;justify-content:space-between;margin-top:4px;color:var(--muted);font-size:9px}.mini-goal-values strong{color:#fff}
 .overview-page .section{margin-bottom:20px}
 @media(max-width:1200px){.goals-head{align-items:flex-start;flex-direction:column}.goal-controls{justify-content:flex-start}.individual-goals-grid{grid-template-columns:1fr}}
 @media(max-width:800px){.goal-controls{width:100%}.goal-period-switch{width:100%}.goal-period-btn{flex:1}.goal-period-select{width:100%}.goal-context{align-items:flex-start;flex-direction:column}}
@@ -302,6 +302,13 @@ let currentPage = "overview";
 
 let filters = { month:"all", week:"all", segment:"all", consultant:"all" };
 let goalFilters = { periodicity:"mensal", period:"all" };
+
+/* MAPEAMENTO DOS AVATARES COM AS FOTOS ENVIADAS */
+const AVATAR_MAP = {
+  "Matheus": "assets/matheus.jpg",
+  "Edson": "assets/edson.jpg",
+  "Gabriel": "assets/gabriel.jpg"
+};
 
 /* NORMALIZAÇÃO E PARSERS */
 function normalizeText(value){
@@ -439,7 +446,11 @@ function renderOverview(){
     return { name, value: score };
   }).sort((a, b) => b.value - a.value);
 
-  const avatars={Matheus:{src:"assets/matheus.jpg",emoji:"🏃"},Edson:{src:"assets/edson.jpg",emoji:"😴"},Gabriel:{src:"assets/gabriel.jpg",emoji:"🥷"}};
+  const avatars={
+    Matheus: {src: AVATAR_MAP["Matheus"], emoji:"🏃"},
+    Edson: {src: AVATAR_MAP["Edson"], emoji:"😴"},
+    Gabriel: {src: AVATAR_MAP["Gabriel"], emoji:"🥷"}
+  };
   
   const rankingHTML = ranking.map((item,index)=>`
     <div class="rank">
@@ -538,8 +549,8 @@ function goalCard(indicator,rows,periodicity,key,label,consultant=null){
 }
 
 function consultantAvatar(name){
-    const file = name.toLowerCase() + ".jpg"; 
-    return `<img src="assets/${file}" alt="${escapeHTML(name)}" onerror="this.style.display='none';this.parentElement.textContent='${name[0]}'">`;
+    const file = AVATAR_MAP[name] || "default.jpg"; 
+    return `<img src="${file}" alt="${escapeHTML(name)}" onerror="this.style.display='none';this.parentElement.textContent='${name[0]}'">`;
 }
 
 function consultantGoalMini(indicator,consultant,rows,periodicity,key){
@@ -601,15 +612,15 @@ function renderMetas(){
 /* CONSULTORES */
 function renderConsultores(){
   const consultants=[
-    {name:"Matheus",avatar:"assets/matheus.jpg", fallback:"🏃"},
-    {name:"Edson",avatar:"assets/edson.jpg", fallback:"😴"},
-    {name:"Gabriel",avatar:"assets/gabriel.jpg", fallback:"🥷"}
+    {name:"Matheus",avatar: AVATAR_MAP["Matheus"], fallback:"🏃"},
+    {name:"Edson",avatar: AVATAR_MAP["Edson"], fallback:"😴"},
+    {name:"Gabriel",avatar: AVATAR_MAP["Gabriel"], fallback:"🥷"}
   ];
   return `${pageHeader("Consultores","Equipe comercial")}
     <div class="stage-grid">
       ${consultants.map(consultant=>`
         <div class="stage-card" style="text-align:center">
-          <div class="avatar" style="width:160px !important;height:160px !important;margin:auto;font-size:50px !important; border-width: 3px;">
+          <div class="avatar" style="width:220px !important;height:220px !important;margin:auto;font-size:50px !important; border-radius: 20px !important;">
             <img src="${consultant.avatar}" alt="${escapeHTML(consultant.name)}" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
             <span style="display:none">${consultant.fallback}</span>
           </div>
