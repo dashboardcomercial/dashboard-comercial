@@ -8,17 +8,18 @@
 
 <style>
 :root{
-  /* NOVAS CORES DA PALETA */
-  --blue-dark: #1b449c; /* AZUL ESCURO */
-  --blue: #0085ca;      /* AZUL CLARO */
+  /* NOVAS CORES DA PALETA - FOCADAS NO HEX #0085ca */
+  --blue: #0085ca;        /* AZUL PRINCIPAL */
+  --blue-dark: #005582;   /* AZUL ESCURO (Para transições de degradê) */
+  --blue-darker: #002236; /* AZUL SUPER ESCURO (Fundo do degradê) */
   
-  /* BASE DO TEMA ADAPTADA PARA OS NOVOS AZUIS */
-  --bg: #071224;
-  --bg2: #0b1a33;
-  --sidebar: var(--blue-dark);
+  /* BASE DO TEMA ADAPTADA PARA O NOVO AZUL (#0085ca) */
+  --bg: #05111a;
+  --bg2: #081a29;
+  --sidebar: var(--blue);
   --sidebar-hover: rgba(0, 133, 202, 0.4);
-  --card: #0c1d3a;
-  --card2: #12284f;
+  --card: #0c2033;
+  --card2: #122d47;
   --blue3: #4dc0ff;
   --white: #ffffff;
   --text: #edf7ff;
@@ -47,8 +48,8 @@ body{
 
 .app{ display:flex; min-height:100vh; }
 
-/* SIDEBAR */
-.sidebar{ width:270px; background: linear-gradient(180deg, var(--blue-dark) 0%, #0d2250 100%); border-right:1px solid rgba(255,255,255,.06); color:white; padding:25px 16px; position:fixed; top:0; bottom:0; left:0; overflow-y:auto; transition:width .28s ease; z-index:20; }
+/* SIDEBAR - DEGRADÊ AJUSTADO COM A NOVA COR */
+.sidebar{ width:270px; background: linear-gradient(180deg, var(--blue) 0%, var(--blue-darker) 100%); border-right:1px solid rgba(255,255,255,.06); color:white; padding:25px 16px; position:fixed; top:0; bottom:0; left:0; overflow-y:auto; transition:width .28s ease; z-index:20; }
 .sidebar-toggle{ position:absolute;right:-13px;top:28px;width:28px;height:28px;border-radius:50%; border:1px solid rgba(255,255,255,.2);background:var(--blue-dark);color:#fff; display:flex;align-items:center;justify-content:center;cursor:pointer; box-shadow:0 8px 20px rgba(0,0,0,.28);transition:.2s ease;font-size:14px; }
 .sidebar-toggle:hover{background:var(--blue);transform:scale(1.06)}
 body.sidebar-collapsed .sidebar{width:82px}
@@ -146,7 +147,7 @@ body.sidebar-collapsed .sidebar-toggle:hover{transform:rotate(180deg) scale(1.06
 .avatar {
   width: 90px; 
   height: 90px; 
-  border-radius: 16px; /* Fotos arredondadas, mas não totalmente circulares */
+  border-radius: 16px; 
   background: transparent;
   border: none;
   display: flex; 
@@ -160,7 +161,7 @@ body.sidebar-collapsed .sidebar-toggle:hover{transform:rotate(180deg) scale(1.06
 .consultant-goal-avatar {
   width: 80px; 
   height: 80px;
-  border-radius: 14px; /* Proporcional ao tamanho menor */
+  border-radius: 14px; 
   background: transparent;
   border: none;
   display: flex; 
@@ -171,7 +172,7 @@ body.sidebar-collapsed .sidebar-toggle:hover{transform:rotate(180deg) scale(1.06
   flex-shrink: 0;
 }
 
-/* IMAGEM NATIVA: Cobre a área mantendo a proporção original */
+/* IMAGEM NATIVA */
 .avatar img, .consultant-goal-avatar img {
   width: 100%;
   height: 100%;
