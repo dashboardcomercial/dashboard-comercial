@@ -18,7 +18,7 @@
   --sidebar: var(--blue-dark);
   --sidebar-hover: rgba(0, 133, 202, 0.4);
   
-  /* CARDS ALTERADOS PARA A COR SOLICITADA (#1b449c) */
+  /* CARDS NA COR SOLICITADA (#1b449c) */
   --card: #1b449c;
   --card2: #1b449c;
   
@@ -145,12 +145,12 @@ body.sidebar-collapsed .sidebar-toggle:hover{transform:rotate(180deg) scale(1.06
 .rank-value{ color:var(--muted); font-size:13px; margin-top:4px; } 
 
 /* ==========================================
-   AVATARES MAIORES E ARREDONDADOS (16px)
+   AVATARES MAIORES E ARREDONDADOS
 ========================================== */
 .avatar {
   width: 90px; 
   height: 90px; 
-  border-radius: 16px; /* Fotos arredondadas, mas não totalmente circulares */
+  border-radius: 16px; 
   background: transparent;
   border: none;
   display: flex; 
@@ -164,7 +164,7 @@ body.sidebar-collapsed .sidebar-toggle:hover{transform:rotate(180deg) scale(1.06
 .consultant-goal-avatar {
   width: 80px; 
   height: 80px;
-  border-radius: 14px; /* Proporcional ao tamanho menor */
+  border-radius: 14px; 
   background: transparent;
   border: none;
   display: flex; 
@@ -175,7 +175,6 @@ body.sidebar-collapsed .sidebar-toggle:hover{transform:rotate(180deg) scale(1.06
   flex-shrink: 0;
 }
 
-/* IMAGEM NATIVA: Cobre a área mantendo a proporção original */
 .avatar img, .consultant-goal-avatar img {
   width: 100%;
   height: 100%;
@@ -304,7 +303,7 @@ let lancamentos = [];
 let metas = [];
 let currentPage = "overview";
 
-let filters = { month:"all", week:"all", segment:"all", consultant:"all" };
+let filters = { month:"all", week:"all", segment:"all", consultant:"all", dailyRankingDate:"" };
 let goalFilters = { periodicity:"mensal", period:"all" };
 
 /* MAPEAMENTO DOS AVATARES COM AS FOTOS ENVIADAS */
@@ -375,6 +374,7 @@ function weekKey(date){ const d=startOfWeek(date); return [d.getFullYear(), Stri
 function weekLabel(key){ const p=key.split("-"); const start=new Date(Number(p[0]), Number(p[1])-1, Number(p[2])); const end=new Date(start); end.setDate(end.getDate()+6); return (start.toLocaleDateString("pt-BR",{day:"2-digit",month:"2-digit"}) + " – " + end.toLocaleDateString("pt-BR",{day:"2-digit",month:"2-digit"})); }
 function monthKey(date){ return (date.getFullYear() + "-" + String(date.getMonth()+1).padStart(2,"0")); }
 function monthLabel(key){ const p=key.split("-"); const d=new Date(Number(p[0]), Number(p[1])-1, 1); return d.toLocaleDateString("pt-BR",{month:"long",year:"numeric"}); }
+function formatDateKey(date){ return [date.getFullYear(),String(date.getMonth()+1).padStart(2,"0"),String(date.getDate()).padStart(2,"0")].join("-"); }
 
 function numberValue(value){
   if(value===null || value===undefined) return 0;
@@ -404,6 +404,38 @@ function formatNumber(n){ return Number(n||0).toLocaleString("pt-BR"); }
 function formatPercent(n){ if(!isFinite(n)) return "0%"; return (n.toFixed(1).replace(".",",") + "%"); }
 function conversion(a,b){ if(!a) return 0; return (Number(b||0) / Number(a||0))*100; }
 function escapeHTML(value){ return String(value??"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;"); }
+
+/* SISTEMA DE RANKING (FUNÇÕES REUTILIZÁVEIS) */
+function calculateRanking(rows) {
+  const consultants=["Matheus", "Edson", "Gabriel"];
+  return consultants.map(name => {
+    const cRows = rows.filter(row => getConsultant(row) === name);
+    const score = (sumIndicator(cRows, "Contatos Efetivos") * 0.5) + (sumIndicator(cRows, "Reuniões Agendadas") * 50) + (sumIndicator(cRows, "Reuniões Realizadas") * 100) + (sumIndicator(cRows, "Reuniões Qualificadas") * 250) + (sumIndicator(cRows, "Contratos") * 1000);
+    return { name, value: score };
+  }).sort((a, b) => b.value - a.value);
+}
+
+function renderRankingHTML(ranking) {
+  const avatars = {
+    Matheus: {src: AVATAR_MAP["Matheus"], emoji:"🏃"},
+    Edson: {src: AVATAR_MAP["Edson"], emoji:"😴"},
+    Gabriel: {src: AVATAR_MAP["Gabriel"], emoji:"🥷"}
+  };
+  
+  return ranking.map((item,index)=>`
+    <div class="rank">
+      <div class="rank-position">${index+1}º</div>
+      <div class="avatar">
+         <img src="${avatars[item.name].src}" alt="${escapeHTML(item.name)}" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+         <span style="display:none">${avatars[item.name].emoji}</span>
+      </div>
+      <div>
+        <div class="rank-name">${item.name} ${index === 0 && item.value > 0 ? '<span style="font-size: 18px; margin-left: 2px;" title="1º Lugar">🏆</span>' : ''}</div>
+        <div class="rank-value">${formatNumber(item.value)} pontos</div>
+      </div>
+    </div>
+  `).join("");
+}
 
 const ICONS={
   prospeccao:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="6"/><circle cx="11" cy="11" r="2"/><path d="M16 16l5 5"/></svg>`,
@@ -437,38 +469,27 @@ function rewardForProgress(percent, indicator){
   return {label: "Primeiro marco", detail: "Continue avançando na operação.", icon:"○", unlocked:false, elite:false};
 }
 
-/* VISÃO DE TUDO */
+/* VISÃO DE TUDO (ATUALIZADO) */
 function renderOverview(){
   const rows=filteredRows();
   const contatos=sumIndicator(rows, "Contatos Efetivos"), reunioesQualificadas=sumIndicator(rows, "Reuniões Qualificadas"), clientesInteressados=sumIndicator(rows, "Clientes Interessados"), acessosDiretoria=sumIndicator(rows, "Acessos à Diretoria"), propostasApresentadas=sumIndicator(rows, "Propostas Apresentadas"), propostasValidadas=sumIndicator(rows, "Propostas Validadas");
   const conversaoContatoQualificado=conversion(contatos, reunioesQualificadas), conversaoQualificadoInteressado=conversion(reunioesQualificadas, clientesInteressados), conversaoInteressadoDiretoria=conversion(clientesInteressados, acessosDiretoria);
   
-  const consultants=["Matheus", "Edson", "Gabriel"];
-  const ranking = consultants.map(name => {
-    const cRows = rows.filter(row => getConsultant(row) === name);
-    const score = (sumIndicator(cRows, "Contatos Efetivos") * 0.5) + (sumIndicator(cRows, "Reuniões Agendadas") * 50) + (sumIndicator(cRows, "Reuniões Realizadas") * 100) + (sumIndicator(cRows, "Reuniões Qualificadas") * 250) + (sumIndicator(cRows, "Contratos") * 1000);
-    return { name, value: score };
-  }).sort((a, b) => b.value - a.value);
+  // 1) Ranking Geral (Baseado nos filtros de Mês, Semana e Segmento)
+  const rankingGeral = calculateRanking(rows);
+  const rankingGeralHTML = renderRankingHTML(rankingGeral);
 
-  const avatars={
-    Matheus: {src: AVATAR_MAP["Matheus"], emoji:"🏃"},
-    Edson: {src: AVATAR_MAP["Edson"], emoji:"😴"},
-    Gabriel: {src: AVATAR_MAP["Gabriel"], emoji:"🥷"}
-  };
-  
-  const rankingHTML = ranking.map((item,index)=>`
-    <div class="rank">
-      <div class="rank-position">${index+1}º</div>
-      <div class="avatar">
-         <img src="${avatars[item.name].src}" alt="${escapeHTML(item.name)}" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
-         <span style="display:none">${avatars[item.name].emoji}</span>
-      </div>
-      <div>
-        <div class="rank-name">${item.name} ${index === 0 ? '<span style="font-size: 18px; margin-left: 2px;" title="1º Lugar">🏆</span>' : ''}</div>
-        <div class="rank-value">${formatNumber(item.value)} pontos acumulados</div>
-      </div>
-    </div>
-  `).join("");
+  // 2) Ranking Diário (Baseado exclusivamente na data selecionada no filtro de dia)
+  const diarioRows = lancamentos.filter(row => {
+      const d = parseDate(row.data);
+      if (!d) return false;
+      if (formatDateKey(d) !== filters.dailyRankingDate) return false;
+      // Mantemos o filtro de segmento para o ranking diário caso esteja aplicado
+      if (filters.segment !== "all" && getSegment(row) !== filters.segment) return false;
+      return true;
+  });
+  const rankingDiario = calculateRanking(diarioRows);
+  const rankingDiarioHTML = renderRankingHTML(rankingDiario);
 
   const pipelineHTML=`
     <div class="pipeline-executive">
@@ -488,8 +509,24 @@ function renderOverview(){
     ${filtersHTML(true)} 
 
     <div class="section">
-      <div class="section-head"><h2>Ranking • Pontuação Geral</h2></div>
-      <div class="ranking">${rankingHTML}</div>
+      <div class="section-head">
+        <div>
+          <h2>Ranking • Geral</h2>
+          <div style="margin-top:5px; color:var(--muted); font-size:12px;">Baseado nos filtros (mês, semana, segmento) do topo da página.</div>
+        </div>
+      </div>
+      <div class="ranking">${rankingGeralHTML}</div>
+    </div>
+
+    <div class="section">
+      <div class="section-head">
+        <div>
+          <h2>Ranking • Diário</h2>
+          <div style="margin-top:5px; color:var(--muted); font-size:12px;">Desempenho isolado por dia da equipe.</div>
+        </div>
+        <select id="dailyRankingFilter" class="goal-period-select" style="min-width: 140px; cursor: pointer;"></select>
+      </div>
+      <div class="ranking">${rankingDiarioHTML}</div>
     </div>
 
     ${renderOverviewGoals()}
@@ -510,7 +547,6 @@ function renderOverview(){
 }
 
 /* METAS DINÂMICAS */
-function formatDateKey(date){return [date.getFullYear(),String(date.getMonth()+1).padStart(2,"0"),String(date.getDate()).padStart(2,"0")].join("-");}
 function metaPeriodicity(row){const v=normalizeText(row.periodicidade||row.frequencia||row.tipo||"mensal");return v.includes("diar")?"diario":v.includes("seman")?"semanal":"mensal";}
 function getRecurringTarget(indicator, periodicity, consultant) {
   const target = normalizeText(indicator);
@@ -676,10 +712,14 @@ function render(){
 }
 
 function populateFilters(){
-  const months=new Set(), weeks=new Set(), segments=new Set();
+  const months=new Set(), weeks=new Set(), segments=new Set(), days=new Set();
   lancamentos.forEach(row=>{
       const date=parseDate(row.data);
-      if(date){ months.add(monthKey(date)); weeks.add(weekKey(date)); }
+      if(date){ 
+         months.add(monthKey(date)); 
+         weeks.add(weekKey(date)); 
+         days.add(formatDateKey(date));
+      }
       if(getSegment(row)) segments.add(getSegment(row));
   });
 
@@ -706,6 +746,23 @@ function populateFilters(){
   const segmentSelect=document.getElementById("segmentFilter");
   if(segmentSelect){ segmentSelect.innerHTML=`<option value="all">Todos os segmentos</option>`+[...segments].sort().map(segment=>`<option value="${escapeHTML(segment)}">${escapeHTML(segment)}</option>`).join(""); segmentSelect.value=filters.segment; }
 
+  /* NOVO: SELECT DE DIA EXCLUSIVO DO RANKING DIÁRIO */
+  const dailyRankingSelect = document.getElementById("dailyRankingFilter");
+  if(dailyRankingSelect){
+    const sortedDays = [...days].sort().reverse();
+    dailyRankingSelect.innerHTML = sortedDays.map(day => {
+        const d = new Date(day + "T00:00:00");
+        const label = d.toLocaleDateString("pt-BR", {day:"2-digit", month:"2-digit", year:"numeric"});
+        return `<option value="${day}">${label}</option>`;
+    }).join("");
+    
+    // Default: Último dia com atividade disponível ou a data de hoje.
+    if(!filters.dailyRankingDate || !days.has(filters.dailyRankingDate)) {
+        filters.dailyRankingDate = sortedDays[0] || formatDateKey(new Date());
+    }
+    dailyRankingSelect.value = filters.dailyRankingDate;
+  }
+
   const goalPeriodValueSelect=document.getElementById("goalPeriodValueFilter");
   if(goalPeriodValueSelect){
     const periodicity=goalFilters.periodicity||"mensal"; const values=new Set();
@@ -729,6 +786,11 @@ function bindFilters(){
   const week=document.getElementById("weekFilter"); if(week)week.addEventListener("change",event=>{filters.week=event.target.value;render();});
   const segment=document.getElementById("segmentFilter"); if(segment)segment.addEventListener("change",event=>{filters.segment=event.target.value;render();});
   const consultant=document.getElementById("consultantFilter"); if(consultant)consultant.addEventListener("change",event=>{filters.consultant=event.target.value;render();});
+  
+  /* BIND DO RANKING DIÁRIO */
+  const dailyRank = document.getElementById("dailyRankingFilter"); 
+  if(dailyRank) dailyRank.addEventListener("change", event => { filters.dailyRankingDate = event.target.value; render(); });
+
   document.querySelectorAll("[data-goal-periodicity]").forEach(button=>{ button.addEventListener("click",()=>{goalFilters.periodicity=button.dataset.goalPeriodicity;goalFilters.period="all";render();}); });
   const goalPeriodValueSelect=document.getElementById("goalPeriodValueFilter"); if(goalPeriodValueSelect)goalPeriodValueSelect.addEventListener("change",event=>{goalFilters.period=event.target.value;render();});
 }
