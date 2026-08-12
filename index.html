@@ -117,7 +117,7 @@ body.sidebar-collapsed .sidebar-toggle:hover{transform:rotate(180deg) scale(1.06
 
 /* SECTIONS */
 .section{ background: linear-gradient(145deg, var(--card), var(--bg2)); border:1px solid var(--border); border-radius:17px; padding:23px; box-shadow:var(--shadow); margin-bottom:24px; }
-.section-head{ display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; }
+.section-head{ display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; flex-wrap: wrap; gap: 10px; }
 .section-head h2{ margin:0; font-size:18px; letter-spacing:-.2px; }
 
 /* ESTEIRA COMERCIAL */
@@ -303,8 +303,11 @@ let lancamentos = [];
 let metas = [];
 let currentPage = "overview";
 
-let filters = { month:"all", week:"all", segment:"all", consultant:"all", dailyRankingDate:"" };
+let filters = { month:"all", week:"all", segment:"all", consultant:"all" };
 let goalFilters = { periodicity:"mensal", period:"all" };
+
+/* NOVO: ESTADO DO RANKING */
+let rankingFilter = { type: "geral", period: "" };
 
 /* MAPEAMENTO DOS AVATARES COM AS FOTOS ENVIADAS */
 const AVATAR_MAP = {
@@ -469,27 +472,30 @@ function rewardForProgress(percent, indicator){
   return {label: "Primeiro marco", detail: "Continue avançando na operação.", icon:"○", unlocked:false, elite:false};
 }
 
-/* VISÃO DE TUDO (ATUALIZADO) */
+/* VISÃO DE TUDO (ATUALIZADO PARA RANKING DINÂMICO) */
 function renderOverview(){
   const rows=filteredRows();
   const contatos=sumIndicator(rows, "Contatos Efetivos"), reunioesQualificadas=sumIndicator(rows, "Reuniões Qualificadas"), clientesInteressados=sumIndicator(rows, "Clientes Interessados"), acessosDiretoria=sumIndicator(rows, "Acessos à Diretoria"), propostasApresentadas=sumIndicator(rows, "Propostas Apresentadas"), propostasValidadas=sumIndicator(rows, "Propostas Validadas");
   const conversaoContatoQualificado=conversion(contatos, reunioesQualificadas), conversaoQualificadoInteressado=conversion(reunioesQualificadas, clientesInteressados), conversaoInteressadoDiretoria=conversion(clientesInteressados, acessosDiretoria);
   
-  // 1) Ranking Geral (Baseado nos filtros de Mês, Semana e Segmento)
-  const rankingGeral = calculateRanking(rows);
-  const rankingGeralHTML = renderRankingHTML(rankingGeral);
-
-  // 2) Ranking Diário (Baseado exclusivamente na data selecionada no filtro de dia)
-  const diarioRows = lancamentos.filter(row => {
+  // RANKING DINÂMICO UNIFICADO
+  const rankingRows = lancamentos.filter(row => {
       const d = parseDate(row.data);
-      if (!d) return false;
-      if (formatDateKey(d) !== filters.dailyRankingDate) return false;
-      // Mantemos o filtro de segmento para o ranking diário caso esteja aplicado
-      if (filters.segment !== "all" && getSegment(row) !== filters.segment) return false;
+      if(!d) return false;
+      // Sempre respeitamos o segmento escolhido no filtro global
+      if(filters.segment !== "all" && getSegment(row) !== filters.segment) return false;
+
+      // Filtros específicos do Ranking
+      if(rankingFilter.type === 'mensal') return monthKey(d) === rankingFilter.period;
+      if(rankingFilter.type === 'semanal') return weekKey(d) === rankingFilter.period;
+      if(rankingFilter.type === 'diario') return formatDateKey(d) === rankingFilter.period;
+      
+      // Se for "Geral", pegamos todas as linhas (filtradas apenas pelo segmento)
       return true;
   });
-  const rankingDiario = calculateRanking(diarioRows);
-  const rankingDiarioHTML = renderRankingHTML(rankingDiario);
+
+  const ranking = calculateRanking(rankingRows);
+  const rankingHTML = renderRankingHTML(ranking);
 
   const pipelineHTML=`
     <div class="pipeline-executive">
@@ -511,22 +517,20 @@ function renderOverview(){
     <div class="section">
       <div class="section-head">
         <div>
-          <h2>Ranking • Geral</h2>
-          <div style="margin-top:5px; color:var(--muted); font-size:12px;">Baseado nos filtros (mês, semana, segmento) do topo da página.</div>
+          <h2>Ranking da Equipe</h2>
+          <div style="margin-top:5px; color:var(--muted); font-size:12px;">Selecione o período para ver o topo do pódio.</div>
+        </div>
+        <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+          <select id="rankingTypeFilter" class="goal-period-select" style="min-width: 120px; cursor: pointer;">
+            <option value="geral">Geral (Todo Período)</option>
+            <option value="mensal">Mensal</option>
+            <option value="semanal">Semanal</option>
+            <option value="diario">Diário</option>
+          </select>
+          <select id="rankingPeriodFilter" class="goal-period-select" style="min-width: 160px; cursor: pointer; display: none;"></select>
         </div>
       </div>
-      <div class="ranking">${rankingGeralHTML}</div>
-    </div>
-
-    <div class="section">
-      <div class="section-head">
-        <div>
-          <h2>Ranking • Diário</h2>
-          <div style="margin-top:5px; color:var(--muted); font-size:12px;">Desempenho isolado por dia da equipe.</div>
-        </div>
-        <select id="dailyRankingFilter" class="goal-period-select" style="min-width: 140px; cursor: pointer;"></select>
-      </div>
-      <div class="ranking">${rankingDiarioHTML}</div>
+      <div class="ranking">${rankingHTML}</div>
     </div>
 
     ${renderOverviewGoals()}
@@ -723,6 +727,7 @@ function populateFilters(){
       if(getSegment(row)) segments.add(getSegment(row));
   });
 
+  /* FILTROS GLOBAIS NO TOPO */
   const monthSelect=document.getElementById("monthFilter");
   if(monthSelect){
     monthSelect.innerHTML=`<option value="all">Todos os meses</option>`+[...months].sort().map(month=>`<option value="${month}">${monthLabel(month)}</option>`).join("");
@@ -746,23 +751,34 @@ function populateFilters(){
   const segmentSelect=document.getElementById("segmentFilter");
   if(segmentSelect){ segmentSelect.innerHTML=`<option value="all">Todos os segmentos</option>`+[...segments].sort().map(segment=>`<option value="${escapeHTML(segment)}">${escapeHTML(segment)}</option>`).join(""); segmentSelect.value=filters.segment; }
 
-  /* NOVO: SELECT DE DIA EXCLUSIVO DO RANKING DIÁRIO */
-  const dailyRankingSelect = document.getElementById("dailyRankingFilter");
-  if(dailyRankingSelect){
-    const sortedDays = [...days].sort().reverse();
-    dailyRankingSelect.innerHTML = sortedDays.map(day => {
-        const d = new Date(day + "T00:00:00");
-        const label = d.toLocaleDateString("pt-BR", {day:"2-digit", month:"2-digit", year:"numeric"});
-        return `<option value="${day}">${label}</option>`;
-    }).join("");
-    
-    // Default: Último dia com atividade disponível ou a data de hoje.
-    if(!filters.dailyRankingDate || !days.has(filters.dailyRankingDate)) {
-        filters.dailyRankingDate = sortedDays[0] || formatDateKey(new Date());
-    }
-    dailyRankingSelect.value = filters.dailyRankingDate;
+  /* FILTRO DINÂMICO ESPECÍFICO DO RANKING (NOVO) */
+  const rType = document.getElementById("rankingTypeFilter");
+  const rPeriod = document.getElementById("rankingPeriodFilter");
+  
+  if(rType && rPeriod){
+      rType.value = rankingFilter.type;
+      
+      if(rankingFilter.type === 'geral'){
+          rPeriod.style.display = 'none';
+      } else {
+          rPeriod.style.display = 'inline-block';
+          let options = [];
+          if(rankingFilter.type === 'mensal'){
+              options = [...months].sort().reverse().map(m => `<option value="${m}">${monthLabel(m)}</option>`);
+              if(!rankingFilter.period || !months.has(rankingFilter.period)) rankingFilter.period = [...months].sort().reverse()[0] || "";
+          } else if (rankingFilter.type === 'semanal') {
+              options = [...weeks].sort().reverse().map(w => `<option value="${w}">${weekLabel(w)}</option>`);
+              if(!rankingFilter.period || !weeks.has(rankingFilter.period)) rankingFilter.period = [...weeks].sort().reverse()[0] || "";
+          } else if (rankingFilter.type === 'diario') {
+              options = [...days].sort().reverse().map(d => `<option value="${d}">${new Date(d+"T00:00:00").toLocaleDateString("pt-BR")}</option>`);
+              if(!rankingFilter.period || !days.has(rankingFilter.period)) rankingFilter.period = [...days].sort().reverse()[0] || "";
+          }
+          rPeriod.innerHTML = options.join("");
+          rPeriod.value = rankingFilter.period;
+      }
   }
 
+  /* FILTROS DE METAS */
   const goalPeriodValueSelect=document.getElementById("goalPeriodValueFilter");
   if(goalPeriodValueSelect){
     const periodicity=goalFilters.periodicity||"mensal"; const values=new Set();
@@ -787,9 +803,23 @@ function bindFilters(){
   const segment=document.getElementById("segmentFilter"); if(segment)segment.addEventListener("change",event=>{filters.segment=event.target.value;render();});
   const consultant=document.getElementById("consultantFilter"); if(consultant)consultant.addEventListener("change",event=>{filters.consultant=event.target.value;render();});
   
-  /* BIND DO RANKING DIÁRIO */
-  const dailyRank = document.getElementById("dailyRankingFilter"); 
-  if(dailyRank) dailyRank.addEventListener("change", event => { filters.dailyRankingDate = event.target.value; render(); });
+  /* BIND DOS FILTROS DO RANKING (NOVO) */
+  const rType = document.getElementById("rankingTypeFilter");
+  if(rType) {
+      rType.addEventListener("change", event => {
+          rankingFilter.type = event.target.value;
+          rankingFilter.period = ""; // Reseta o período para pegar o mais atual
+          render();
+      });
+  }
+  
+  const rPeriod = document.getElementById("rankingPeriodFilter");
+  if(rPeriod) {
+      rPeriod.addEventListener("change", event => {
+          rankingFilter.period = event.target.value;
+          render();
+      });
+  }
 
   document.querySelectorAll("[data-goal-periodicity]").forEach(button=>{ button.addEventListener("click",()=>{goalFilters.periodicity=button.dataset.goalPeriodicity;goalFilters.period="all";render();}); });
   const goalPeriodValueSelect=document.getElementById("goalPeriodValueFilter"); if(goalPeriodValueSelect)goalPeriodValueSelect.addEventListener("change",event=>{goalFilters.period=event.target.value;render();});
