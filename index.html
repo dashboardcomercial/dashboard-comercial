@@ -129,41 +129,52 @@ body.sidebar-collapsed .sidebar-toggle:hover{transform:rotate(180deg) scale(1.06
 .pipeline-conversion strong{ color:var(--green); font-size:13px; }
 .pipeline-conversion span{ color:var(--muted); }
 
-/* RANKING */
-.ranking{ display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
-.rank{ border:1px solid var(--border); border-radius:13px; padding:16px; display:flex; align-items:center; gap:14px; background:rgba(255,255,255,.018); }
-.rank-position{ font-size:25px; font-weight:900; color:var(--blue3); }
-.rank-name{ font-weight:800; }
-.rank-value{ color:var(--muted); font-size:11px; margin-top:3px; }
+/* RANKING (20% MAIOR) */
+.ranking{ display:grid; grid-template-columns:repeat(3,1fr); gap:17px; } /* Gap aumentado */
+.rank{ border:1px solid var(--border); border-radius:15px; padding:20px; display:flex; align-items:center; gap:18px; background:rgba(255,255,255,.018); } /* Padding e gap aumentados */
+.rank-position{ font-size:30px; font-weight:900; color:var(--blue3); } /* Fonte maior */
+.rank-name{ font-weight:800; font-size:15px; } /* Fonte maior */
+.rank-value{ color:var(--muted); font-size:13px; margin-top:4px; } /* Fonte maior */
 
 /* ==========================================
-   CSS DEFINITIVO - AVATARES PERFEITOS (HD)
+   AVATARES EM TAMANHO ORIGINAL - 100% NÍTIDOS
 ========================================== */
-.avatar, .consultant-goal-avatar {
-  width: 46px; 
-  height: 46px; 
+/* Layout 20% maior */
+.avatar {
+  width: 56px; /* Aumentado de 46 para 56 */
+  height: 56px; 
   border-radius: 50%; 
   background: linear-gradient(145deg, #123b56, #0a2538);
   border: 1px solid rgba(101,200,255,.18);
   display: flex; 
   align-items: center; 
   justify-content: center;
-  font-size: 22px; 
+  font-size: 26px; 
   overflow: hidden; 
   flex-shrink: 0;
-  /* TRUQUE MÁGICO DE HARDWARE ACCELERATION PARA NÃO SERRILHAR: */
-  -webkit-transform: translateZ(0);
-  transform: translateZ(0);
-  box-shadow: 0 0 1px rgba(0,0,0,0.05); /* Força o anti-aliasing nas bordas do círculo */
 }
 
+.consultant-goal-avatar {
+  width: 44px; /* Aumentado de 36 para 44 */
+  height: 44px;
+  border-radius: 50%; 
+  background: linear-gradient(145deg, #123b56, #0a2538);
+  border: 1px solid rgba(101,200,255,.18);
+  display: flex; 
+  align-items: center; 
+  justify-content: center;
+  font-size: 20px; 
+  overflow: hidden; 
+  flex-shrink: 0;
+}
+
+/* IMAGEM NATIVA: Sem zooms, sem transforms. Qualidade 100% original. */
 .avatar img, .consultant-goal-avatar img {
   width: 100%;
   height: 100%;
   display: block;
   object-fit: cover;
   object-position: center;
-  /* Removemos qualquer regra de zoom ou distorção daqui */
 }
 
 /* METAS NA VISÃO DE TUDO */
@@ -597,7 +608,7 @@ function renderConsultores(){
     <div class="stage-grid">
       ${consultants.map(consultant=>`
         <div class="stage-card" style="text-align:center">
-          <div class="avatar" style="width:90px;height:90px;margin:auto;font-size:42px;">
+          <div class="avatar" style="width:110px !important;height:110px !important;margin:auto;font-size:50px !important;">
             <img src="${consultant.avatar}" alt="${escapeHTML(consultant.name)}" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
             <span style="display:none">${consultant.fallback}</span>
           </div>
