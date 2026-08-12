@@ -136,14 +136,6 @@ body.sidebar-collapsed .sidebar-toggle:hover{transform:rotate(180deg) scale(1.06
 .pipeline-conversion strong{ color:var(--green); font-size:13px; }
 .pipeline-conversion span{ color:var(--muted); }
 
-/* RANKING (LAYOUT FLUIDO) */
-.ranking{ display:grid; grid-template-columns:repeat(auto-fit, minmax(260px, 1fr)); gap:17px; }
-.rank{ border:1px solid var(--border); border-radius:15px; padding:20px; display:flex; align-items:center; gap:18px; background:rgba(255,255,255,.02); transition: transform 0.2s; }
-.rank:hover{ transform: translateY(-3px); border-color: var(--blue); }
-.rank-position{ font-size:30px; font-weight:900; color:var(--blue); }
-.rank-name{ font-weight:800; font-size:16px; color:#fff; display: flex; align-items: center; gap: 6px; }
-.rank-value{ color:var(--muted); font-size:13px; margin-top:4px; } 
-
 /* ==========================================
    AVATARES MAIORES E ARREDONDADOS
 ========================================== */
@@ -214,7 +206,16 @@ body.sidebar-collapsed .sidebar-toggle:hover{transform:rotate(180deg) scale(1.06
 .goal-progress-wrap{position:relative;padding-top:13px}.goal-bar{height:9px;border-radius:99px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.03);overflow:hidden}.goal-fill{height:100%;border-radius:inherit;background:linear-gradient(90deg,var(--blue-dark),var(--blue));box-shadow:0 0 17px rgba(0,133,202,.4);transition:width .55s cubic-bezier(.22,.8,.25,1)}.goal-achieved .goal-fill{background:linear-gradient(90deg,#20ad7c,#62e7b0);box-shadow:0 0 17px rgba(38,197,139,.22)}.goal-elite .goal-fill{background:linear-gradient(90deg,var(--blue),#c4efff);box-shadow:0 0 20px rgba(0,133,202,.4)}
 .goal-milestones{position:absolute;left:0;right:0;top:0;height:20px}.goal-milestone{position:absolute;top:6px;width:8px;height:8px;margin-left:-4px;border-radius:50%;background:var(--card2);border:2px solid var(--card);box-shadow:0 0 0 1px rgba(0,133,202,.3)}.goal-milestone.done{background:var(--blue);box-shadow:0 0 0 2px rgba(0,133,202,.15),0 0 9px rgba(0,133,202,.6)}.goal-milestone-label{position:absolute;top:-7px;transform:translate(-50%,-100%);color:var(--muted);font-size:8px;font-weight:800}.goal-milestone.done .goal-milestone-label{color:var(--blue)}
 .goal-reward{display:flex;align-items:center;gap:8px;min-height:43px;margin-top:12px;padding:8px 9px;border:1px solid rgba(255,255,255,.05);border-radius:10px;background:rgba(0,0,0,.15);color:var(--muted);font-size:9px;line-height:1.25}.goal-reward-icon{width:25px;height:25px;flex-shrink:0;display:flex;align-items:center;justify-content:center;border-radius:7px;background:rgba(255,255,255,.04);color:var(--muted);font-size:12px}.goal-reward strong{display:block;margin-top:2px;color:#fff;font-size:9px}.goal-reward.unlocked{border-color:rgba(38,197,139,.2);background:linear-gradient(90deg,rgba(38,197,139,.08),rgba(255,255,255,.01));color:#89bca9}.goal-reward.unlocked .goal-reward-icon{background:rgba(38,197,139,.15);color:#60e5ad;box-shadow:0 0 15px rgba(38,197,139,.15)}.goal-reward.unlocked strong{color:#6ce9b3}.goal-reward.elite{border-color:rgba(0,133,202,.3);background:linear-gradient(90deg,rgba(0,133,202,.15),rgba(0,133,202,.03))}.goal-reward.elite .goal-reward-icon{background:rgba(0,133,202,.2);color:var(--blue);box-shadow:0 0 18px rgba(0,133,202,.3)}.goal-reward.elite strong{color:#a6e5ff}
-.individual-goals{margin-top:18px}.individual-goals-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:11px}.individual-goals-head h3{margin:0;font-size:13px}.individual-goals-head span{color:var(--muted);font-size:10px}.individual-goals-grid{display:grid;grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));gap:13px}.consultant-goal-card{background:linear-gradient(145deg,var(--card),var(--bg2));border:1px solid var(--border);border-radius:15px;padding:15px;box-shadow:var(--shadow);min-width:0}.consultant-goal-card.selected{border-color:var(--blue);box-shadow:0 0 0 1px rgba(0,133,202,.2),var(--shadow)}.consultant-goal-head{display:flex;align-items:center;gap:15px;padding-bottom:12px;margin-bottom:8px;border-bottom:1px solid rgba(255,255,255,.05)}.consultant-goal-name{font-size:14px;font-weight:900;color:#fff;}.consultant-goal-role{font-size:9px;color:var(--blue);text-transform:uppercase;letter-spacing:1px;margin-top:3px;font-weight:700;}.mini-goal{padding:9px 0;border-bottom:1px solid rgba(255,255,255,.05)}.mini-goal:last-child{border-bottom:0;padding-bottom:1px}.mini-goal-top{display:flex;justify-content:space-between;gap:8px;margin-bottom:6px}.mini-goal-name{font-size:10px;color:#fff;font-weight:750}.mini-goal-percent{font-size:10px;color:var(--blue);font-weight:900}.mini-goal-bar{height:5px;border-radius:99px;background:rgba(255,255,255,.08);overflow:hidden}.mini-goal-fill{height:100%;border-radius:99px;background:linear-gradient(90deg,var(--blue-dark),var(--blue))}.mini-goal-fill.done{background:linear-gradient(90deg,#20ad7c,#62e7b0)}.mini-goal-fill.elite{background:linear-gradient(90deg,var(--blue),#c4efff);box-shadow:0 0 9px rgba(0,133,202,.4)}.mini-goal-values{display:flex;justify-content:space-between;margin-top:4px;color:var(--muted);font-size:9px}.mini-goal-values strong{color:#fff}
+.individual-goals{margin-top:18px}.individual-goals-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:11px}.individual-goals-head h3{margin:0;font-size:13px}.individual-goals-head span{color:var(--muted);font-size:10px}.individual-goals-grid{display:grid;grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));gap:13px}
+.consultant-goal-card{background:linear-gradient(145deg,var(--card),var(--bg2));border:1px solid var(--border);border-radius:15px;padding:15px;box-shadow:var(--shadow);min-width:0; position:relative; overflow:hidden;}
+.consultant-goal-card.selected{border-color:var(--blue);box-shadow:0 0 0 1px rgba(0,133,202,.2),var(--shadow)}
+.consultant-goal-head{display:flex;align-items:center;gap:15px;padding-bottom:12px;margin-bottom:8px;border-bottom:1px solid rgba(255,255,255,.05)}
+.consultant-goal-name{font-size:15px;font-weight:900;color:#fff; display: flex; align-items: center;}
+.consultant-goal-role{font-size:10px;color:var(--blue);text-transform:uppercase;letter-spacing:1px;margin-top:4px;font-weight:700;}
+.mini-goal{padding:9px 0;border-bottom:1px solid rgba(255,255,255,.05)}.mini-goal:last-child{border-bottom:0;padding-bottom:1px}
+.mini-goal-top{display:flex;justify-content:space-between;gap:8px;margin-bottom:6px}.mini-goal-name{font-size:10px;color:#fff;font-weight:750}.mini-goal-percent{font-size:10px;color:var(--blue);font-weight:900}
+.mini-goal-bar{height:5px;border-radius:99px;background:rgba(255,255,255,.08);overflow:hidden}.mini-goal-fill{height:100%;border-radius:99px;background:linear-gradient(90deg,var(--blue-dark),var(--blue))}.mini-goal-fill.done{background:linear-gradient(90deg,#20ad7c,#62e7b0)}.mini-goal-fill.elite{background:linear-gradient(90deg,var(--blue),#c4efff);box-shadow:0 0 9px rgba(0,133,202,.4)}
+.mini-goal-values{display:flex;justify-content:space-between;margin-top:4px;color:var(--muted);font-size:9px}.mini-goal-values strong{color:#fff}
 .overview-page .section{margin-bottom:20px}
 @media(max-width:1200px){.goals-head{align-items:flex-start;flex-direction:column}.goal-controls{justify-content:flex-start}.individual-goals-grid{grid-template-columns:1fr}}
 @media(max-width:800px){.goal-controls{width:100%}.goal-period-switch{width:100%}.goal-period-btn{flex:1}.goal-period-select{width:100%}.goal-context{align-items:flex-start;flex-direction:column}}
@@ -305,9 +306,6 @@ let currentPage = "overview";
 
 let filters = { month:"all", week:"all", segment:"all", consultant:"all" };
 let goalFilters = { periodicity:"mensal", period:"all" };
-
-/* NOVO: ESTADO DO RANKING */
-let rankingFilter = { type: "geral", period: "" };
 
 /* MAPEAMENTO DOS AVATARES COM AS FOTOS ENVIADAS */
 const AVATAR_MAP = {
@@ -408,38 +406,6 @@ function formatPercent(n){ if(!isFinite(n)) return "0%"; return (n.toFixed(1).re
 function conversion(a,b){ if(!a) return 0; return (Number(b||0) / Number(a||0))*100; }
 function escapeHTML(value){ return String(value??"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;"); }
 
-/* SISTEMA DE RANKING (FUNÇÕES REUTILIZÁVEIS) */
-function calculateRanking(rows) {
-  const consultants=["Matheus", "Edson", "Gabriel"];
-  return consultants.map(name => {
-    const cRows = rows.filter(row => getConsultant(row) === name);
-    const score = (sumIndicator(cRows, "Contatos Efetivos") * 0.5) + (sumIndicator(cRows, "Reuniões Agendadas") * 50) + (sumIndicator(cRows, "Reuniões Realizadas") * 100) + (sumIndicator(cRows, "Reuniões Qualificadas") * 250) + (sumIndicator(cRows, "Contratos") * 1000);
-    return { name, value: score };
-  }).sort((a, b) => b.value - a.value);
-}
-
-function renderRankingHTML(ranking) {
-  const avatars = {
-    Matheus: {src: AVATAR_MAP["Matheus"], emoji:"🏃"},
-    Edson: {src: AVATAR_MAP["Edson"], emoji:"😴"},
-    Gabriel: {src: AVATAR_MAP["Gabriel"], emoji:"🥷"}
-  };
-  
-  return ranking.map((item,index)=>`
-    <div class="rank">
-      <div class="rank-position">${index+1}º</div>
-      <div class="avatar">
-         <img src="${avatars[item.name].src}" alt="${escapeHTML(item.name)}" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
-         <span style="display:none">${avatars[item.name].emoji}</span>
-      </div>
-      <div>
-        <div class="rank-name">${item.name} ${index === 0 && item.value > 0 ? '<span style="font-size: 18px; margin-left: 2px;" title="1º Lugar">🏆</span>' : ''}</div>
-        <div class="rank-value">${formatNumber(item.value)} pontos</div>
-      </div>
-    </div>
-  `).join("");
-}
-
 const ICONS={
   prospeccao:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="6"/><circle cx="11" cy="11" r="2"/><path d="M16 16l5 5"/></svg>`,
   diagnostico:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/><path d="M8 11l2 2 5-5"/></svg>`,
@@ -472,31 +438,12 @@ function rewardForProgress(percent, indicator){
   return {label: "Primeiro marco", detail: "Continue avançando na operação.", icon:"○", unlocked:false, elite:false};
 }
 
-/* VISÃO DE TUDO (ATUALIZADO PARA RANKING DINÂMICO) */
+/* VISÃO DE TUDO (ATUALIZADO SEM O RANKING ISOLADO NO TOPO) */
 function renderOverview(){
   const rows=filteredRows();
   const contatos=sumIndicator(rows, "Contatos Efetivos"), reunioesQualificadas=sumIndicator(rows, "Reuniões Qualificadas"), clientesInteressados=sumIndicator(rows, "Clientes Interessados"), acessosDiretoria=sumIndicator(rows, "Acessos à Diretoria"), propostasApresentadas=sumIndicator(rows, "Propostas Apresentadas"), propostasValidadas=sumIndicator(rows, "Propostas Validadas");
   const conversaoContatoQualificado=conversion(contatos, reunioesQualificadas), conversaoQualificadoInteressado=conversion(reunioesQualificadas, clientesInteressados), conversaoInteressadoDiretoria=conversion(clientesInteressados, acessosDiretoria);
   
-  // RANKING DINÂMICO UNIFICADO
-  const rankingRows = lancamentos.filter(row => {
-      const d = parseDate(row.data);
-      if(!d) return false;
-      // Sempre respeitamos o segmento escolhido no filtro global
-      if(filters.segment !== "all" && getSegment(row) !== filters.segment) return false;
-
-      // Filtros específicos do Ranking
-      if(rankingFilter.type === 'mensal') return monthKey(d) === rankingFilter.period;
-      if(rankingFilter.type === 'semanal') return weekKey(d) === rankingFilter.period;
-      if(rankingFilter.type === 'diario') return formatDateKey(d) === rankingFilter.period;
-      
-      // Se for "Geral", pegamos todas as linhas (filtradas apenas pelo segmento)
-      return true;
-  });
-
-  const ranking = calculateRanking(rankingRows);
-  const rankingHTML = renderRankingHTML(ranking);
-
   const pipelineHTML=`
     <div class="pipeline-executive">
       <div class="pipeline-step"><div class="pipeline-step-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="6"/><circle cx="11" cy="11" r="2"/><path d="M16 16l5 5"/></svg></div><div class="pipeline-step-info"><div class="pipeline-step-label">Contatos Efetivos</div><div class="pipeline-step-value">${formatNumber(contatos)}</div><div class="pipeline-step-description">Entrada da operação comercial</div></div></div>
@@ -513,25 +460,6 @@ function renderOverview(){
     <div class="overview-page">
     ${statusHTML()}
     ${filtersHTML(true)} 
-
-    <div class="section">
-      <div class="section-head">
-        <div>
-          <h2>Ranking da Equipe</h2>
-          <div style="margin-top:5px; color:var(--muted); font-size:12px;">Selecione o período para ver o topo do pódio.</div>
-        </div>
-        <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
-          <select id="rankingTypeFilter" class="goal-period-select" style="min-width: 120px; cursor: pointer;">
-            <option value="geral">Geral (Todo Período)</option>
-            <option value="mensal">Mensal</option>
-            <option value="semanal">Semanal</option>
-            <option value="diario">Diário</option>
-          </select>
-          <select id="rankingPeriodFilter" class="goal-period-select" style="min-width: 160px; cursor: pointer; display: none;"></select>
-        </div>
-      </div>
-      <div class="ranking">${rankingHTML}</div>
-    </div>
 
     ${renderOverviewGoals()}
 
@@ -605,12 +533,55 @@ function consultantGoalMini(indicator,consultant,rows,periodicity,key){
   return `<div class="mini-goal"><div class="mini-goal-top"><span class="mini-goal-name">${escapeHTML(indicator)}</span><span class="mini-goal-percent">${target?formatPercent(percent):"—"}</span></div><div class="mini-goal-bar"><div class="mini-goal-fill ${elite?"elite":done?"done":""}" style="width:${width}%"></div></div><div class="mini-goal-values"><span>${formatNumber(actual)} realizado</span><strong>${target?"Meta "+formatNumber(target):"Sem meta"}</strong></div></div>`;
 }
 
+/* NOVO: RENDER DE METAS INDIVIDUAIS ORDENADO COMO RANKING DO PERÍODO */
 function renderIndividualGoals(periodicity,key,label){
   let indicators = ["Contatos Efetivos", "Reuniões Agendadas"];
   if (periodicity === "semanal" || periodicity === "mensal") indicators.push("Reuniões Realizadas", "Reuniões Qualificadas");
   if (periodicity === "mensal") indicators.push("Contratos");
-  const consultants=["Edson","Gabriel","Matheus"];
-  return `<div class="individual-goals"><div class="individual-goals-head"><h3>Metas Individuais</h3><span>${escapeHTML(label)} • visão por consultor</span></div><div class="individual-goals-grid">${consultants.map(name=>{const rows=goalActualRows(periodicity,key,name);const selected=filters.consultant===name;return `<div class="consultant-goal-card ${selected?"selected":""}"><div class="consultant-goal-head"><div class="consultant-goal-avatar">${consultantAvatar(name)}</div><div><div class="consultant-goal-name">${name}</div><div class="consultant-goal-role">Consultor</div></div></div>${indicators.map(i=>consultantGoalMini(i,name,rows,periodicity,key)).join("")}</div>`;}).join("")}</div></div>`;
+  
+  const consultants = ["Edson","Gabriel","Matheus"];
+  
+  // 1) Calcula o score de cada consultor para o período atual e ordena
+  const scoredConsultants = consultants.map(name => {
+      const rows = goalActualRows(periodicity, key, name);
+      const score = (sumIndicator(rows, "Contatos Efetivos") * 0.5) + 
+                    (sumIndicator(rows, "Reuniões Agendadas") * 50) + 
+                    (sumIndicator(rows, "Reuniões Realizadas") * 100) + 
+                    (sumIndicator(rows, "Reuniões Qualificadas") * 250) + 
+                    (sumIndicator(rows, "Contratos") * 1000);
+      return { name, score, rows };
+  }).sort((a, b) => b.score - a.score);
+
+  const medals = ["🥇", "🥈", "🥉"];
+
+  return `
+    <div class="individual-goals">
+      <div class="individual-goals-head">
+        <h3>Metas Individuais (Ranking do Período)</h3>
+        <span>${escapeHTML(label)} • ordem definida pelo engajamento</span>
+      </div>
+      <div class="individual-goals-grid">
+        ${scoredConsultants.map((c, index) => {
+          const name = c.name;
+          const rows = c.rows;
+          const selected = filters.consultant === name;
+          const medal = (c.score > 0) ? (medals[index] || "") : ""; // Só ganha medalha se tiver pontuação
+          
+          return `
+            <div class="consultant-goal-card ${selected?"selected":""}">
+              <div class="consultant-goal-head">
+                <div class="consultant-goal-avatar">${consultantAvatar(name)}</div>
+                <div>
+                  <div class="consultant-goal-name">${name} <span style="font-size: 18px; margin-left: 6px;" title="${index+1}º Lugar">${medal}</span></div>
+                  <div class="consultant-goal-role">Consultor • ${formatNumber(c.score)} pts</div>
+                </div>
+              </div>
+              ${indicators.map(i=>consultantGoalMini(i,name,rows,periodicity,key)).join("")}
+            </div>
+          `;
+        }).join("")}
+      </div>
+    </div>`;
 }
 
 function renderOverviewGoals(){
@@ -619,7 +590,7 @@ function renderOverviewGoals(){
   if (periodicity === "semanal" || periodicity === "mensal") indicators.push("Reuniões Realizadas", "Reuniões Qualificadas");
   if (periodicity === "mensal") indicators.push("Contratos");
   
-  return `<div class="section goals-section"><div class="goals-head"><div class="goals-title-wrap"><div class="goals-kicker"><span class="goals-kicker-dot"></span>Performance Comercial</div><h2>Metas da Operação</h2><div class="goals-subtitle">Meta da equipe em destaque e, abaixo, a performance individual dos consultores.</div></div><div class="goal-controls"><div class="goal-period-switch"><button type="button" class="goal-period-btn ${periodicity==="diario"?"active":""}" data-goal-periodicity="diario">Diário</button><button type="button" class="goal-period-btn ${periodicity==="semanal"?"active":""}" data-goal-periodicity="semanal">Semanal</button><button type="button" class="goal-period-btn ${periodicity==="mensal"?"active":""}" data-goal-periodicity="mensal">Mensal</button></div><select id="goalPeriodValueFilter" class="goal-period-select"><option value="all">${escapeHTML(label)}</option></select></div></div><div class="goal-context"><div class="goal-context-period"><span>PERÍODO</span>${escapeHTML(label)}</div><div class="goal-context-status">${periodicity==="diario"?"Meta diária":periodicity==="semanal"?"Meta semanal":"Meta mensal"}</div></div><div class="team-goals-grid">${indicators.map(i=>goalCard(i,rows,periodicity,key,label)).join("")}</div>${renderIndividualGoals(periodicity,key,label)}</div>`;
+  return `<div class="section goals-section"><div class="goals-head"><div class="goals-title-wrap"><div class="goals-kicker"><span class="goals-kicker-dot"></span>Performance Comercial</div><h2>Metas da Operação</h2><div class="goals-subtitle">Meta da equipe em destaque e, abaixo, a performance individual ordenada como ranking.</div></div><div class="goal-controls"><div class="goal-period-switch"><button type="button" class="goal-period-btn ${periodicity==="diario"?"active":""}" data-goal-periodicity="diario">Diário</button><button type="button" class="goal-period-btn ${periodicity==="semanal"?"active":""}" data-goal-periodicity="semanal">Semanal</button><button type="button" class="goal-period-btn ${periodicity==="mensal"?"active":""}" data-goal-periodicity="mensal">Mensal</button></div><select id="goalPeriodValueFilter" class="goal-period-select"><option value="all">${escapeHTML(label)}</option></select></div></div><div class="goal-context"><div class="goal-context-period"><span>PERÍODO</span>${escapeHTML(label)}</div><div class="goal-context-status">${periodicity==="diario"?"Meta diária":periodicity==="semanal"?"Meta semanal":"Meta mensal"}</div></div><div class="team-goals-grid">${indicators.map(i=>goalCard(i,rows,periodicity,key,label)).join("")}</div>${renderIndividualGoals(periodicity,key,label)}</div>`;
 }
 
 /* STAGE CARDS */
@@ -751,34 +722,7 @@ function populateFilters(){
   const segmentSelect=document.getElementById("segmentFilter");
   if(segmentSelect){ segmentSelect.innerHTML=`<option value="all">Todos os segmentos</option>`+[...segments].sort().map(segment=>`<option value="${escapeHTML(segment)}">${escapeHTML(segment)}</option>`).join(""); segmentSelect.value=filters.segment; }
 
-  /* FILTRO DINÂMICO ESPECÍFICO DO RANKING (NOVO) */
-  const rType = document.getElementById("rankingTypeFilter");
-  const rPeriod = document.getElementById("rankingPeriodFilter");
-  
-  if(rType && rPeriod){
-      rType.value = rankingFilter.type;
-      
-      if(rankingFilter.type === 'geral'){
-          rPeriod.style.display = 'none';
-      } else {
-          rPeriod.style.display = 'inline-block';
-          let options = [];
-          if(rankingFilter.type === 'mensal'){
-              options = [...months].sort().reverse().map(m => `<option value="${m}">${monthLabel(m)}</option>`);
-              if(!rankingFilter.period || !months.has(rankingFilter.period)) rankingFilter.period = [...months].sort().reverse()[0] || "";
-          } else if (rankingFilter.type === 'semanal') {
-              options = [...weeks].sort().reverse().map(w => `<option value="${w}">${weekLabel(w)}</option>`);
-              if(!rankingFilter.period || !weeks.has(rankingFilter.period)) rankingFilter.period = [...weeks].sort().reverse()[0] || "";
-          } else if (rankingFilter.type === 'diario') {
-              options = [...days].sort().reverse().map(d => `<option value="${d}">${new Date(d+"T00:00:00").toLocaleDateString("pt-BR")}</option>`);
-              if(!rankingFilter.period || !days.has(rankingFilter.period)) rankingFilter.period = [...days].sort().reverse()[0] || "";
-          }
-          rPeriod.innerHTML = options.join("");
-          rPeriod.value = rankingFilter.period;
-      }
-  }
-
-  /* FILTROS DE METAS */
+  /* FILTROS DE METAS (Onde agora funciona o Ranking) */
   const goalPeriodValueSelect=document.getElementById("goalPeriodValueFilter");
   if(goalPeriodValueSelect){
     const periodicity=goalFilters.periodicity||"mensal"; const values=new Set();
@@ -803,24 +747,6 @@ function bindFilters(){
   const segment=document.getElementById("segmentFilter"); if(segment)segment.addEventListener("change",event=>{filters.segment=event.target.value;render();});
   const consultant=document.getElementById("consultantFilter"); if(consultant)consultant.addEventListener("change",event=>{filters.consultant=event.target.value;render();});
   
-  /* BIND DOS FILTROS DO RANKING (NOVO) */
-  const rType = document.getElementById("rankingTypeFilter");
-  if(rType) {
-      rType.addEventListener("change", event => {
-          rankingFilter.type = event.target.value;
-          rankingFilter.period = ""; // Reseta o período para pegar o mais atual
-          render();
-      });
-  }
-  
-  const rPeriod = document.getElementById("rankingPeriodFilter");
-  if(rPeriod) {
-      rPeriod.addEventListener("change", event => {
-          rankingFilter.period = event.target.value;
-          render();
-      });
-  }
-
   document.querySelectorAll("[data-goal-periodicity]").forEach(button=>{ button.addEventListener("click",()=>{goalFilters.periodicity=button.dataset.goalPeriodicity;goalFilters.period="all";render();}); });
   const goalPeriodValueSelect=document.getElementById("goalPeriodValueFilter"); if(goalPeriodValueSelect)goalPeriodValueSelect.addEventListener("change",event=>{goalFilters.period=event.target.value;render();});
 }
