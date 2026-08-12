@@ -137,7 +137,7 @@ body.sidebar-collapsed .sidebar-toggle:hover{transform:rotate(180deg) scale(1.06
 .rank-value{ color:var(--muted); font-size:11px; margin-top:3px; }
 
 /* ==========================================
-   CSS DEFINITIVO - AVATARES (MATEMÁTICA PURA, ZERO GAMBIARRA)
+   CSS DEFINITIVO - AVATARES PERFEITOS (HD)
 ========================================== */
 .avatar, .consultant-goal-avatar {
   width: 46px; 
@@ -151,44 +151,19 @@ body.sidebar-collapsed .sidebar-toggle:hover{transform:rotate(180deg) scale(1.06
   font-size: 22px; 
   overflow: hidden; 
   flex-shrink: 0;
-  position: relative; /* Essencial para o cálculo matemático funcionar */
+  /* TRUQUE MÁGICO DE HARDWARE ACCELERATION PARA NÃO SERRILHAR: */
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  box-shadow: 0 0 1px rgba(0,0,0,0.05); /* Força o anti-aliasing nas bordas do círculo */
 }
 
-/* Base cravada para a imagem - Alta fidelidade */
 .avatar img, .consultant-goal-avatar img {
-  position: absolute;
+  width: 100%;
+  height: 100%;
   display: block;
-  max-width: none;
-  max-height: none;
   object-fit: cover;
-  image-rendering: high-quality;
-}
-
-/* Matheus: Precisa de 150% de zoom para tirar o terno. 
-   Centralizado: (100 - 150) / 2 = -25% left. */
-.avatar img.matheus, .consultant-goal-avatar img.matheus {
-  width: 150%; 
-  height: 150%; 
-  left: -25%; 
-  top: -5%; 
-}
-
-/* Edson: Precisa de 170% de zoom. 
-   Centralizado: (100 - 170) / 2 = -35% left. */
-.avatar img.edson, .consultant-goal-avatar img.edson {
-  width: 170%; 
-  height: 170%; 
-  left: -35%; 
-  top: -15%;
-}
-
-/* Gabriel: Foto muito de longe, precisa de 200% de zoom. 
-   Centralizado: (100 - 200) / 2 = -50% left. */
-.avatar img.gabriel, .consultant-goal-avatar img.gabriel {
-  width: 200%; 
-  height: 200%; 
-  left: -50%; 
-  top: -15%; 
+  object-position: center;
+  /* Removemos qualquer regra de zoom ou distorção daqui */
 }
 
 /* METAS NA VISÃO DE TUDO */
@@ -458,7 +433,7 @@ function renderOverview(){
     <div class="rank">
       <div class="rank-position">${index+1}º</div>
       <div class="avatar">
-         <img class="${item.name.toLowerCase()}" src="${avatars[item.name].src}" alt="${escapeHTML(item.name)}" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+         <img src="${avatars[item.name].src}" alt="${escapeHTML(item.name)}" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
          <span style="display:none">${avatars[item.name].emoji}</span>
       </div>
       <div><div class="rank-name">${item.name}</div><div class="rank-value">${formatNumber(item.value)} pontos acumulados</div></div>
@@ -552,8 +527,7 @@ function goalCard(indicator,rows,periodicity,key,label,consultant=null){
 
 function consultantAvatar(name){
     const file = name.toLowerCase() + ".jpg"; 
-    const cssClass = name.toLowerCase();
-    return `<img class="${cssClass}" src="assets/${file}" alt="${escapeHTML(name)}" onerror="this.style.display='none';this.parentElement.textContent='${name[0]}'">`;
+    return `<img src="assets/${file}" alt="${escapeHTML(name)}" onerror="this.style.display='none';this.parentElement.textContent='${name[0]}'">`;
 }
 
 function consultantGoalMini(indicator,consultant,rows,periodicity,key){
@@ -624,7 +598,7 @@ function renderConsultores(){
       ${consultants.map(consultant=>`
         <div class="stage-card" style="text-align:center">
           <div class="avatar" style="width:90px;height:90px;margin:auto;font-size:42px;">
-            <img class="${consultant.name.toLowerCase()}" src="${consultant.avatar}" alt="${escapeHTML(consultant.name)}" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+            <img src="${consultant.avatar}" alt="${escapeHTML(consultant.name)}" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
             <span style="display:none">${consultant.fallback}</span>
           </div>
           <h3>${consultant.name}</h3><div class="card-sub">Consultor</div>
