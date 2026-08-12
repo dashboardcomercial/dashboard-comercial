@@ -141,12 +141,12 @@ body.sidebar-collapsed .sidebar-toggle:hover{transform:rotate(180deg) scale(1.06
 .rank-value{ color:var(--muted); font-size:13px; margin-top:4px; } 
 
 /* ==========================================
-   AVATARES MAIORES E ARREDONDADOS
+   AVATARES MAIORES E ARREDONDADOS (16px)
 ========================================== */
 .avatar {
   width: 90px; 
   height: 90px; 
-  border-radius: 50%; /* Transformado em círculo perfeito */
+  border-radius: 16px; /* Fotos arredondadas, mas não totalmente circulares */
   background: transparent;
   border: none;
   display: flex; 
@@ -160,7 +160,7 @@ body.sidebar-collapsed .sidebar-toggle:hover{transform:rotate(180deg) scale(1.06
 .consultant-goal-avatar {
   width: 80px; 
   height: 80px;
-  border-radius: 50%; /* Transformado em círculo perfeito */
+  border-radius: 14px; /* Proporcional ao tamanho menor */
   background: transparent;
   border: none;
   display: flex; 
@@ -305,9 +305,9 @@ let goalFilters = { periodicity:"mensal", period:"all" };
 
 /* MAPEAMENTO DOS AVATARES COM AS FOTOS ENVIADAS */
 const AVATAR_MAP = {
-  "Matheus": "IMG_2096.jpg",
-  "Edson": "IMG_2094.jpg",
-  "Gabriel": "IMG_2093.jpg"
+  "Matheus": "IMG_2094_2.jpg",
+  "Edson": "IMG_2093_2.jpg",
+  "Gabriel": "IMG_2096_2.jpg"
 };
 
 /* NORMALIZAÇÃO E PARSERS */
@@ -620,7 +620,7 @@ function renderConsultores(){
     <div class="stage-grid">
       ${consultants.map(consultant=>`
         <div class="stage-card" style="text-align:center">
-          <div class="avatar" style="width:220px !important;height:220px !important;margin:auto;font-size:50px !important; border-radius: 50% !important;">
+          <div class="avatar" style="width:220px !important;height:220px !important;margin:auto;font-size:50px !important; border-radius: 20px !important;">
             <img src="${consultant.avatar}" alt="${escapeHTML(consultant.name)}" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
             <span style="display:none">${consultant.fallback}</span>
           </div>
