@@ -86,12 +86,6 @@ body.sidebar-collapsed .sidebar-toggle:hover{transform:rotate(180deg) scale(1.06
 .refresh{ border:1px solid var(--border); background:rgba(0,133,202,.08); color:var(--blue); border-radius:10px; padding:10px 15px; cursor:pointer; font-weight:700; transition:.18s; }
 .refresh:hover{ background:var(--blue); color:#fff; border-color:var(--blue); }
 
-/* STATUS & PULSE */
-@keyframes pulse-green { 0% { box-shadow: 0 0 0 0 rgba(38, 197, 139, 0.7); } 70% { box-shadow: 0 0 0 6px rgba(38, 197, 139, 0); } 100% { box-shadow: 0 0 0 0 rgba(38, 197, 139, 0); } }
-.status{ background:rgba(255,255,255,.02); border:1px solid rgba(255,255,255,.08); border-radius:11px; padding:11px 15px; margin-bottom:19px; font-size:12px; color:var(--muted); display: flex; align-items: center; }
-.status strong{ color:var(--green); display: flex; align-items: center; }
-.status strong::before { content: ""; display: inline-block; width: 8px; height: 8px; background: var(--green); border-radius: 50%; margin-right: 8px; animation: pulse-green 2s infinite; }
-
 /* SKELETON */
 @keyframes skeleton-loading { 0% { background-color: rgba(255,255,255,0.02); } 50% { background-color: rgba(255,255,255,0.06); } 100% { background-color: rgba(255,255,255,0.02); } }
 .skeleton { animation: skeleton-loading 1.5s infinite; border-radius: 8px; }
@@ -100,12 +94,14 @@ body.sidebar-collapsed .sidebar-toggle:hover{transform:rotate(180deg) scale(1.06
 .skeleton-box { height: 180px; width: 100%; margin-bottom: 20px; border-radius: 15px; }
 .skeleton-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 20px; }
 
-/* FILTROS */
-.filters{ background: linear-gradient(135deg, rgba(255,255,255,.03), rgba(255,255,255,.01)); border:1px solid var(--border); border-radius:15px; padding:17px; display:flex; gap:14px; flex-wrap:wrap; box-shadow:var(--shadow); margin-bottom:24px; }
-.filter{ display:flex; flex-direction:column; gap:6px; min-width:175px; flex:1; max-width: 300px; }
-.filter label{ font-size:10px; text-transform:uppercase; letter-spacing:1px; color:var(--muted); font-weight:800; }
-.filter select{ border:1px solid var(--border); border-radius:9px; padding:10px 12px; background:var(--card); color:#eaf6fd; outline:none; }
-.filter select:focus{ border-color:var(--blue); }
+/* CONTROLES MESTRES DE FILTRO UNIFICADO (Patch Focus) */
+.goal-controls{display:flex;align-items:center;gap:9px;flex-wrap:wrap;}
+.goal-period-switch{display:flex;gap:3px;padding:4px;border:1px solid var(--border);border-radius:12px;background:rgba(0,0,0,.2); height: 38px;}
+.goal-period-btn{border:0;border-radius:8px;padding:0 12px;background:transparent;color:var(--muted);font-size:11px;font-weight:850;cursor:pointer;transition:.18s ease; flex: 1;}
+.goal-period-btn:hover{color:#fff}
+.goal-period-btn.active{color:#fff;background:linear-gradient(135deg, var(--blue), var(--blue-dark));box-shadow:0 5px 15px rgba(0,133,202,.3)}
+.goal-period-select{border:1px solid var(--border);border-radius:10px;padding:9px 11px;min-width:160px;background:var(--card);color:#dff4ff;outline:none;font-size:11px;font-weight:700; height: 38px;}
+.goal-period-select:focus{border-color:var(--blue3);}
 
 /* CARDS FLUIDOS */
 .grid{ display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:15px; margin-bottom:24px; }
@@ -117,7 +113,7 @@ body.sidebar-collapsed .sidebar-toggle:hover{transform:rotate(180deg) scale(1.06
 
 /* SECTIONS */
 .section{ background: linear-gradient(145deg, var(--card), var(--bg2)); border:1px solid var(--border); border-radius:17px; padding:23px; box-shadow:var(--shadow); margin-bottom:24px; }
-.section-head{ display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; flex-wrap: wrap; gap: 10px; }
+.section-head{ display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:20px; flex-wrap: wrap; gap: 15px; }
 .section-head h2{ margin:0; font-size:18px; letter-spacing:-.2px; }
 
 /* ESTEIRA COMERCIAL */
@@ -136,9 +132,7 @@ body.sidebar-collapsed .sidebar-toggle:hover{transform:rotate(180deg) scale(1.06
 .pipeline-conversion strong{ color:var(--green); font-size:13px; }
 .pipeline-conversion span{ color:var(--muted); }
 
-/* ==========================================
-   AVATARES MAIORES E ARREDONDADOS
-========================================== */
+/* AVATARES */
 .avatar {
   width: 90px; 
   height: 90px; 
@@ -177,19 +171,11 @@ body.sidebar-collapsed .sidebar-toggle:hover{transform:rotate(180deg) scale(1.06
 
 /* METAS NA VISÃO DE TUDO */
 .goals-section{margin-bottom:22px}
-.goals-head{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;margin-bottom:15px; flex-wrap: wrap;}
 .goals-kicker{display:flex;align-items:center;gap:7px;color:var(--blue);font-size:10px;font-weight:900;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:7px}
 .goals-kicker-dot{width:6px;height:6px;border-radius:50%;background:var(--blue);box-shadow:0 0 12px var(--blue)}
 .goals-title-wrap h2{margin:0;font-size:19px;letter-spacing:-.3px}
 .goals-subtitle{margin-top:6px;color:var(--muted);font-size:11px}
-.goal-controls{display:flex;align-items:center;gap:9px;flex-wrap:wrap;justify-content:flex-end}
-.goal-period-switch{display:flex;gap:3px;padding:4px;border:1px solid var(--border);border-radius:12px;background:rgba(0,0,0,.2)}
-.goal-period-btn{border:0;border-radius:8px;padding:8px 12px;background:transparent;color:var(--muted);font-size:10px;font-weight:850;cursor:pointer;transition:.18s ease}
-.goal-period-btn:hover{color:#fff}
-.goal-period-btn.active{color:#fff;background:linear-gradient(135deg, var(--blue), var(--blue-dark));box-shadow:0 5px 15px rgba(0,133,202,.3)}
-.goal-period-select{border:1px solid var(--border);border-radius:10px;padding:9px 11px;min-width:155px;background:var(--card);color:#dff4ff;outline:none;font-size:10px;font-weight:700}
-.goal-context{display:flex;align-items:center;justify-content:space-between;gap:15px;padding:10px 13px;margin-bottom:13px;border:1px solid var(--border);border-radius:11px;background:linear-gradient(90deg,rgba(0,133,202,.08),rgba(255,255,255,.01))}
-.goal-context-period{display:flex;align-items:center;gap:9px;color:#fff;font-size:11px;font-weight:800}.goal-context-period span{color:var(--muted);font-weight:600}.goal-context-status{color:var(--blue);font-size:9px;text-transform:uppercase;letter-spacing:1px;font-weight:850}
+
 .team-goals-grid{display:grid;grid-template-columns:repeat(auto-fit, minmax(260px, 1fr));gap:13px}
 .goal-card{position:relative;overflow:hidden;min-height:190px;background:radial-gradient(circle at 100% 0%,rgba(0,133,202,.12),transparent 36%),linear-gradient(145deg,var(--card),var(--bg2));border:1px solid var(--border);border-radius:16px;padding:16px;box-shadow:var(--shadow);transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease}
 .goal-card:hover{transform:translateY(-2px);border-color:rgba(0,133,202,.5);box-shadow:0 18px 45px rgba(0,0,0,.4)}
@@ -214,7 +200,6 @@ body.sidebar-collapsed .sidebar-toggle:hover{transform:rotate(180deg) scale(1.06
 .consultant-goal-card.selected{border-color:var(--blue);box-shadow:0 0 0 1px rgba(0,133,202,.2),var(--shadow)}
 .consultant-goal-card.winner-card{border-color:#d4af37;box-shadow:0 0 0 1px rgba(212, 175, 55, 0.4),var(--shadow)}
 
-/* TROFÉU NA BORDA SUPERIOR DIREITA */
 .trophy-badge {
   position: absolute;
   top: -12px;
@@ -241,8 +226,6 @@ body.sidebar-collapsed .sidebar-toggle:hover{transform:rotate(180deg) scale(1.06
 .mini-goal-bar{height:5px;border-radius:99px;background:rgba(255,255,255,.08);overflow:hidden}.mini-goal-fill{height:100%;border-radius:99px;background:linear-gradient(90deg,var(--blue-dark),var(--blue))}.mini-goal-fill.done{background:linear-gradient(90deg,#20ad7c,#62e7b0)}.mini-goal-fill.elite{background:linear-gradient(90deg,var(--blue),#c4efff);box-shadow:0 0 9px rgba(0,133,202,.4)}
 .mini-goal-values{display:flex;justify-content:space-between;margin-top:4px;color:var(--muted);font-size:9px}.mini-goal-values strong{color:#fff}
 .overview-page .section{margin-bottom:20px}
-@media(max-width:1200px){.goals-head{align-items:flex-start;flex-direction:column}.goal-controls{justify-content:flex-start}.individual-goals-grid{grid-template-columns:1fr}}
-@media(max-width:800px){.goal-controls{width:100%}.goal-period-switch{width:100%}.goal-period-btn{flex:1}.goal-period-select{width:100%}.goal-context{align-items:flex-start;flex-direction:column}}
 
 /* STAGE CARDS FLUIDOS */
 .stage-grid{ display:grid; grid-template-columns:repeat(auto-fit, minmax(260px, 1fr)); gap:17px; }
@@ -328,9 +311,12 @@ let lancamentos = [];
 let metas = [];
 let currentPage = "overview";
 
-/* FILTRO "DAY" ADICIONADO E SETADO COMO "TODAY" POR PADRÃO */
-let filters = { day: "today", month:"all", week:"all", segment:"all", consultant:"all" };
-let goalFilters = { periodicity:"mensal", period:"all" };
+/* CONTROLE MESTRE E ABSOLUTO (Patch Focus: Minimal UI) */
+let filters = { 
+  periodicity: "diario", // Abre sempre no diário focado no hoje
+  periodValue: "current", 
+  consultant: "all" 
+};
 
 /* MAPEAMENTO DOS AVATARES */
 const AVATAR_MAP = {
@@ -340,9 +326,7 @@ const AVATAR_MAP = {
 };
 
 /* NORMALIZAÇÃO E PARSERS */
-function normalizeText(value){
-  return String(value ?? "").replace(/\uFEFF/g,"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/\s+/g," ").trim().toLowerCase();
-}
+function normalizeText(value){ return String(value ?? "").replace(/\uFEFF/g,"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/\s+/g," ").trim().toLowerCase(); }
 function normalizeHeader(value){ return normalizeText(value); }
 function csvUrl(gid){ return "https://docs.google.com/spreadsheets/d/e/" + PUBLISHED_ID + "/pub?output=csv&gid=" + gid; }
 function parseCSV(text){
@@ -381,10 +365,19 @@ async function loadSheet(gid){
   if(text.includes("<!DOCTYPE html>") || text.includes("<html")) throw new Error("O Google retornou HTML em vez do CSV.");
   return rowsToObjects(parseCSV(text));
 }
+
 async function loadData(){
   const app = document.getElementById("app");
   app.innerHTML=`<div style="margin-bottom: 25px;"><div class="skeleton skeleton-title"></div><div class="skeleton skeleton-text" style="width: 150px;"></div></div><div class="skeleton-grid"><div class="skeleton skeleton-box"></div><div class="skeleton skeleton-box"></div><div class="skeleton skeleton-box"></div><div class="skeleton skeleton-box"></div></div><div class="skeleton skeleton-box" style="height: 300px;"></div>`;
-  try{ lancamentos = await loadSheet(SHEETS.lancamentos); metas = await loadSheet(SHEETS.metas); render(); }
+  try{ 
+      lancamentos = await loadSheet(SHEETS.lancamentos); 
+      metas = await loadSheet(SHEETS.metas); 
+      
+      if (filters.periodValue === "current") {
+          filters.periodValue = getCurrentKey(filters.periodicity);
+      }
+      render(); 
+  }
   catch(error){ console.error(error); app.innerHTML=`<div class="empty"><h2>Erro ao carregar a planilha</h2><p>${escapeHTML(error.message)}</p><br><button class="refresh" onclick="loadData()">Tentar novamente</button></div>`; }
 }
 
@@ -402,6 +395,13 @@ function weekLabel(key){ const p=key.split("-"); const start=new Date(Number(p[0
 function monthKey(date){ return (date.getFullYear() + "-" + String(date.getMonth()+1).padStart(2,"0")); }
 function monthLabel(key){ const p=key.split("-"); const d=new Date(Number(p[0]), Number(p[1])-1, 1); return d.toLocaleDateString("pt-BR",{month:"long",year:"numeric"}); }
 
+function getCurrentKey(periodicity) {
+    const today = new Date();
+    if(periodicity === "diario") return formatDateKey(today);
+    if(periodicity === "semanal") return weekKey(today);
+    return monthKey(today);
+}
+
 function numberValue(value){
   if(value===null || value===undefined) return 0;
   let str=String(value).replace(/\s/g,"").replace(/R\$/gi,"");
@@ -411,24 +411,25 @@ function numberValue(value){
 }
 function getIndicator(row){ return normalizeText(row.indicador); }
 function getConsultant(row){ return String(row.consultor || "").trim(); }
-function getSegment(row){ return String(row.segmento || "").trim(); }
 function getValue(row){ return numberValue(row.valor); }
 
 function filteredRows(){
   return lancamentos.filter(row=>{
-      const date=parseDate(row.data); if(!date) return false;
+      const date=parseDate(row.data); 
+      if(!date) return false;
       
-      /* LÓGICA DE FILTRO "HOJE" (TODAY) APLICADA */
-      if(filters.day === "today") {
-          if (formatDateKey(date) !== formatDateKey(new Date())) return false;
-      } else if (filters.day !== "all" && formatDateKey(date) !== filters.day) {
-          return false;
+      /* O FILTRO MESTRE UNIFICADO E ABSOLUTO */
+      if(filters.periodValue !== "all") {
+          let rowKey = "";
+          if(filters.periodicity === "diario") rowKey = formatDateKey(date);
+          else if(filters.periodicity === "semanal") rowKey = weekKey(date);
+          else rowKey = monthKey(date);
+          
+          if(rowKey !== filters.periodValue) return false;
       }
-
-      if(filters.month!=="all" && monthKey(date)!==filters.month) return false;
-      if(filters.week!=="all" && weekKey(date)!==filters.week) return false;
-      if(filters.segment!=="all" && getSegment(row)!==filters.segment) return false;
-      if(filters.consultant!=="all" && getConsultant(row)!==filters.consultant) return false;
+      
+      if(filters.consultant !== "all" && getConsultant(row) !== filters.consultant) return false;
+      
       return true;
   });
 }
@@ -445,19 +446,30 @@ const ICONS={
   validacao:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3l7 3v5c0 5-3 8-7 10-4-2-7-5-7-10V6l7-3z"/><path d="M8 12l2.5 2.5L16 9"/></svg>`,
   apresentacao:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8"/><path d="M12 17v4"/><path d="M7 13l3-3 2 2 4-5"/></svg>`,
   decisorio:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="6" height="6" rx="1"/><rect x="15" y="15" width="6" height="6" rx="1"/><path d="M9 6h3c3 0 3 3 3 5v4"/><path d="M12 12l3 3 3-3"/></svg>`,
-  /* NOVOS ÍCONES PARA LIGAÇÕES E FOLLOW UP */
   ligacoes: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>`,
   followup: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M1 4v6h6"/><path d="M23 20v-6h-6"/><path d="M20.49 9A9 9 0 005.64 5.64L1 10"/><path d="M3.51 15A9 9 0 0018.36 18.36L23 14"/></svg>`
 };
 
 function pageHeader(title, subtitle){ return `<div class="topbar"><div class="title"><h1>${title}</h1><p>${subtitle}</p></div><button class="refresh" onclick="loadData()">↻ Atualizar</button></div>`; }
-function statusHTML(){ return `<div class="status"><strong>Conexão ativa</strong> &nbsp;— Lendo ${lancamentos.length} registros ao vivo.</div>`; }
-function filtersHTML(showConsultant=false, showGoalPeriod=false){
-  /* FILTRO DE DIA ADICIONADO AO HTML */
-  return `<div class="filters"><div class="filter"><label>Dia</label><select id="dayFilter"><option value="all">Todos os dias</option></select></div><div class="filter"><label>Mês</label><select id="monthFilter"><option value="all">Todos os meses</option></select></div><div class="filter"><label>Semana</label><select id="weekFilter"><option value="all">Todas as semanas</option></select></div><div class="filter"><label>Segmento</label><select id="segmentFilter"><option value="all">Todos os segmentos</option></select></div>${showGoalPeriod ? `<div class="filter"><label>Metas por</label><select id="goalPeriodicityFilter"><option value="mensal">Mensal</option><option value="semanal">Semanal</option><option value="diario">Diário</option></select></div><div class="filter"><label>Período da meta</label><select id="goalPeriodValueFilter"><option value="all">Todos os períodos</option></select></div>` : ""}${showConsultant ? `<div class="filter"><label>Consultor</label><select id="consultantFilter"><option value="all">Todos</option><option value="Matheus">Matheus</option><option value="Edson">Edson</option><option value="Gabriel">Gabriel</option></select></div>` : ""}</div>`;
+
+function masterControlsHTML() {
+  return `
+    <div class="goal-controls" style="justify-content: flex-end; margin-bottom: 20px;">
+      <div class="goal-period-switch">
+        <button type="button" class="goal-period-btn ${filters.periodicity==='diario'?'active':''}" data-periodicity="diario">Diário</button>
+        <button type="button" class="goal-period-btn ${filters.periodicity==='semanal'?'active':''}" data-periodicity="semanal">Semanal</button>
+        <button type="button" class="goal-period-btn ${filters.periodicity==='mensal'?'active':''}" data-periodicity="mensal">Mensal</button>
+      </div>
+      <select id="periodValueFilter" class="goal-period-select"></select>
+      <select id="consultantFilter" class="goal-period-select">
+        <option value="all">Equipe (Todos)</option>
+        <option value="Matheus">Matheus</option>
+        <option value="Edson">Edson</option>
+        <option value="Gabriel">Gabriel</option>
+      </select>
+    </div>`;
 }
 
-/* GAMIFICAÇÃO */
 function rewardForProgress(percent, indicator){
   const t = normalizeText(indicator); let tiers = {};
   if(t.includes("ligacoes")) { tiers = { elite: {l: "Call Center", d: "Volume absurdo de ligações diárias."}, max: {l: "Ritmo Certo", d: "Meta de ligações atingida."}, high: {l: "Tração de Voz", d: "Falta pouco na discagem."}, mid: {l: "Aquecendo as Linhas", d: "Metade das ligações feitas."}, low: {l: "Primeiros Alôs", d: "Primeiras ligações."} }; }
@@ -479,9 +491,8 @@ function rewardForProgress(percent, indicator){
 
 /* VISÃO DE TUDO */
 function renderOverview(){
-  const rows=filteredRows();
+  const rows = filteredRows();
   
-  /* LIGAÇÕES E FOLLOW UP INJETADOS NA CONTA */
   const ligacoes=sumIndicator(rows, "Ligações");
   const contatos=sumIndicator(rows, "Contatos Efetivos");
   const reunioesQualificadas=sumIndicator(rows, "Reuniões Qualificadas");
@@ -491,28 +502,11 @@ function renderOverview(){
   const propostasApresentadas=sumIndicator(rows, "Propostas Apresentadas");
   const propostasValidadas=sumIndicator(rows, "Propostas Validadas");
   
-  /* CONVERSÕES ATUALIZADAS PARA A NOVA ORDEM DA ESTEIRA */
   const conversaoLigacaoContato=conversion(ligacoes, contatos);
   const conversaoContatoQualificado=conversion(contatos, reunioesQualificadas);
   const conversaoQualificadoFollowUp=conversion(reunioesQualificadas, followUp);
   const conversaoFollowUpInteressado=conversion(followUp, clientesInteressados);
   const conversaoInteressadoDiretoria=conversion(clientesInteressados, acessosDiretoria);
-  
-  /* RANKING ATUALIZADO COM PONTOS DE LIGAÇÕES E FOLLOW UP */
-  const consultants=["Matheus", "Edson", "Gabriel"];
-  const ranking = consultants.map(name => {
-    const cRows = rows.filter(row => getConsultant(row) === name);
-    const score = (sumIndicator(cRows, "Ligações") * 0.1) + 
-                  (sumIndicator(cRows, "Contatos Efetivos") * 0.5) + 
-                  (sumIndicator(cRows, "Reuniões Agendadas") * 50) + 
-                  (sumIndicator(cRows, "Reuniões Realizadas") * 100) + 
-                  (sumIndicator(cRows, "Reuniões Qualificadas") * 250) + 
-                  (sumIndicator(cRows, "Follow Up") * 20) + 
-                  (sumIndicator(cRows, "Contratos") * 1000);
-    return { name, value: score };
-  }).sort((a, b) => b.value - a.value);
-
-  const avatars={Matheus:{src:AVATAR_MAP["Matheus"],emoji:"🏃"},Edson:{src:AVATAR_MAP["Edson"],emoji:"😴"},Gabriel:{src:AVATAR_MAP["Gabriel"],emoji:"🥷"}};
   
   const pipelineHTML=`
     <div class="pipeline-executive">
@@ -537,8 +531,7 @@ function renderOverview(){
 
   return `
     <div class="overview-page">
-    ${statusHTML()}
-    ${filtersHTML(true)} 
+    ${pageHeader("Visão de Tudo", "Visão consolidada da operação comercial")}
 
     ${renderOverviewGoals()}
 
@@ -579,22 +572,20 @@ function goalTargetForConsultant(indicator, periodicity, key, consultant) {
     lancamentos.forEach(row => {
       const d = parseDate(row.data);
       if(d) {
-        if(periodicity === "mensal") uniquePeriods.add(monthKey(d));
+        if(periodicity === "diario") uniquePeriods.add(formatDateKey(d));
         else if(periodicity === "semanal") uniquePeriods.add(weekKey(d));
-        else uniquePeriods.add(formatDateKey(d));
+        else uniquePeriods.add(monthKey(d));
       }
     });
     return baseTarget * (uniquePeriods.size > 0 ? uniquePeriods.size : 1); 
   }
   return baseTarget;
 }
-function goalTarget(indicator,periodicity,key){return goalTargetForConsultant(indicator,periodicity,key,filters.consultant==="all"?"Equipe":filters.consultant);}
-function goalActualRows(periodicity,key,consultantOverride=null){return lancamentos.filter(row=>{const d=parseDate(row.data);if(!d)return false;if(filters.segment!=="all"&&getSegment(row)!==filters.segment)return false;if(consultantOverride){if(getConsultant(row)!==consultantOverride)return false;}else if(filters.consultant!=="all"&&getConsultant(row)!==filters.consultant)return false;if(periodicity==="mensal")return key==="all"||monthKey(d)===key;if(periodicity==="semanal")return key==="all"||weekKey(d)===key;return key==="all"||formatDateKey(d)===key;});}
-function goalPeriodLabel(periodicity,key){if(key==="all")return periodicity==="mensal"?"Todos os meses":periodicity==="semanal"?"Todas as semanas":"Todos os dias";if(periodicity==="mensal")return monthLabel(key);if(periodicity==="semanal")return weekLabel(key);return new Date(key+"T00:00:00").toLocaleDateString("pt-BR",{day:"2-digit",month:"2-digit",year:"numeric"});}
+
 function goalMilestones(percent){return [25,50,75,100].map(mark=>`<span class="goal-milestone ${percent>=mark?"done":""}" style="left:${mark}%"><span class="goal-milestone-label">${mark}%</span></span>`).join("");}
 
 function goalCard(indicator,rows,periodicity,key,label,consultant=null){
-  const actual=sumIndicator(rows,indicator),target=consultant?goalTargetForConsultant(indicator,periodicity,key,consultant):goalTarget(indicator,periodicity,key);
+  const actual=sumIndicator(rows,indicator),target=consultant?goalTargetForConsultant(indicator,periodicity,key,consultant):goalTargetForConsultant(indicator,periodicity,key,"Equipe");
   const percent=target?(actual/target)*100:0,width=Math.min(percent,100),reward=rewardForProgress(percent, indicator);
   const cardClass=reward.elite?"goal-card goal-elite":reward.unlocked?"goal-card goal-achieved":"goal-card";
   const rewardClass=reward.elite?"goal-reward unlocked elite":reward.unlocked?"goal-reward unlocked":"goal-reward";
@@ -612,8 +603,7 @@ function consultantGoalMini(indicator,consultant,rows,periodicity,key){
   return `<div class="mini-goal"><div class="mini-goal-top"><span class="mini-goal-name">${escapeHTML(indicator)}</span><span class="mini-goal-percent">${target?formatPercent(percent):"—"}</span></div><div class="mini-goal-bar"><div class="mini-goal-fill ${elite?"elite":done?"done":""}" style="width:${width}%"></div></div><div class="mini-goal-values"><span>${formatNumber(actual)} realizado</span><strong>${target?"Meta "+formatNumber(target):"Sem meta"}</strong></div></div>`;
 }
 
-function renderIndividualGoals(periodicity,key,label){
-  /* INSERINDO LIGAÇÕES E FOLLOW UP NOS CARDS INDIVIDUAIS */
+function renderIndividualGoals(periodicity, key, label, allRows){
   let indicators = ["Ligações", "Contatos Efetivos", "Reuniões Agendadas"];
   if (periodicity === "semanal" || periodicity === "mensal") indicators.push("Reuniões Realizadas", "Reuniões Qualificadas", "Follow Up");
   if (periodicity === "mensal") indicators.push("Contratos");
@@ -621,7 +611,8 @@ function renderIndividualGoals(periodicity,key,label){
   const consultants = ["Edson","Gabriel","Matheus"];
   
   const scoredConsultants = consultants.map(name => {
-      const rows = goalActualRows(periodicity, key, name);
+      // Pega as linhas que já passaram pelo filtro Mestre de Tempo, e filtra pelo consultor
+      const rows = allRows.filter(r => getConsultant(r) === name);
       const score = (sumIndicator(rows, "Ligações") * 0.1) + 
                     (sumIndicator(rows, "Contatos Efetivos") * 0.5) + 
                     (sumIndicator(rows, "Reuniões Agendadas") * 50) + 
@@ -632,25 +623,27 @@ function renderIndividualGoals(periodicity,key,label){
       return { name, score, rows };
   }).sort((a, b) => b.score - a.score);
 
+  // Se houver um consultor específico no filtro mestre, o ranking mostra apenas ele
+  const consultantsToShow = filters.consultant === "all" ? scoredConsultants : scoredConsultants.filter(c => c.name === filters.consultant);
+
   const medals = ["🥇", "🥈", "🥉"];
 
   return `
     <div class="individual-goals" style="margin-top: 0;">
       <div class="individual-goals-head">
         <h3>Ranking Individual</h3>
-        <span>${escapeHTML(label)} • ordem definida pela pontuação de engajamento</span>
+        <span>Ordem definida pela pontuação de engajamento no período selecionado</span>
       </div>
       <div class="individual-goals-grid">
-        ${scoredConsultants.map((c, index) => {
+        ${consultantsToShow.map((c, index) => {
           const name = c.name;
           const rows = c.rows;
-          const selected = filters.consultant === name;
-          const isWinner = index === 0 && c.score > 0;
-          const medal = (c.score > 0) ? (medals[index] || "") : "";
+          const isWinner = index === 0 && c.score > 0 && filters.consultant === "all";
+          const medal = (c.score > 0 && filters.consultant === "all") ? (medals[index] || "") : "";
           const trophyHTML = isWinner ? `<div class="trophy-badge" title="1º Lugar do Período">🏆</div>` : "";
           
           return `
-            <div class="consultant-goal-card ${selected?"selected":""} ${isWinner ? "winner-card" : ""}">
+            <div class="consultant-goal-card ${isWinner ? "winner-card" : ""}">
               ${trophyHTML}
               <div class="consultant-goal-head">
                 <div class="consultant-goal-avatar">${consultantAvatar(name)}</div>
@@ -668,8 +661,16 @@ function renderIndividualGoals(periodicity,key,label){
 }
 
 function renderOverviewGoals(){
-  const periodicity=goalFilters.periodicity||"mensal",key=goalFilters.period||"all",rows=goalActualRows(periodicity,key),label=goalPeriodLabel(periodicity,key);
-  /* LIGAÇÕES E FOLLOW UP INJETADOS NOS CARDS GERAIS (MÉTRICAS DA OPERAÇÃO) */
+  const periodicity = filters.periodicity;
+  const key = filters.periodValue;
+  const rows = filteredRows();
+  
+  const selectEl = document.getElementById("periodValueFilter");
+  let label = "Período";
+  if (selectEl && selectEl.options[selectEl.selectedIndex]) {
+      label = selectEl.options[selectEl.selectedIndex].text;
+  }
+
   let indicators = ["Ligações", "Contatos Efetivos"];
   if (periodicity === "semanal" || periodicity === "mensal") indicators.push("Reuniões Qualificadas", "Follow Up");
   if (periodicity === "mensal") indicators.push("Contratos");
@@ -680,29 +681,18 @@ function renderOverviewGoals(){
         <div class="goals-title-wrap">
           <div class="goals-kicker"><span class="goals-kicker-dot"></span>Performance Comercial</div>
           <h2>Metas e Ranking</h2>
-          <div class="goals-subtitle">Acompanhamento do ranking individual e da performance consolidada da equipe.</div>
+          <div class="goals-subtitle">O seu painel inteiro está refletindo: <strong>${escapeHTML(label)}</strong></div>
         </div>
-        <div class="goal-controls">
-          <div class="goal-period-switch">
-            <button type="button" class="goal-period-btn ${periodicity==="diario"?"active":""}" data-goal-periodicity="diario">Diário</button>
-            <button type="button" class="goal-period-btn ${periodicity==="semanal"?"active":""}" data-goal-periodicity="semanal">Semanal</button>
-            <button type="button" class="goal-period-btn ${periodicity==="mensal"?"active":""}" data-goal-periodicity="mensal">Mensal</button>
-          </div>
-          <select id="goalPeriodValueFilter" class="goal-period-select"><option value="all">${escapeHTML(label)}</option></select>
-        </div>
-      </div>
-      <div class="goal-context">
-        <div class="goal-context-period"><span>PERÍODO</span>${escapeHTML(label)}</div>
-        <div class="goal-context-status">${periodicity==="diario"?"Meta diária":periodicity==="semanal"?"Meta semanal":"Meta mensal"}</div>
+        ${masterControlsHTML()}
       </div>
       
       <!-- RANKING INDIVIDUAL FICA EM CIMA -->
-      ${renderIndividualGoals(periodicity,key,label)}
+      ${renderIndividualGoals(periodicity, key, label, rows)}
       
       <!-- DIVISÓRIA PARA AS METAS DA OPERAÇÃO -->
       <div style="margin: 30px 0 15px; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 20px;">
         <h3 style="margin: 0; font-size: 15px; color: #fff;">Metas da Operação (Equipe)</h3>
-        <span style="color: var(--muted); font-size: 10px;">Consolidado geral</span>
+        <span style="color: var(--muted); font-size: 10px;">Consolidado geral da equipe</span>
       </div>
       
       <!-- CARDS GERAIS (OPERAÇÃO) FICAM EMBAIXO -->
@@ -710,7 +700,7 @@ function renderOverviewGoals(){
     </div>`;
 }
 
-/* STAGE CARDS ATUALIZADOS PARA OS NOVOS INDICADORES */
+/* STAGE CARDS */
 const STAGES={
   prospeccao:{title:"Prospecção Inicial",description:"Eficiência da geração e qualificação de reuniões.",icon:"prospeccao",indicators:["Ligações","Contatos Efetivos","Reuniões Agendadas","Reuniões Confirmadas","Reuniões Qualificadas"]},
   diagnostico:{title:"Diagnóstico Estratégico",description:"Evolução dos clientes interessados até o acesso à diretoria.",icon:"diagnostico",indicators:["Follow Up","Clientes Interessados","Diagnósticos Concluídos","Acessos à Diretoria"]},
@@ -731,12 +721,12 @@ function renderStage(page){
       }
       cards+=`<div class="stage-card"><div class="stage-icon">${ICONS[stage.icon] || ICONS.prospeccao}</div><h3>${item.indicator}</h3><div class="stage-number">${formatNumber(item.value)}</div>${conversionHTML}</div>`;
   });
-  return `${pageHeader(stage.title,stage.description)}${statusHTML()}${filtersHTML(page==="prospeccao" || page==="diagnostico" || page==="apresentacao")}<div class="stage-grid">${cards}</div>`;
+  return `${pageHeader(stage.title,stage.description)}${masterControlsHTML()}<div class="stage-grid">${cards}</div>`;
 }
 
 function renderMetas(){
-  return `${pageHeader("Metas","Metas da equipe e dos consultores por ritmo de acompanhamento")}
-    <div class="section"><div class="section-head"><div><h2>Metas cadastradas</h2><div style="margin-top:5px;color:var(--muted);font-size:12px">Lendo metas fixas recorrentes da planilha.</div></div></div>
+  return `${pageHeader("Metas","Metas fixas recorrentes da operação")}${masterControlsHTML()}
+    <div class="section"><div class="section-head"><div><h2>Metas cadastradas</h2><div style="margin-top:5px;color:var(--muted);font-size:12px">Lendo diretamente da planilha de metas.</div></div></div>
       <div class="table-wrap"><table><thead><tr><th>Periodicidade</th><th>Consultor</th><th>Indicador</th><th>Meta</th></tr></thead>
           <tbody>${metas.length?metas.map(row=>`<tr><td>${escapeHTML(row.periodicidade||row.frequencia||row.tipo||"Mensal")}</td><td>${escapeHTML(row.consultor||"")}</td><td>${escapeHTML(row.indicador||"")}</td><td>${formatNumber(numberValue(row.meta))}</td></tr>`).join(""):`<tr><td colspan="4">Nenhuma meta encontrada.</td></tr>`}</tbody>
         </table></div></div>`;
@@ -796,102 +786,69 @@ function render(){
   else if(currentPage==="metas") app.innerHTML=renderMetas();
   else if(currentPage==="consultores") app.innerHTML=renderConsultores();
   
-  bindFilters(); populateFilters(); bindSidebar(); updateActiveMenu();
+  populateFilters(); bindFilters(); bindSidebar(); updateActiveMenu();
 }
 
 function populateFilters(){
-  const months=new Set(), weeks=new Set(), segments=new Set(), days=new Set();
+  const periodValues = new Set();
+  const currentKey = getCurrentKey(filters.periodicity);
+
   lancamentos.forEach(row=>{
       const date=parseDate(row.data);
       if(date){ 
-         days.add(formatDateKey(date));
-         months.add(monthKey(date)); 
-         weeks.add(weekKey(date)); 
+         if(filters.periodicity === "diario") periodValues.add(formatDateKey(date));
+         else if(filters.periodicity === "semanal") periodValues.add(weekKey(date));
+         else periodValues.add(monthKey(date));
       }
-      if(getSegment(row)) segments.add(getSegment(row));
   });
+  
+  // Garante que o dia/semana/mês atual SEMPRE exista na lista, mesmo se não houver lançamentos ainda hoje.
+  periodValues.add(currentKey);
 
-  /* FILTROS GLOBAIS (AGORA COM O DIA NO TOPO) */
-  const daySelect=document.getElementById("dayFilter");
-  if(daySelect){
-    const sortedDays = [...days].sort().reverse();
-    daySelect.innerHTML=`<option value="all">Todos os dias</option><option value="today">Hoje (Padrão)</option>`+sortedDays.map(d=>{
-      const dateObj = new Date(d + "T00:00:00");
-      return `<option value="${d}">${dateObj.toLocaleDateString("pt-BR")}</option>`;
-    }).join("");
-    daySelect.value=filters.day;
-  }
-
-  const monthSelect=document.getElementById("monthFilter");
-  if(monthSelect){
-    monthSelect.innerHTML=`<option value="all">Todos os meses</option>`+[...months].sort().map(month=>`<option value="${month}">${monthLabel(month)}</option>`).join("");
-    if(filters.month === "all" && months.has(monthKey(new Date()))) { filters.month = monthKey(new Date()); }
-    monthSelect.value=filters.month;
-  }
-
-  const weekSelect=document.getElementById("weekFilter");
-  if(weekSelect){
-    let availableWeeks=[...weeks];
-    if(filters.month!=="all"){
-      availableWeeks=availableWeeks.filter(week=>{
-        const p=week.split("-"); const date=new Date(Number(p[0]), Number(p[1])-1, Number(p[2]));
-        return (monthKey(date)===filters.month);
-      });
+  const periodSelect = document.getElementById("periodValueFilter");
+  if(periodSelect){
+    const sorted = [...periodValues].sort().reverse();
+    let html = `<option value="all">Todo o Histórico</option>`;
+    
+    sorted.forEach(v => {
+        let label = "";
+        if(filters.periodicity === "diario") {
+            const dateObj = new Date(v + "T00:00:00");
+            label = v === currentKey ? `Hoje (${dateObj.toLocaleDateString("pt-BR")})` : dateObj.toLocaleDateString("pt-BR");
+        } else if(filters.periodicity === "semanal") {
+            label = v === currentKey ? `Semana Atual (${weekLabel(v)})` : weekLabel(v);
+        } else {
+            label = v === currentKey ? `Mês Atual (${monthLabel(v)})` : monthLabel(v);
+        }
+        html += `<option value="${v}">${escapeHTML(label)}</option>`;
+    });
+    
+    if (filters.periodValue !== "all" && !periodValues.has(filters.periodValue)) {
+        filters.periodValue = currentKey;
     }
-    weekSelect.innerHTML=`<option value="all">Todas as semanas</option>`+availableWeeks.sort().map(week=>`<option value="${week}">${weekLabel(week)}</option>`).join("");
-    weekSelect.value=filters.week;
+    
+    periodSelect.innerHTML = html;
+    periodSelect.value = filters.periodValue;
   }
 
-  const segmentSelect=document.getElementById("segmentFilter");
-  if(segmentSelect){ segmentSelect.innerHTML=`<option value="all">Todos os segmentos</option>`+[...segments].sort().map(segment=>`<option value="${escapeHTML(segment)}">${escapeHTML(segment)}</option>`).join(""); segmentSelect.value=filters.segment; }
-
-  const goalPeriodValueSelect=document.getElementById("goalPeriodValueFilter");
-  if(goalPeriodValueSelect){
-    const periodicity=goalFilters.periodicity||"mensal"; const values=new Set();
-    lancamentos.forEach(row=>{ const d=parseDate(row.data); if(!d)return; values.add(periodicity==="mensal"?monthKey(d):periodicity==="semanal"?weekKey(d):formatDateKey(d)); });
-    const sorted=[...values].sort();
-    goalPeriodValueSelect.innerHTML=`<option value="all">${periodicity==="mensal"?"Todos os meses":periodicity==="semanal"?"Todas as semanas":"Todos os dias"}</option>`+sorted.map(v=>{const label=periodicity==="mensal"?monthLabel(v):periodicity==="semanal"?weekLabel(v):new Date(v+"T00:00:00").toLocaleDateString("pt-BR",{day:"2-digit",month:"2-digit",year:"numeric"});return `<option value="${v}">${escapeHTML(label)}</option>`;}).join("");
-    if(goalFilters.period==="all"){
-      const current = periodicity==="mensal"?monthKey(new Date()):periodicity==="semanal"?weekKey(new Date()):formatDateKey(new Date());
-      if(values.has(current)) goalFilters.period = current;
-    }
-    if(goalFilters.period!=="all"&&!sorted.includes(goalFilters.period))goalFilters.period="all";
-    goalPeriodValueSelect.value=goalFilters.period;
-  }
-
-  const consultantSelect=document.getElementById("consultantFilter");
-  if(consultantSelect)consultantSelect.value=filters.consultant;
+  const consultantSelect = document.getElementById("consultantFilter");
+  if(consultantSelect) consultantSelect.value = filters.consultant;
 }
 
 function bindFilters(){
-  /* RESET INTELIGENTE DOS FILTROS */
-  const day=document.getElementById("dayFilter"); 
-  if(day)day.addEventListener("change",event=>{
-     filters.day=event.target.value;
-     if(filters.day !== "all") { filters.month="all"; filters.week="all"; } 
-     render();
+  document.querySelectorAll("[data-periodicity]").forEach(button => { 
+      button.addEventListener("click", () => {
+          filters.periodicity = button.dataset.periodicity;
+          filters.periodValue = getCurrentKey(filters.periodicity); // Reseta a data para o "hoje" automático
+          render();
+      }); 
   });
 
-  const month=document.getElementById("monthFilter"); 
-  if(month)month.addEventListener("change",event=>{
-     filters.month=event.target.value; 
-     filters.week="all"; 
-     filters.day="all"; 
-     render();
-  });
-
-  const week=document.getElementById("weekFilter"); 
-  if(week)week.addEventListener("change",event=>{
-     filters.week=event.target.value;
-     filters.day="all"; 
-     render();
-  });
-
-  const segment=document.getElementById("segmentFilter"); if(segment)segment.addEventListener("change",event=>{filters.segment=event.target.value;render();});
-  const consultant=document.getElementById("consultantFilter"); if(consultant)consultant.addEventListener("change",event=>{filters.consultant=event.target.value;render();});
+  const periodValue = document.getElementById("periodValueFilter"); 
+  if(periodValue) periodValue.addEventListener("change", event => { filters.periodValue = event.target.value; render(); });
   
-  document.querySelectorAll("[data-goal-periodicity]").forEach(button=>{ button.addEventListener("click",()=>{goalFilters.periodicity=button.dataset.goalPeriodicity;goalFilters.period="all";render();}); });
-  const goalPeriodValueSelect=document.getElementById("goalPeriodValueFilter"); if(goalPeriodValueSelect)goalPeriodValueSelect.addEventListener("change",event=>{goalFilters.period=event.target.value;render();});
+  const consultant = document.getElementById("consultantFilter"); 
+  if(consultant) consultant.addEventListener("change", event => { filters.consultant = event.target.value; render(); });
 }
 
 /* INICIAR O SISTEMA */
