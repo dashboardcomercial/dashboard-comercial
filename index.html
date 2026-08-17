@@ -1,1 +1,858 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<title>Dashboard Comercial | Tax Group</title>
+
+<style>
+:root{
+  /* NOVAS CORES DA PALETA */
+  --blue-dark: #1b449c; /* AZUL ESCURO */
+  --blue: #0085ca;      /* AZUL CLARO */
+  
+  /* BASE DO TEMA ADAPTADA PARA OS NOVOS AZUIS */
+  --bg: #071224;
+  --bg2: #0b1a33;
+  --sidebar: var(--blue-dark);
+  --sidebar-hover: rgba(0, 133, 202, 0.4);
+  
+  /* CARDS NA COR SOLICITADA (#1b449c) */
+  --card: #1b449c;
+  --card2: #1b449c;
+  
+  --blue3: #4dc0ff;
+  --white: #ffffff;
+  --text: #edf7ff;
+  --muted: #94b5d6;
+  --border: rgba(0, 133, 202, 0.25);
+  --green: #26c58b;
+  --orange: #e8a943;
+  --red: #e15b67;
+  --shadow: 0 15px 40px rgba(0,0,0,.35);
+}
+
+*{ box-sizing:border-box; }
+
+/* SCROLLBAR CUSTOMIZADA */
+::-webkit-scrollbar { width: 7px; height: 7px; }
+::-webkit-scrollbar-track { background: rgba(0,0,0,0.15); }
+::-webkit-scrollbar-thumb { background: rgba(0, 133, 202, 0.4); border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(0, 133, 202, 0.8); }
+
+body{
+  margin:0;
+  font-family:Inter,"Segoe UI",Arial,sans-serif;
+  background: linear-gradient(180deg, var(--blue-dark) 0%, #0d2250 100%);
+  background-attachment: fixed;
+  color:var(--text);
+}
+
+.app{ display:flex; min-height:100vh; }
+
+/* SIDEBAR */
+.sidebar{ width:270px; background: transparent; border-right:1px solid rgba(255,255,255,.06); color:white; padding:25px 16px; position:fixed; top:0; bottom:0; left:0; overflow-y:auto; transition:width .28s ease; z-index:20; }
+.sidebar-toggle{ position:absolute;right:-13px;top:28px;width:28px;height:28px;border-radius:50%; border:1px solid rgba(255,255,255,.2);background:var(--blue-dark);color:#fff; display:flex;align-items:center;justify-content:center;cursor:pointer; box-shadow:0 8px 20px rgba(0,0,0,.28);transition:.2s ease;font-size:14px; }
+.sidebar-toggle:hover{background:var(--blue);transform:scale(1.06)}
+body.sidebar-collapsed .sidebar{width:82px}
+body.sidebar-collapsed .main{margin-left:82px;width:calc(100% - 82px)}
+body.sidebar-collapsed .logo{justify-content:center;padding-left:0;padding-right:0}
+body.sidebar-collapsed .logo-text,body.sidebar-collapsed .menu-title,body.sidebar-collapsed .nav span:not(.nav-icon){display:none}
+body.sidebar-collapsed .nav{justify-content:center;padding-left:10px;padding-right:10px}
+body.sidebar-collapsed .sidebar-toggle{transform:rotate(180deg)}
+body.sidebar-collapsed .sidebar-toggle:hover{transform:rotate(180deg) scale(1.06)}
+
+.logo{ display:flex; align-items:center; gap:11px; padding:8px 13px 28px; font-size:21px; font-weight:850; letter-spacing:.4px; }
+.logo-mark{ width:34px; height:34px; border-radius:10px; display:flex; align-items:center; justify-content:center; }
+.logo-text{ line-height:1; }
+.logo-sub{ font-size:9px; letter-spacing:2px; opacity:.7; margin-top:5px; }
+
+.menu-title{ font-size:10px; text-transform:uppercase; letter-spacing:1.6px; opacity:.6; margin:22px 13px 9px; font-weight:700; color: #a9cbe8; }
+.nav{ display:flex; align-items:center; gap:12px; width:100%; border:0; background:transparent; color:#d0e3f2; padding:11px 13px; border-radius:11px; cursor:pointer; font-size:13px; text-align:left; margin-bottom:4px; transition:.18s ease; }
+.nav:hover{ background:var(--sidebar-hover); color:white; }
+.nav.active{ background: linear-gradient(90deg, rgba(0,133,202,.4), rgba(0,133,202,.05)); color:white; font-weight:700; box-shadow: inset 4px 0 0 var(--blue); }
+.nav-icon{ width:24px; height:24px; display:flex; align-items:center; justify-content:center; flex-shrink:0; border-radius:7px; color:rgba(255,255,255,0.7); }
+.nav.active .nav-icon{ color:#fff; }
+.nav-icon svg{ width:18px; height:18px; }
+
+/* MAIN */
+.main{ margin-left:270px; width:calc(100% - 270px); padding:32px 38px 55px; }
+
+/* TOPBAR */
+.topbar{ display:flex; justify-content:space-between; align-items:flex-start; gap:20px; margin-bottom:25px; }
+.title h1{ margin:0; font-size:30px; letter-spacing:-.6px; }
+.title p{ margin:7px 0 0; color:var(--muted); font-size:13px; }
+.refresh{ border:1px solid var(--border); background:rgba(0,133,202,.08); color:var(--blue); border-radius:10px; padding:10px 15px; cursor:pointer; font-weight:700; transition:.18s; }
+.refresh:hover{ background:var(--blue); color:#fff; border-color:var(--blue); }
+
+/* SKELETON */
+@keyframes skeleton-loading { 0% { background-color: rgba(255,255,255,0.02); } 50% { background-color: rgba(255,255,255,0.06); } 100% { background-color: rgba(255,255,255,0.02); } }
+.skeleton { animation: skeleton-loading 1.5s infinite; border-radius: 8px; }
+.skeleton-title { height: 28px; width: 200px; margin-bottom: 15px; }
+.skeleton-text { height: 14px; width: 100px; margin-bottom: 8px; }
+.skeleton-box { height: 180px; width: 100%; margin-bottom: 20px; border-radius: 15px; }
+.skeleton-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 20px; }
+
+/* CONTROLES MESTRES DE FILTRO UNIFICADO (Patch Focus) */
+.goal-controls{display:flex;align-items:center;gap:9px;flex-wrap:wrap;}
+.goal-period-switch{display:flex;gap:3px;padding:4px;border:1px solid var(--border);border-radius:12px;background:rgba(0,0,0,.2); height: 38px;}
+.goal-period-btn{border:0;border-radius:8px;padding:0 12px;background:transparent;color:var(--muted);font-size:11px;font-weight:850;cursor:pointer;transition:.18s ease; flex: 1;}
+.goal-period-btn:hover{color:#fff}
+.goal-period-btn.active{color:#fff;background:linear-gradient(135deg, var(--blue), var(--blue-dark));box-shadow:0 5px 15px rgba(0,133,202,.3)}
+.goal-period-select{border:1px solid var(--border);border-radius:10px;padding:9px 11px;min-width:160px;background:var(--card);color:#dff4ff;outline:none;font-size:11px;font-weight:700; height: 38px;}
+.goal-period-select:focus{border-color:var(--blue3);}
+
+/* CARDS FLUIDOS */
+.grid{ display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:15px; margin-bottom:24px; }
+.card{ background: linear-gradient(145deg, var(--card), var(--bg2)); border:1px solid var(--border); border-radius:15px; padding:20px; box-shadow:var(--shadow); position:relative; overflow:hidden; }
+.card::after{ content:""; position:absolute; width:80px; height:80px; right:-35px; bottom:-40px; background:rgba(0,133,202,.15); border-radius:50%; }
+.card-label{ color:var(--muted); font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing: 0.5px;}
+.card-value{ font-size:30px; font-weight:850; margin-top:8px; color:#f2faff; }
+.card-sub{ margin-top:7px; font-size:11px; color:var(--muted); }
+
+/* SECTIONS */
+.section{ background: linear-gradient(145deg, var(--card), var(--bg2)); border:1px solid var(--border); border-radius:17px; padding:23px; box-shadow:var(--shadow); margin-bottom:24px; }
+.section-head{ display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:20px; flex-wrap: wrap; gap: 15px; }
+.section-head h2{ margin:0; font-size:18px; letter-spacing:-.2px; }
+
+/* ESTEIRA COMERCIAL */
+.pipeline-executive{ display:flex; flex-direction:column; align-items:stretch; gap:0; max-width:850px; margin:0 auto; }
+.pipeline-step{ display:flex; align-items:center; gap:18px; padding:18px 22px; background: linear-gradient(135deg, rgba(255,255,255,.025), rgba(255,255,255,.005)); border:1px solid var(--border); border-radius:14px; transition:.18s ease; }
+.pipeline-step:hover{ border-color:var(--blue); transform:translateX(2px); background: rgba(0,133,202,.05); }
+.pipeline-step-icon{ width:48px; height:48px; flex-shrink:0; display:flex; align-items:center; justify-content:center; border-radius:12px; background:rgba(0,133,202,.15); color:var(--blue); }
+.pipeline-step-icon svg{ width:23px; height:23px; }
+.pipeline-step-info{ flex:1; }
+.pipeline-step-label{ color:var(--muted); font-size:11px; font-weight:750; text-transform:uppercase; letter-spacing:.7px; }
+.pipeline-step-value{ font-size:30px; font-weight:900; line-height:1.1; margin-top:4px; color:#fff;}
+.pipeline-step-description{ color:var(--muted); font-size:11px; margin-top:4px; }
+.pipeline-connector{ display:flex; align-items:center; gap:13px; margin:5px 0; padding-left:22px; min-height:43px; }
+.pipeline-arrow{ width:30px; height:30px; display:flex; align-items:center; justify-content:center; border-radius:50%; background:rgba(0,133,202,.12); border:1px solid rgba(0,133,202,.25); color:var(--blue); font-size:18px; font-weight:800; }
+.pipeline-conversion{ display:flex; align-items:center; gap:8px; font-size:11px; }
+.pipeline-conversion strong{ color:var(--green); font-size:13px; }
+.pipeline-conversion span{ color:var(--muted); }
+
+/* AVATARES */
+.avatar {
+  width: 90px; 
+  height: 90px; 
+  border-radius: 16px; 
+  background: transparent;
+  border: none;
+  display: flex; 
+  align-items: center; 
+  justify-content: center;
+  font-size: 26px; 
+  overflow: hidden; 
+  flex-shrink: 0;
+}
+
+.consultant-goal-avatar {
+  width: 80px; 
+  height: 80px;
+  border-radius: 14px; 
+  background: transparent;
+  border: none;
+  display: flex; 
+  align-items: center; 
+  justify-content: center;
+  font-size: 20px; 
+  overflow: hidden; 
+  flex-shrink: 0;
+}
+
+.avatar img, .consultant-goal-avatar img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* METAS NA VISÃO DE TUDO */
+.goals-section{margin-bottom:22px}
+.goals-kicker{display:flex;align-items:center;gap:7px;color:var(--blue);font-size:10px;font-weight:900;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:7px}
+.goals-kicker-dot{width:6px;height:6px;border-radius:50%;background:var(--blue);box-shadow:0 0 12px var(--blue)}
+.goals-title-wrap h2{margin:0;font-size:19px;letter-spacing:-.3px}
+.goals-subtitle{margin-top:6px;color:var(--muted);font-size:11px}
+
+.team-goals-grid{display:grid;grid-template-columns:repeat(auto-fit, minmax(260px, 1fr));gap:13px}
+.goal-card{position:relative;overflow:hidden;min-height:190px;background:radial-gradient(circle at 100% 0%,rgba(0,133,202,.12),transparent 36%),linear-gradient(145deg,var(--card),var(--bg2));border:1px solid var(--border);border-radius:16px;padding:16px;box-shadow:var(--shadow);transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease}
+.goal-card:hover{transform:translateY(-2px);border-color:rgba(0,133,202,.5);box-shadow:0 18px 45px rgba(0,0,0,.4)}
+.goal-card:before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:linear-gradient(180deg,var(--blue),var(--blue-dark))}
+.goal-card.goal-achieved{border-color:rgba(38,197,139,.4);background:radial-gradient(circle at 100% 0%,rgba(38,197,139,.1),transparent 38%),linear-gradient(145deg,var(--card),var(--bg2))}
+.goal-card.goal-achieved:before{background:linear-gradient(180deg,#67e8b5,#26c58b)}
+.goal-card.goal-elite{border-color:var(--blue);box-shadow:0 0 0 1px rgba(0,133,202,.15),0 18px 50px rgba(0,133,202,.25)}
+.goal-card.goal-elite:before{background:linear-gradient(180deg,#d7f5ff,var(--blue))}
+.goal-card.goal-elite:after{content:"";position:absolute;width:140px;height:140px;right:-70px;top:-70px;border-radius:50%;border:1px solid rgba(0,133,202,.2);box-shadow:0 0 40px rgba(0,133,202,.2)}
+.goal-top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}.goal-label{font-size:12px;font-weight:850;color:#fff}.goal-period{font-size:9px;text-transform:uppercase;letter-spacing:.8px;color:var(--muted);margin-top:4px}
+.goal-percent-badge{min-width:52px;height:34px;padding:0 8px;border-radius:10px;display:flex;align-items:center;justify-content:center;background:rgba(0,133,202,.15);border:1px solid rgba(0,133,202,.25);color:var(--blue);font-size:12px;font-weight:950}
+.goal-achieved .goal-percent-badge{background:rgba(38,197,139,.10);border-color:rgba(38,197,139,.20);color:#62e7b0}.goal-elite .goal-percent-badge{background:rgba(0,133,202,.2);border-color:var(--blue);color:#fff;box-shadow:0 0 18px rgba(0,133,202,.3)}
+.goal-numbers{display:flex;align-items:baseline;gap:6px;margin:16px 0 11px}.goal-current{font-size:27px;line-height:1;font-weight:950;letter-spacing:-1px}.goal-target{color:var(--muted);font-size:10px;font-weight:650}
+.goal-progress-wrap{position:relative;padding-top:13px}.goal-bar{height:9px;border-radius:99px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.03);overflow:hidden}.goal-fill{height:100%;border-radius:inherit;background:linear-gradient(90deg,var(--blue-dark),var(--blue));box-shadow:0 0 17px rgba(0,133,202,.4);transition:width .55s cubic-bezier(.22,.8,.25,1)}.goal-achieved .goal-fill{background:linear-gradient(90deg,#20ad7c,#62e7b0);box-shadow:0 0 17px rgba(38,197,139,.22)}.goal-elite .goal-fill{background:linear-gradient(90deg,var(--blue),#c4efff);box-shadow:0 0 20px rgba(0,133,202,.4)}
+.goal-milestones{position:absolute;left:0;right:0;top:0;height:20px}.goal-milestone{position:absolute;top:6px;width:8px;height:8px;margin-left:-4px;border-radius:50%;background:var(--card2);border:2px solid var(--card);box-shadow:0 0 0 1px rgba(0,133,202,.3)}.goal-milestone.done{background:var(--blue);box-shadow:0 0 0 2px rgba(0,133,202,.15),0 0 9px rgba(0,133,202,.6)}.goal-milestone-label{position:absolute;top:-7px;transform:translate(-50%,-100%);color:var(--muted);font-size:8px;font-weight:800}.goal-milestone.done .goal-milestone-label{color:var(--blue)}
+.goal-reward{display:flex;align-items:center;gap:8px;min-height:43px;margin-top:12px;padding:8px 9px;border:1px solid rgba(255,255,255,.05);border-radius:10px;background:rgba(0,0,0,.15);color:var(--muted);font-size:9px;line-height:1.25}.goal-reward-icon{width:25px;height:25px;flex-shrink:0;display:flex;align-items:center;justify-content:center;border-radius:7px;background:rgba(255,255,255,.04);color:var(--muted);font-size:12px}.goal-reward strong{display:block;margin-top:2px;color:#fff;font-size:9px}.goal-reward.unlocked{border-color:rgba(38,197,139,.2);background:linear-gradient(90deg,rgba(38,197,139,.08),rgba(255,255,255,.01));color:#89bca9}.goal-reward.unlocked .goal-reward-icon{background:rgba(38,197,139,.15);color:#60e5ad;box-shadow:0 0 15px rgba(38,197,139,.15)}.goal-reward.unlocked strong{color:#6ce9b3}.goal-reward.elite{border-color:rgba(0,133,202,.3);background:linear-gradient(90deg,rgba(0,133,202,.15),rgba(0,133,202,.03))}.goal-reward.elite .goal-reward-icon{background:rgba(0,133,202,.2);color:var(--blue);box-shadow:0 0 18px rgba(0,133,202,.3)}.goal-reward.elite strong{color:#a6e5ff}
+
+/* METAS INDIVIDUAIS / RANKING */
+.individual-goals{margin-top:0;}
+.individual-goals-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:11px}.individual-goals-head h3{margin:0;font-size:13px}.individual-goals-head span{color:var(--muted);font-size:10px}.individual-goals-grid{display:grid;grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));gap:13px}
+.consultant-goal-card{background:linear-gradient(145deg,var(--card),var(--bg2));border:1px solid var(--border);border-radius:15px;padding:15px;box-shadow:var(--shadow);min-width:0; position:relative; overflow:visible;}
+.consultant-goal-card.selected{border-color:var(--blue);box-shadow:0 0 0 1px rgba(0,133,202,.2),var(--shadow)}
+.consultant-goal-card.winner-card{border-color:#d4af37;box-shadow:0 0 0 1px rgba(212, 175, 55, 0.4),var(--shadow)}
+
+.trophy-badge {
+  position: absolute;
+  top: -12px;
+  right: -12px;
+  background: linear-gradient(135deg, #ffd700, #d4af37);
+  color: #000;
+  border-radius: 50%;
+  width: 42px;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3), 0 0 0 4px var(--bg);
+  z-index: 10;
+  transform: rotate(10deg);
+}
+
+.consultant-goal-head{display:flex;align-items:center;gap:15px;padding-bottom:12px;margin-bottom:8px;border-bottom:1px solid rgba(255,255,255,.05)}
+.consultant-goal-name{font-size:15px;font-weight:900;color:#fff; display: flex; align-items: center;}
+.consultant-goal-role{font-size:10px;color:var(--blue);text-transform:uppercase;letter-spacing:1px;margin-top:4px;font-weight:700;}
+.mini-goal{padding:9px 0;border-bottom:1px solid rgba(255,255,255,.05)}.mini-goal:last-child{border-bottom:0;padding-bottom:1px}
+.mini-goal-top{display:flex;justify-content:space-between;gap:8px;margin-bottom:6px}.mini-goal-name{font-size:10px;color:#fff;font-weight:750}.mini-goal-percent{font-size:10px;color:var(--blue);font-weight:900}
+.mini-goal-bar{height:5px;border-radius:99px;background:rgba(255,255,255,.08);overflow:hidden}.mini-goal-fill{height:100%;border-radius:99px;background:linear-gradient(90deg,var(--blue-dark),var(--blue))}.mini-goal-fill.done{background:linear-gradient(90deg,#20ad7c,#62e7b0)}.mini-goal-fill.elite{background:linear-gradient(90deg,var(--blue),#c4efff);box-shadow:0 0 9px rgba(0,133,202,.4)}
+.mini-goal-values{display:flex;justify-content:space-between;margin-top:4px;color:var(--muted);font-size:9px}.mini-goal-values strong{color:#fff}
+.overview-page .section{margin-bottom:20px}
+
+/* STAGE CARDS FLUIDOS */
+.stage-grid{ display:grid; grid-template-columns:repeat(auto-fit, minmax(260px, 1fr)); gap:17px; }
+.stage-card{ background: linear-gradient(145deg, var(--card), var(--bg2)); border:1px solid var(--border); border-radius:16px; padding:23px; box-shadow:var(--shadow); transition: transform .18s, border-color .18s; }
+.stage-card:hover{ transform:translateY(-3px); border-color:var(--blue); }
+.stage-icon{ width:42px; height:42px; border-radius:11px; display:flex; align-items:center; justify-content:center; background:rgba(0,133,202,.15); color:var(--blue); }
+.stage-icon svg{ width:21px; height:21px; }
+.stage-card h3{ margin:15px 0 4px; font-size:13px; color:#fff; }
+.stage-number{ font-size:37px; font-weight:900; color:#fff; }
+.stage-conversion{ margin-top:14px; background:rgba(38,197,139,.08); border:1px solid rgba(38,197,139,.15); border-radius:9px; padding:10px; font-size:11px; color:var(--muted); }
+.stage-conversion strong{ color:var(--green); }
+
+/* TABELA STICKY */
+.table-wrap{ max-height: 500px; overflow-y: auto; border-radius: 8px; }
+table{ width:100%; border-collapse:collapse; }
+th,td{ text-align:left; padding:12px; border-bottom:1px solid var(--border); }
+th{ position: sticky; top: 0; background: var(--card2); z-index: 10; font-size:10px; text-transform:uppercase; color:var(--muted); box-shadow: 0 1px 0 var(--border); }
+
+/* EMPTY */
+.empty{ padding:60px; text-align:center; color:var(--muted); }
+
+/* RESPONSIVO GERAL */
+@media(max-width:800px){
+  .sidebar{ width:78px; }
+  .logo-text, .logo-sub, .menu-title{ display:none; }
+  .logo{ justify-content:center; }
+  .nav{ justify-content:center; }
+  .nav span:not(.nav-icon){ display:none; }
+  .main{ margin-left:78px; width:calc(100% - 78px); padding:20px; }
+}
+@media(max-width:700px){ .pipeline-executive{ width:100%; } .pipeline-step{ padding:15px; } .pipeline-connector{ padding-left:15px; } }
+</style>
+</head>
+<body>
+<div class="app">
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <button class="sidebar-toggle" id="sidebarToggle" type="button" aria-label="Recolher menu" title="Recolher menu">‹</button>
+  <div class="logo">
+    <div class="logo-mark" style="background: transparent; box-shadow: none;">
+      <img src="assets/logo.png" alt="Logo Tax Group" style="width: 100%; height: 100%; object-fit: contain;">
+    </div>
+    <div class="logo-text">TAX GROUP<div class="logo-sub">COMERCIAL</div></div>
+  </div>
+
+  <div class="menu-title">Dashboard</div>
+  <button class="nav active" data-page="overview">
+    <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></span>
+    <span>Visão de Tudo</span>
+  </button>
+
+  <div class="menu-title">Esteira Comercial</div>
+  <button class="nav" data-page="prospeccao"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="6"/><circle cx="11" cy="11" r="2"/><path d="M16 16l5 5"/></svg></span><span>Prospecção Inicial</span></button>
+  <button class="nav" data-page="diagnostico"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/><path d="M8 11l2 2 5-5"/></svg></span><span>Diagnóstico Estratégico</span></button>
+  <button class="nav" data-page="validacao"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3l7 3v5c0 5-3 8-7 10-4-2-7-5-7-10V6l7-3z"/><path d="M8 12l2.5 2.5L16 9"/></svg></span><span>Validação Executiva</span></button>
+  <button class="nav" data-page="apresentacao"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8"/><path d="M12 17v4"/><path d="M7 13l3-3 2 2 4-5"/></svg></span><span>Apresentação Executiva</span></button>
+  <button class="nav" data-page="decisorio"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="6" height="6" rx="1"/><rect x="15" y="15" width="6" height="6" rx="1"/><path d="M9 6h3c3 0 3 3 3 5v4"/><path d="M12 12l3 3 3-3"/></svg></span><span>Processo Decisório</span></button>
+
+  <div class="menu-title">Gestão</div>
+  <button class="nav" data-page="metas"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19V5"/><path d="M4 19h16"/><path d="M7 15l3-4 3 2 5-7"/></svg></span><span>Metas</span></button>
+  <button class="nav" data-page="consultores"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="9" cy="8" r="3"/><circle cx="17" cy="9" r="2.5"/><path d="M3 20c0-4 2.5-6 6-6s6 2 6 6"/><path d="M15 14c3.5 0 6 2 6 6"/></svg></span><span>Consultores</span></button>
+</aside>
+
+<!-- MAIN -->
+<main class="main" id="app">
+  <div class="empty">
+    <div class="skeleton skeleton-title"></div>
+    <div class="skeleton skeleton-text"></div>
+    <div class="skeleton skeleton-text"></div>
+  </div>
+</main>
+</div>
+
+<script>
+/* =====================================================
+   GOOGLE SHEETS & ESTADO GLOBAL
+===================================================== */
+const PUBLISHED_ID = "2PACX-1vTag39UjwjAd6j3ypuq42D_wtFAqGzhwup9mkbgllj5ZrQnpl-u36zt7Si9fV2OjZSDYscQ1DTLSWuJ";
+const SHEETS = { lancamentos: "541100022", metas: "1903840577" };
+
+let lancamentos = [];
+let metas = [];
+let currentPage = "overview";
+
+/* CONTROLE MESTRE E ABSOLUTO (Patch Focus: Minimal UI) */
+let filters = { 
+  periodicity: "diario", // Abre sempre no diário focado no hoje
+  periodValue: "current", 
+  consultant: "all" 
+};
+
+/* MAPEAMENTO DOS AVATARES */
+const AVATAR_MAP = {
+  "Matheus": "assets/matheus.jpg",
+  "Edson": "assets/edson.jpg",
+  "Gabriel": "assets/gabriel.jpg"
+};
+
+/* NORMALIZAÇÃO E PARSERS */
+function normalizeText(value){ return String(value ?? "").replace(/\uFEFF/g,"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/\s+/g," ").trim().toLowerCase(); }
+function normalizeHeader(value){ return normalizeText(value); }
+function csvUrl(gid){ return "https://docs.google.com/spreadsheets/d/e/" + PUBLISHED_ID + "/pub?output=csv&gid=" + gid; }
+function parseCSV(text){
+  const rows=[]; let row=[]; let cell=""; let insideQuotes=false;
+  for(let i=0; i<text.length; i++){
+    const char=text[i]; const next=text[i+1];
+    if(char === '"' && insideQuotes && next === '"'){ cell+='"'; i++; continue; }
+    if(char === '"'){ insideQuotes=!insideQuotes; continue; }
+    if(char === "," && !insideQuotes){ row.push(cell); cell=""; continue; }
+    if((char === "\n" || char === "\r") && !insideQuotes){
+      if(char === "\r" && next === "\n") i++;
+      row.push(cell); cell="";
+      if(row.some(x => String(x).trim() !== "")) rows.push(row);
+      row=[]; continue;
+    }
+    cell+=char;
+  }
+  if(cell !== "" || row.length){ row.push(cell); if(row.some(x => String(x).trim() !== "")) rows.push(row); }
+  return rows;
+}
+function rowsToObjects(rows){
+  if(!rows.length) return [];
+  const headers = rows[0].map(normalizeHeader);
+  return rows.slice(1).map(row=>{
+      const obj={};
+      headers.forEach((header,index)=>{ obj[header]=String(row[index] ?? "").replace(/\uFEFF/g,"").trim(); });
+      return obj;
+  });
+}
+
+/* CARREGAMENTO */
+async function loadSheet(gid){
+  const response = await fetch(csvUrl(gid) + "&cachebust=" + Date.now());
+  if(!response.ok) throw new Error("Erro HTTP " + response.status);
+  const text = await response.text();
+  if(text.includes("<!DOCTYPE html>") || text.includes("<html")) throw new Error("O Google retornou HTML em vez do CSV.");
+  return rowsToObjects(parseCSV(text));
+}
+
+async function loadData(){
+  const app = document.getElementById("app");
+  app.innerHTML=`<div style="margin-bottom: 25px;"><div class="skeleton skeleton-title"></div><div class="skeleton skeleton-text" style="width: 150px;"></div></div><div class="skeleton-grid"><div class="skeleton skeleton-box"></div><div class="skeleton skeleton-box"></div><div class="skeleton skeleton-box"></div><div class="skeleton skeleton-box"></div></div><div class="skeleton skeleton-box" style="height: 300px;"></div>`;
+  try{ 
+      lancamentos = await loadSheet(SHEETS.lancamentos); 
+      metas = await loadSheet(SHEETS.metas); 
+      
+      if (filters.periodValue === "current") {
+          filters.periodValue = getCurrentKey(filters.periodicity);
+      }
+      render(); 
+  }
+  catch(error){ console.error(error); app.innerHTML=`<div class="empty"><h2>Erro ao carregar a planilha</h2><p>${escapeHTML(error.message)}</p><br><button class="refresh" onclick="loadData()">Tentar novamente</button></div>`; }
+}
+
+/* DATAS E VALORES */
+function parseDate(value){
+  if(!value) return null; value=String(value).trim();
+  if(value.includes("/")){ const p=value.split("/"); if(p.length===3){ const d=new Date(Number(p[2]), Number(p[1])-1, Number(p[0])); if(!isNaN(d.getTime())) return d; } }
+  if(value.includes("-")){ const p=value.split("-"); if(p.length===3){ const d=new Date(Number(p[0]), Number(p[1])-1, Number(p[2])); if(!isNaN(d.getTime())) return d; } }
+  const date=new Date(value); return isNaN(date.getTime()) ? null : date;
+}
+function startOfWeek(date){ const d=new Date(date); const day=d.getDay(); const diff = day===0 ? -6 : 1-day; d.setDate(d.getDate()+diff); d.setHours(0,0,0,0); return d; }
+function formatDateKey(date){ return [date.getFullYear(),String(date.getMonth()+1).padStart(2,"0"),String(date.getDate()).padStart(2,"0")].join("-"); }
+function weekKey(date){ const d=startOfWeek(date); return formatDateKey(d); }
+function weekLabel(key){ const p=key.split("-"); const start=new Date(Number(p[0]), Number(p[1])-1, Number(p[2])); const end=new Date(start); end.setDate(end.getDate()+6); return (start.toLocaleDateString("pt-BR",{day:"2-digit",month:"2-digit"}) + " – " + end.toLocaleDateString("pt-BR",{day:"2-digit",month:"2-digit"})); }
+function monthKey(date){ return (date.getFullYear() + "-" + String(date.getMonth()+1).padStart(2,"0")); }
+function monthLabel(key){ const p=key.split("-"); const d=new Date(Number(p[0]), Number(p[1])-1, 1); return d.toLocaleDateString("pt-BR",{month:"long",year:"numeric"}); }
+
+function getCurrentKey(periodicity) {
+    const today = new Date();
+    if(periodicity === "diario") return formatDateKey(today);
+    if(periodicity === "semanal") return weekKey(today);
+    return monthKey(today);
+}
+
+function numberValue(value){
+  if(value===null || value===undefined) return 0;
+  let str=String(value).replace(/\s/g,"").replace(/R\$/gi,"");
+  if(str.includes(",")) str=str.replace(/\./g,"").replace(",",".");
+  else str=str.replace(/[^\d.-]/g,"");
+  const n=Number(str); return isNaN(n) ? 0 : n;
+}
+function getIndicator(row){ return normalizeText(row.indicador); }
+function getConsultant(row){ return String(row.consultor || "").trim(); }
+function getValue(row){ return numberValue(row.valor); }
+
+function filteredRows(){
+  return lancamentos.filter(row=>{
+      const date=parseDate(row.data); 
+      if(!date) return false;
+      
+      /* O FILTRO MESTRE UNIFICADO E ABSOLUTO */
+      if(filters.periodValue !== "all") {
+          let rowKey = "";
+          if(filters.periodicity === "diario") rowKey = formatDateKey(date);
+          else if(filters.periodicity === "semanal") rowKey = weekKey(date);
+          else rowKey = monthKey(date);
+          
+          if(rowKey !== filters.periodValue) return false;
+      }
+      
+      if(filters.consultant !== "all" && getConsultant(row) !== filters.consultant) return false;
+      
+      return true;
+  });
+}
+
+function sumIndicator(rows, indicator){ const target=normalizeText(indicator); return rows.filter(row => getIndicator(row)===target).reduce((total,row)=>total+getValue(row),0); }
+function formatNumber(n){ return Number(n||0).toLocaleString("pt-BR"); }
+function formatPercent(n){ if(!isFinite(n)) return "0%"; return (n.toFixed(1).replace(".",",") + "%"); }
+function conversion(a,b){ if(!a) return 0; return (Number(b||0) / Number(a||0))*100; }
+function escapeHTML(value){ return String(value??"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;"); }
+
+const ICONS={
+  prospeccao:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="6"/><circle cx="11" cy="11" r="2"/><path d="M16 16l5 5"/></svg>`,
+  diagnostico:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/><path d="M8 11l2 2 5-5"/></svg>`,
+  validacao:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3l7 3v5c0 5-3 8-7 10-4-2-7-5-7-10V6l7-3z"/><path d="M8 12l2.5 2.5L16 9"/></svg>`,
+  apresentacao:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8"/><path d="M12 17v4"/><path d="M7 13l3-3 2 2 4-5"/></svg>`,
+  decisorio:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="6" height="6" rx="1"/><rect x="15" y="15" width="6" height="6" rx="1"/><path d="M9 6h3c3 0 3 3 3 5v4"/><path d="M12 12l3 3 3-3"/></svg>`,
+  ligacoes: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>`,
+  followup: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M1 4v6h6"/><path d="M23 20v-6h-6"/><path d="M20.49 9A9 9 0 005.64 5.64L1 10"/><path d="M3.51 15A9 9 0 0018.36 18.36L23 14"/></svg>`
+};
+
+function pageHeader(title, subtitle){ return `<div class="topbar"><div class="title"><h1>${title}</h1><p>${subtitle}</p></div><button class="refresh" onclick="loadData()">↻ Atualizar</button></div>`; }
+
+function masterControlsHTML() {
+  return `
+    <div class="goal-controls" style="justify-content: flex-end; margin-bottom: 20px;">
+      <div class="goal-period-switch">
+        <button type="button" class="goal-period-btn ${filters.periodicity==='diario'?'active':''}" data-periodicity="diario">Diário</button>
+        <button type="button" class="goal-period-btn ${filters.periodicity==='semanal'?'active':''}" data-periodicity="semanal">Semanal</button>
+        <button type="button" class="goal-period-btn ${filters.periodicity==='mensal'?'active':''}" data-periodicity="mensal">Mensal</button>
+      </div>
+      <select id="periodValueFilter" class="goal-period-select"></select>
+      <select id="consultantFilter" class="goal-period-select">
+        <option value="all">Equipe (Todos)</option>
+        <option value="Matheus">Matheus</option>
+        <option value="Edson">Edson</option>
+        <option value="Gabriel">Gabriel</option>
+      </select>
+    </div>`;
+}
+
+function rewardForProgress(percent, indicator){
+  const t = normalizeText(indicator); let tiers = {};
+  if(t.includes("ligacoes")) { tiers = { elite: {l: "Call Center", d: "Volume absurdo de ligações diárias."}, max: {l: "Ritmo Certo", d: "Meta de ligações atingida."}, high: {l: "Tração de Voz", d: "Falta pouco na discagem."}, mid: {l: "Aquecendo as Linhas", d: "Metade das ligações feitas."}, low: {l: "Primeiros Alôs", d: "Primeiras ligações."} }; }
+  else if(t.includes("follow up")) { tiers = { elite: {l: "Implacável", d: "Nenhum cliente escapa. Elite."}, max: {l: "Mestre do Retorno", d: "Todos os retornos garantidos."}, high: {l: "Radar Quente", d: "Acompanhamento forte."}, mid: {l: "Memória Ativa", d: "Metade dos follow ups."}, low: {l: "Iniciando Contato", d: "Primeiros retornos."} }; }
+  else if(t.includes("efetivos")) { tiers = { elite: {l: "Máquina de Prospecção", d: "Volume insano de contatos. Elite Prime ✦"}, max: {l: "Mestre da Abordagem", d: "Meta de contatos 100% batida."}, high: {l: "Máquina de Tração", d: "Falta muito pouco para a meta."}, mid: {l: "Radar Ligado", d: "Metade do caminho nos contatos."}, low: {l: "Emissor Ativo", d: "Primeiros contatos realizados."} }; }
+  else if (t.includes("agendadas")) { tiers = { elite: {l: "Arquiteto de Oportunidades", d: "Agenda completamente lotada. Nível Elite ✦"}, max: {l: "Dominador de Agenda", d: "Meta de agendamentos 100% atingida."}, high: {l: "Calendário Quente", d: "Quase batendo a meta de agenda."}, mid: {l: "Tração de Agenda", d: "50% dos agendamentos concluídos."}, low: {l: "Agenda Iniciada", d: "Primeiros agendamentos marcados no mês."} }; }
+  else if (t.includes("realizadas")) { tiers = { elite: {l: "Linha de Frente", d: "Presença executiva massiva. Elite Prime ✦"}, max: {l: "Execução Impecável", d: "Meta de reuniões realizadas batida."}, high: {l: "Campo de Batalha", d: "Ritmo forte de apresentações diárias."}, mid: {l: "Conexão Estabelecida", d: "Metade das reuniões já aconteceram."}, low: {l: "Presença Marcada", d: "Primeiras reuniões executadas com sucesso."} }; }
+  else if (t.includes("qualificadas")) { tiers = { elite: {l: "Fechador de Elite", d: "Altíssima conversão e foco. Nível máximo ✦"}, max: {l: "Sniper Corporativo", d: "Meta de qualificação rigorosamente atingida."}, high: {l: "Mira Laser", d: "Qualificação cirúrgica em nível avançado."}, mid: {l: "Filtro de Ouro", d: "Metade das grandes oportunidades geradas."}, low: {l: "Garimpeiro", d: "Primeiras oportunidades reais validadas."} }; }
+  else if (t.includes("contratos")) { tiers = { elite: {l: "Lenda Comercial", d: "Resultados extraordinários e faturamento limpo. Elite Prime ✦"}, max: {l: "Rainmaker", d: "Meta de fechamentos atingida! Impressionante."}, high: {l: "Zona de Conversão", d: "A um único passo de bater a meta de contratos."}, mid: {l: "Aperto de Mão", d: "50% da agressiva meta de contratos garantida."}, low: {l: "Tinta no Papel", d: "Os primeiros fechamentos já estão em casa."} }; }
+  else { tiers = { elite: {l: "Elite Prime", d: "Meta superada."}, max: {l: "Meta conquistada", d: "Objetivo atingido."}, high: {l: "Zona de fechamento", d: "Quase lá."}, mid: {l: "Ritmo de ataque", d: "Metade do caminho."}, low: {l: "Aquecendo a máquina", d: "Primeiro marco."} }; }
+
+  if(percent>100) return {label: tiers.elite.l, detail: tiers.elite.d, icon:"✦", unlocked:true, elite:true};
+  if(percent>=100) return {label: tiers.max.l, detail: tiers.max.d, icon:"✓", unlocked:true, elite:false};
+  if(percent>=75) return {label: tiers.high.l, detail: tiers.high.d, icon:"◆", unlocked:true, elite:false};
+  if(percent>=50) return {label: tiers.mid.l, detail: tiers.mid.d, icon:"↗", unlocked:true, elite:false};
+  if(percent>=25) return {label: tiers.low.l, detail: tiers.low.d, icon:"◈", unlocked:true, elite:false};
+  return {label: "Primeiro marco", detail: "Continue avançando na operação.", icon:"○", unlocked:false, elite:false};
+}
+
+/* VISÃO DE TUDO */
+function renderOverview(){
+  const rows = filteredRows();
+  
+  const ligacoes=sumIndicator(rows, "Ligações");
+  const contatos=sumIndicator(rows, "Contatos Efetivos");
+  const reunioesQualificadas=sumIndicator(rows, "Reuniões Qualificadas");
+  const followUp=sumIndicator(rows, "Follow Up");
+  const clientesInteressados=sumIndicator(rows, "Clientes Interessados");
+  const acessosDiretoria=sumIndicator(rows, "Acessos à Diretoria");
+  const propostasApresentadas=sumIndicator(rows, "Propostas Apresentadas");
+  const propostasValidadas=sumIndicator(rows, "Propostas Validadas");
+  
+  const conversaoLigacaoContato=conversion(ligacoes, contatos);
+  const conversaoContatoQualificado=conversion(contatos, reunioesQualificadas);
+  const conversaoQualificadoFollowUp=conversion(reunioesQualificadas, followUp);
+  const conversaoFollowUpInteressado=conversion(followUp, clientesInteressados);
+  const conversaoInteressadoDiretoria=conversion(clientesInteressados, acessosDiretoria);
+  
+  const pipelineHTML=`
+    <div class="pipeline-executive">
+      <div class="pipeline-step"><div class="pipeline-step-icon">${ICONS.ligacoes}</div><div class="pipeline-step-info"><div class="pipeline-step-label">Ligações (Cold Call)</div><div class="pipeline-step-value">${formatNumber(ligacoes)}</div><div class="pipeline-step-description">Volume de discagem bruta</div></div></div>
+      <div class="pipeline-connector"><div class="pipeline-arrow">↓</div><div class="pipeline-conversion"><strong>${formatPercent(conversaoLigacaoContato)}</strong><span>das ligações foram atendidas</span></div></div>
+      
+      <div class="pipeline-step"><div class="pipeline-step-icon">${ICONS.prospeccao}</div><div class="pipeline-step-info"><div class="pipeline-step-label">Contatos Efetivos</div><div class="pipeline-step-value">${formatNumber(contatos)}</div><div class="pipeline-step-description">Conexão comercial estabelecida</div></div></div>
+      <div class="pipeline-connector"><div class="pipeline-arrow">↓</div><div class="pipeline-conversion"><strong>${formatPercent(conversaoContatoQualificado)}</strong><span>dos contatos viraram reuniões qualificadas</span></div></div>
+      
+      <div class="pipeline-step"><div class="pipeline-step-icon">${ICONS.diagnostico}</div><div class="pipeline-step-info"><div class="pipeline-step-label">Reuniões Qualificadas</div><div class="pipeline-step-value">${formatNumber(reunioesQualificadas)}</div><div class="pipeline-step-description">Oportunidades mapeadas e no perfil</div></div></div>
+      <div class="pipeline-connector"><div class="pipeline-arrow">↓</div><div class="pipeline-conversion"><strong>${formatPercent(conversaoQualificadoFollowUp)}</strong><span>das reuniões demandaram follow up ativo</span></div></div>
+      
+      <div class="pipeline-step"><div class="pipeline-step-icon">${ICONS.followup}</div><div class="pipeline-step-info"><div class="pipeline-step-label">Follow Up Executado</div><div class="pipeline-step-value">${formatNumber(followUp)}</div><div class="pipeline-step-description">Retomada estratégica pós-reunião</div></div></div>
+      <div class="pipeline-connector"><div class="pipeline-arrow">↓</div><div class="pipeline-conversion"><strong>${formatPercent(conversaoFollowUpInteressado)}</strong><span>dos follow ups confirmaram clientes interessados</span></div></div>
+      
+      <div class="pipeline-step"><div class="pipeline-step-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="9" cy="8" r="3"/><path d="M3 20c0-4 2.5-6 6-6"/><circle cx="17" cy="10" r="3"/><path d="M14 20c0-3.5 1.5-6 5-6"/></svg></div><div class="pipeline-step-info"><div class="pipeline-step-label">Clientes Interessados</div><div class="pipeline-step-value">${formatNumber(clientesInteressados)}</div><div class="pipeline-step-description">Interesse comercial confirmado na operação</div></div></div>
+      <div class="pipeline-connector"><div class="pipeline-arrow">↓</div><div class="pipeline-conversion"><strong>${formatPercent(conversaoInteressadoDiretoria)}</strong><span>dos interessados chegaram à diretoria</span></div></div>
+      
+      <div class="pipeline-step"><div class="pipeline-step-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 21V9l8-5 8 5v12"/><path d="M8 21v-7h8v7"/><path d="M3 21h18"/></svg></div><div class="pipeline-step-info"><div class="pipeline-step-label">Acessos à Diretoria</div><div class="pipeline-step-value">${formatNumber(acessosDiretoria)}</div><div class="pipeline-step-description">Acesso ao decisor principal</div></div></div>
+    </div>
+  `;
+
+  return `
+    <div class="overview-page">
+    ${pageHeader("Visão de Tudo", "Visão consolidada da operação comercial")}
+
+    ${renderOverviewGoals()}
+
+    <div class="grid">
+      <div class="card"><div class="card-label">Ligações (Cold Call)</div><div class="card-value">${formatNumber(ligacoes)}</div><div class="card-sub">Top of Funnel Bruto</div></div>
+      <div class="card"><div class="card-label">Contatos Efetivos</div><div class="card-value">${formatNumber(contatos)}</div><div class="card-sub">Conexão real no perfil</div></div>
+      <div class="card"><div class="card-label">Reuniões Qualificadas</div><div class="card-value">${formatNumber(reunioesQualificadas)}</div><div class="card-sub">Oportunidade confirmada</div></div>
+      <div class="card"><div class="card-label">Propostas Validadas</div><div class="card-value">${formatNumber(propostasValidadas)}</div><div class="card-sub">${formatPercent(conversion(propostasApresentadas, propostasValidadas))} de validação</div></div>
+    </div>
+
+    <div class="section">
+      <div class="section-head"><div><h2>Esteira Comercial Atualizada</h2><div style="margin-top:5px; color:var(--muted); font-size:12px;">Conversão ponta a ponta, desde a discagem ao decisor.</div></div></div>
+      ${pipelineHTML}
+    </div>
+    </div>
+  `;
+}
+
+/* METAS DINÂMICAS E RANKING INDIVIDUAL */
+function metaPeriodicity(row){const v=normalizeText(row.periodicidade||row.frequencia||row.tipo||"mensal");return v.includes("diar")?"diario":v.includes("seman")?"semanal":"mensal";}
+function getRecurringTarget(indicator, periodicity, consultant) {
+  const target = normalizeText(indicator);
+  const match = metas.find(row => {
+    if(normalizeText(row.indicador) !== target) return false;
+    const rc = normalizeText(row.consultor || "");
+    const reqC = consultant === "Equipe" ? "equipe" : normalizeText(consultant);
+    if(rc !== reqC) return false;
+    if(metaPeriodicity(row) !== periodicity) return false;
+    return true;
+  });
+  return match ? numberValue(match.meta) : 0;
+}
+function goalTargetForConsultant(indicator, periodicity, key, consultant) {
+  const baseTarget = getRecurringTarget(indicator, periodicity, consultant);
+  if (!baseTarget) return 0;
+  if (key === "all") {
+    const uniquePeriods = new Set();
+    lancamentos.forEach(row => {
+      const d = parseDate(row.data);
+      if(d) {
+        if(periodicity === "diario") uniquePeriods.add(formatDateKey(d));
+        else if(periodicity === "semanal") uniquePeriods.add(weekKey(d));
+        else uniquePeriods.add(monthKey(d));
+      }
+    });
+    return baseTarget * (uniquePeriods.size > 0 ? uniquePeriods.size : 1); 
+  }
+  return baseTarget;
+}
+
+function goalMilestones(percent){return [25,50,75,100].map(mark=>`<span class="goal-milestone ${percent>=mark?"done":""}" style="left:${mark}%"><span class="goal-milestone-label">${mark}%</span></span>`).join("");}
+
+function goalCard(indicator,rows,periodicity,key,label,consultant=null){
+  const actual=sumIndicator(rows,indicator),target=consultant?goalTargetForConsultant(indicator,periodicity,key,consultant):goalTargetForConsultant(indicator,periodicity,key,"Equipe");
+  const percent=target?(actual/target)*100:0,width=Math.min(percent,100),reward=rewardForProgress(percent, indicator);
+  const cardClass=reward.elite?"goal-card goal-elite":reward.unlocked?"goal-card goal-achieved":"goal-card";
+  const rewardClass=reward.elite?"goal-reward unlocked elite":reward.unlocked?"goal-reward unlocked":"goal-reward";
+  return `<div class="${cardClass}"><div class="goal-top"><div><div class="goal-label">${escapeHTML(indicator)}</div><div class="goal-period">${escapeHTML(label)}</div></div><div class="goal-percent-badge">${target?formatPercent(percent):"—"}</div></div><div class="goal-numbers"><span class="goal-current">${formatNumber(actual)}</span><span class="goal-target">/ ${target?formatNumber(target):"meta não cadastrada"}</span></div><div class="goal-progress-wrap"><div class="goal-milestones">${goalMilestones(percent)}</div><div class="goal-bar"><div class="goal-fill" style="width:${width}%"></div></div></div><div class="${rewardClass}"><div class="goal-reward-icon">${reward.icon}</div><div><span>${reward.unlocked?"Recompensa desbloqueada":"Próxima recompensa"}</span><strong>${escapeHTML(reward.label)}</strong></div></div></div>`;
+}
+
+function consultantAvatar(name){
+    const file = AVATAR_MAP[name] || "default.jpg"; 
+    return `<img src="${file}" alt="${escapeHTML(name)}" onerror="this.style.display='none';this.parentElement.textContent='${name[0]}'">`;
+}
+
+function consultantGoalMini(indicator,consultant,rows,periodicity,key){
+  const actual=sumIndicator(rows,indicator),target=goalTargetForConsultant(indicator,periodicity,key,consultant),percent=target?(actual/target)*100:0,width=Math.min(percent,100);
+  const elite=percent>100,done=percent>=100;
+  return `<div class="mini-goal"><div class="mini-goal-top"><span class="mini-goal-name">${escapeHTML(indicator)}</span><span class="mini-goal-percent">${target?formatPercent(percent):"—"}</span></div><div class="mini-goal-bar"><div class="mini-goal-fill ${elite?"elite":done?"done":""}" style="width:${width}%"></div></div><div class="mini-goal-values"><span>${formatNumber(actual)} realizado</span><strong>${target?"Meta "+formatNumber(target):"Sem meta"}</strong></div></div>`;
+}
+
+function renderIndividualGoals(periodicity, key, label, allRows){
+  let indicators = ["Ligações", "Contatos Efetivos", "Reuniões Agendadas"];
+  if (periodicity === "semanal" || periodicity === "mensal") indicators.push("Reuniões Realizadas", "Reuniões Qualificadas", "Follow Up");
+  if (periodicity === "mensal") indicators.push("Contratos");
+  
+  const consultants = ["Edson","Gabriel","Matheus"];
+  
+  const scoredConsultants = consultants.map(name => {
+      // Pega as linhas que já passaram pelo filtro Mestre de Tempo, e filtra pelo consultor
+      const rows = allRows.filter(r => getConsultant(r) === name);
+      const score = (sumIndicator(rows, "Ligações") * 0.1) + 
+                    (sumIndicator(rows, "Contatos Efetivos") * 0.5) + 
+                    (sumIndicator(rows, "Reuniões Agendadas") * 50) + 
+                    (sumIndicator(rows, "Reuniões Realizadas") * 100) + 
+                    (sumIndicator(rows, "Reuniões Qualificadas") * 250) + 
+                    (sumIndicator(rows, "Follow Up") * 20) + 
+                    (sumIndicator(rows, "Contratos") * 1000);
+      return { name, score, rows };
+  }).sort((a, b) => b.score - a.score);
+
+  // Se houver um consultor específico no filtro mestre, o ranking mostra apenas ele
+  const consultantsToShow = filters.consultant === "all" ? scoredConsultants : scoredConsultants.filter(c => c.name === filters.consultant);
+
+  const medals = ["🥇", "🥈", "🥉"];
+
+  return `
+    <div class="individual-goals" style="margin-top: 0;">
+      <div class="individual-goals-head">
+        <h3>Ranking Individual</h3>
+        <span>Ordem definida pela pontuação de engajamento no período selecionado</span>
+      </div>
+      <div class="individual-goals-grid">
+        ${consultantsToShow.map((c, index) => {
+          const name = c.name;
+          const rows = c.rows;
+          const isWinner = index === 0 && c.score > 0 && filters.consultant === "all";
+          const medal = (c.score > 0 && filters.consultant === "all") ? (medals[index] || "") : "";
+          const trophyHTML = isWinner ? `<div class="trophy-badge" title="1º Lugar do Período">🏆</div>` : "";
+          
+          return `
+            <div class="consultant-goal-card ${isWinner ? "winner-card" : ""}">
+              ${trophyHTML}
+              <div class="consultant-goal-head">
+                <div class="consultant-goal-avatar">${consultantAvatar(name)}</div>
+                <div>
+                  <div class="consultant-goal-name">${name} <span style="font-size: 18px; margin-left: 6px;" title="${index+1}º Lugar">${medal}</span></div>
+                  <div class="consultant-goal-role">Consultor • ${formatNumber(c.score)} pts</div>
+                </div>
+              </div>
+              ${indicators.map(i=>consultantGoalMini(i,name,rows,periodicity,key)).join("")}
+            </div>
+          `;
+        }).join("")}
+      </div>
+    </div>`;
+}
+
+function renderOverviewGoals(){
+  const periodicity = filters.periodicity;
+  const key = filters.periodValue;
+  const rows = filteredRows();
+  
+  const selectEl = document.getElementById("periodValueFilter");
+  let label = "Período";
+  if (selectEl && selectEl.options[selectEl.selectedIndex]) {
+      label = selectEl.options[selectEl.selectedIndex].text;
+  }
+
+  let indicators = ["Ligações", "Contatos Efetivos"];
+  if (periodicity === "semanal" || periodicity === "mensal") indicators.push("Reuniões Qualificadas", "Follow Up");
+  if (periodicity === "mensal") indicators.push("Contratos");
+  
+  return `
+    <div class="section goals-section">
+      <div class="goals-head">
+        <div class="goals-title-wrap">
+          <div class="goals-kicker"><span class="goals-kicker-dot"></span>Performance Comercial</div>
+          <h2>Metas e Ranking</h2>
+          <div class="goals-subtitle">O seu painel inteiro está refletindo: <strong>${escapeHTML(label)}</strong></div>
+        </div>
+        ${masterControlsHTML()}
+      </div>
+      
+      <!-- RANKING INDIVIDUAL FICA EM CIMA -->
+      ${renderIndividualGoals(periodicity, key, label, rows)}
+      
+      <!-- DIVISÓRIA PARA AS METAS DA OPERAÇÃO -->
+      <div style="margin: 30px 0 15px; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 20px;">
+        <h3 style="margin: 0; font-size: 15px; color: #fff;">Metas da Operação (Equipe)</h3>
+        <span style="color: var(--muted); font-size: 10px;">Consolidado geral da equipe</span>
+      </div>
+      
+      <!-- CARDS GERAIS (OPERAÇÃO) FICAM EMBAIXO -->
+      <div class="team-goals-grid">${indicators.map(i=>goalCard(i,rows,periodicity,key,label)).join("")}</div>
+    </div>`;
+}
+
+/* STAGE CARDS */
+const STAGES={
+  prospeccao:{title:"Prospecção Inicial",description:"Eficiência da geração e qualificação de reuniões.",icon:"prospeccao",indicators:["Ligações","Contatos Efetivos","Reuniões Agendadas","Reuniões Confirmadas","Reuniões Qualificadas"]},
+  diagnostico:{title:"Diagnóstico Estratégico",description:"Evolução dos clientes interessados até o acesso à diretoria.",icon:"diagnostico",indicators:["Follow Up","Clientes Interessados","Diagnósticos Concluídos","Acessos à Diretoria"]},
+  validacao:{title:"Validação Executiva",description:"Engajamento das diretorias, prioridades e propostas.",icon:"validacao",indicators:["Diretorias Engajadas","Prioridades Mapeadas","Propostas Apresentadas"]},
+  apresentacao:{title:"Apresentação Executiva",description:"Acompanhamento das propostas validadas.",icon:"apresentacao",indicators:["Propostas Validadas"]},
+  decisorio:{title:"Processo Decisório",description:"Identificação e saneamento das objeções.",icon:"decisorio",indicators:["Objeções Identificadas","Objeções Sanadas"]}
+};
+
+function renderStage(page){
+  const stage=STAGES[page]; const rows=filteredRows();
+  const values=stage.indicators.map(indicator=>({indicator,value:sumIndicator(rows,indicator)}));
+  let cards="";
+  values.forEach((item,index)=>{
+      let conversionHTML="";
+      if(index<values.length-1){
+        const next=values[index+1];
+        conversionHTML=`<div class="stage-conversion">Conversão para ${next.indicator}: <strong>${formatPercent(conversion(item.value,next.value))}</strong></div>`;
+      }
+      cards+=`<div class="stage-card"><div class="stage-icon">${ICONS[stage.icon] || ICONS.prospeccao}</div><h3>${item.indicator}</h3><div class="stage-number">${formatNumber(item.value)}</div>${conversionHTML}</div>`;
+  });
+  return `${pageHeader(stage.title,stage.description)}${masterControlsHTML()}<div class="stage-grid">${cards}</div>`;
+}
+
+function renderMetas(){
+  return `${pageHeader("Metas","Metas fixas recorrentes da operação")}${masterControlsHTML()}
+    <div class="section"><div class="section-head"><div><h2>Metas cadastradas</h2><div style="margin-top:5px;color:var(--muted);font-size:12px">Lendo diretamente da planilha de metas.</div></div></div>
+      <div class="table-wrap"><table><thead><tr><th>Periodicidade</th><th>Consultor</th><th>Indicador</th><th>Meta</th></tr></thead>
+          <tbody>${metas.length?metas.map(row=>`<tr><td>${escapeHTML(row.periodicidade||row.frequencia||row.tipo||"Mensal")}</td><td>${escapeHTML(row.consultor||"")}</td><td>${escapeHTML(row.indicador||"")}</td><td>${formatNumber(numberValue(row.meta))}</td></tr>`).join(""):`<tr><td colspan="4">Nenhuma meta encontrada.</td></tr>`}</tbody>
+        </table></div></div>`;
+}
+
+function renderConsultores(){
+  const consultants=[
+    {name:"Matheus",avatar: AVATAR_MAP["Matheus"], fallback:"🏃"},
+    {name:"Edson",avatar: AVATAR_MAP["Edson"], fallback:"😴"},
+    {name:"Gabriel",avatar: AVATAR_MAP["Gabriel"], fallback:"🥷"}
+  ];
+  return `${pageHeader("Consultores","Equipe comercial")}
+    <div class="stage-grid">
+      ${consultants.map(consultant=>`
+        <div class="stage-card" style="text-align:center">
+          <div class="avatar" style="width:220px !important;height:220px !important;margin:auto;font-size:50px !important; border-radius: 20px !important;">
+            <img src="${consultant.avatar}" alt="${escapeHTML(consultant.name)}" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+            <span style="display:none">${consultant.fallback}</span>
+          </div>
+          <h3 style="font-size: 20px;">${consultant.name}</h3><div class="card-sub" style="font-size: 14px; text-transform: uppercase;">Consultor</div>
+        </div>
+      `).join("")}
+    </div>`;
+}
+
+function bindSidebar() {
+  const toggleBtn = document.getElementById("sidebarToggle");
+  if (toggleBtn && !toggleBtn.dataset.bound) {
+    toggleBtn.dataset.bound = "true";
+    toggleBtn.addEventListener("click", () => document.body.classList.toggle("sidebar-collapsed"));
+  }
+  const sidebarNav = document.querySelector('.sidebar');
+  if(sidebarNav && !sidebarNav.dataset.bound) {
+    sidebarNav.dataset.bound = "true";
+    sidebarNav.addEventListener("click", (e) => {
+      const btn = e.target.closest('.nav[data-page]');
+      if(btn) {
+        const page = btn.getAttribute("data-page");
+        if (page && page !== currentPage) {
+          currentPage = page; updateActiveMenu(); render();
+        }
+      }
+    });
+  }
+}
+function updateActiveMenu() {
+  document.querySelectorAll(".nav[data-page]").forEach(btn => {
+    if (btn.getAttribute("data-page") === currentPage) btn.classList.add("active");
+    else btn.classList.remove("active");
+  });
+}
+
+function render(){
+  const app=document.getElementById("app");
+  if(currentPage==="overview") app.innerHTML=renderOverview();
+  else if(STAGES[currentPage]) app.innerHTML=renderStage(currentPage);
+  else if(currentPage==="metas") app.innerHTML=renderMetas();
+  else if(currentPage==="consultores") app.innerHTML=renderConsultores();
+  
+  populateFilters(); bindFilters(); bindSidebar(); updateActiveMenu();
+}
+
+function populateFilters(){
+  const periodValues = new Set();
+  const currentKey = getCurrentKey(filters.periodicity);
+
+  lancamentos.forEach(row=>{
+      const date=parseDate(row.data);
+      if(date){ 
+         if(filters.periodicity === "diario") periodValues.add(formatDateKey(date));
+         else if(filters.periodicity === "semanal") periodValues.add(weekKey(date));
+         else periodValues.add(monthKey(date));
+      }
+  });
+  
+  // Garante que o dia/semana/mês atual SEMPRE exista na lista, mesmo se não houver lançamentos ainda hoje.
+  periodValues.add(currentKey);
+
+  const periodSelect = document.getElementById("periodValueFilter");
+  if(periodSelect){
+    const sorted = [...periodValues].sort().reverse();
+    let html = `<option value="all">Todo o Histórico</option>`;
+    
+    sorted.forEach(v => {
+        let label = "";
+        if(filters.periodicity === "diario") {
+            const dateObj = new Date(v + "T00:00:00");
+            label = v === currentKey ? `Hoje (${dateObj.toLocaleDateString("pt-BR")})` : dateObj.toLocaleDateString("pt-BR");
+        } else if(filters.periodicity === "semanal") {
+            label = v === currentKey ? `Semana Atual (${weekLabel(v)})` : weekLabel(v);
+        } else {
+            label = v === currentKey ? `Mês Atual (${monthLabel(v)})` : monthLabel(v);
+        }
+        html += `<option value="${v}">${escapeHTML(label)}</option>`;
+    });
+    
+    if (filters.periodValue !== "all" && !periodValues.has(filters.periodValue)) {
+        filters.periodValue = currentKey;
+    }
+    
+    periodSelect.innerHTML = html;
+    periodSelect.value = filters.periodValue;
+  }
+
+  const consultantSelect = document.getElementById("consultantFilter");
+  if(consultantSelect) consultantSelect.value = filters.consultant;
+}
+
+function bindFilters(){
+  document.querySelectorAll("[data-periodicity]").forEach(button => { 
+      button.addEventListener("click", () => {
+          filters.periodicity = button.dataset.periodicity;
+          filters.periodValue = getCurrentKey(filters.periodicity); // Reseta a data para o "hoje" automático
+          render();
+      }); 
+  });
+
+  const periodValue = document.getElementById("periodValueFilter"); 
+  if(periodValue) periodValue.addEventListener("change", event => { filters.periodValue = event.target.value; render(); });
+  
+  const consultant = document.getElementById("consultantFilter"); 
+  if(consultant) consultant.addEventListener("change", event => { filters.consultant = event.target.value; render(); });
+}
+
+/* INICIAR O SISTEMA */
+loadData();
+</script>
+</body>
+</html>
