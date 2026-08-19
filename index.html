@@ -153,20 +153,63 @@ body.sidebar-collapsed .sidebar-toggle:hover { transform: rotate(180deg) scale(1
 .goal-card.goal-elite { border-color: var(--blue); box-shadow: 0 0 0 1px rgba(0,133,202,.15),0 18px 50px rgba(0,133,202,.25); }
 .goal-card.goal-elite:before { background: linear-gradient(180deg,#d7f5ff,var(--blue)); }
 .goal-card.goal-elite:after { content: ""; position: absolute; width: 140px; height: 140px; right: -70px; top: -70px; border-radius: 50%; border: 1px solid rgba(0,133,202,.2); box-shadow: 0 0 40px rgba(0,133,202,.2); }
+
+/* EFEITO SOBRE-HUMANO (400% AGENDADAS) */
+@keyframes superhuman-pulse {
+  0% { box-shadow: 0 0 20px rgba(255, 51, 51, 0.4), inset 0 0 15px rgba(255, 51, 51, 0.2); }
+  50% { box-shadow: 0 0 50px rgba(255, 51, 51, 0.9), inset 0 0 25px rgba(255, 51, 51, 0.5); transform: scale(1.02); border-color: #ff6666; }
+  100% { box-shadow: 0 0 20px rgba(255, 51, 51, 0.4), inset 0 0 15px rgba(255, 51, 51, 0.2); }
+}
+@keyframes float-firework {
+  0% { transform: translateY(0) rotate(-5deg) scale(1); filter: hue-rotate(0deg); }
+  100% { transform: translateY(-15px) rotate(15deg) scale(1.3); filter: hue-rotate(45deg); text-shadow: 0 0 25px rgba(255, 255, 255, 0.8); }
+}
+.goal-superhuman {
+  border-color: #ff3333 !important;
+  background: radial-gradient(circle at top right, rgba(255, 0, 0, 0.25), transparent 60%), linear-gradient(145deg, #3a0b16, #140206) !important;
+  animation: superhuman-pulse 1.5s infinite;
+  z-index: 20;
+}
+.goal-superhuman:before { background: linear-gradient(180deg, #ff9999, #ff0000) !important; }
+.goal-superhuman:after {
+  content: "🎆🎇";
+  position: absolute;
+  font-size: 60px;
+  top: -15px;
+  right: -10px;
+  animation: float-firework 1.5s infinite alternate ease-in-out;
+  text-shadow: 0 0 20px rgba(255,255,255,0.5);
+  pointer-events: none;
+}
+.goal-superhuman .goal-percent-badge {
+  background: rgba(255, 51, 51, 0.2) !important; border-color: #ff3333 !important; color: #ffcccc !important; text-shadow: 0 0 10px #ff3333;
+}
+.goal-superhuman .goal-fill {
+  background: linear-gradient(90deg, #cc0000, #ff4d4d) !important; box-shadow: 0 0 25px rgba(255, 51, 51, 0.8) !important;
+}
+.goal-reward.superhuman {
+  border-color: rgba(255, 51, 51, 0.5) !important; background: linear-gradient(90deg, rgba(255, 51, 51, 0.2), rgba(255, 0, 0, 0.05)) !important; color: #ffcccc !important;
+}
+.goal-reward.superhuman .goal-reward-icon {
+  background: rgba(255, 51, 51, 0.3) !important; color: #ff6666 !important; box-shadow: 0 0 20px rgba(255, 51, 51, 0.5) !important;
+}
+.goal-reward.superhuman strong { color: #fff !important; text-transform: uppercase; font-size: 10px; letter-spacing: 1px; }
+
+/* MINI METAS SOBRE-HUMANAS NO RANKING */
+.mini-goal-fill.superhuman {
+  background: linear-gradient(90deg, #cc0000, #ff4d4d); box-shadow: 0 0 15px rgba(255, 51, 51, 0.6);
+}
+
 .goal-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
 .goal-label { font-size: 12px; font-weight: 850; color: #fff; }
 .goal-period { font-size: 9px; text-transform: uppercase; letter-spacing: .8px; color: var(--muted); margin-top: 4px; }
 .goal-percent-badge { min-width: 52px; height: 34px; padding: 0 8px; border-radius: 10px; display: flex; align-items: center; justify-content: center; background: rgba(0,133,202,.15); border: 1px solid rgba(0,133,202,.25); color: var(--blue); font-size: 12px; font-weight: 950; }
-.goal-achieved .goal-percent-badge { background: rgba(38,197,139,.10); border-color: rgba(38,197,139,.20); color: #62e7b0; }
-.goal-elite .goal-percent-badge { background: rgba(0,133,202,.2); border-color: var(--blue); color: #fff; box-shadow: 0 0 18px rgba(0,133,202,.3); }
 .goal-numbers { display: flex; align-items: baseline; gap: 6px; margin: 16px 0 11px; }
 .goal-current { font-size: 27px; line-height: 1; font-weight: 950; letter-spacing: -1px; }
 .goal-target { color: var(--muted); font-size: 10px; font-weight: 650; }
 .goal-progress-wrap { position: relative; padding-top: 13px; }
 .goal-bar { height: 9px; border-radius: 99px; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.03); overflow: hidden; }
 .goal-fill { height: 100%; border-radius: inherit; background: linear-gradient(90deg,var(--blue-dark),var(--blue)); box-shadow: 0 0 17px rgba(0,133,202,.4); transition: width .55s cubic-bezier(.22,.8,.25,1); }
-.goal-achieved .goal-fill { background: linear-gradient(90deg,#20ad7c,#62e7b0); box-shadow: 0 0 17px rgba(38,197,139,.22); }
-.goal-elite .goal-fill { background: linear-gradient(90deg,var(--blue),#c4efff); box-shadow: 0 0 20px rgba(0,133,202,.4); }
 .goal-milestones { position: absolute; left: 0; right: 0; top: 0; height: 20px; }
 .goal-milestone { position: absolute; top: 6px; width: 8px; height: 8px; margin-left: -4px; border-radius: 50%; background: var(--card2); border: 2px solid var(--card); box-shadow: 0 0 0 1px rgba(0,133,202,.3); }
 .goal-milestone.done { background: var(--blue); box-shadow: 0 0 0 2px rgba(0,133,202,.15),0 0 9px rgba(0,133,202,.6); }
@@ -175,12 +218,6 @@ body.sidebar-collapsed .sidebar-toggle:hover { transform: rotate(180deg) scale(1
 .goal-reward { display: flex; align-items: center; gap: 8px; min-height: 43px; margin-top: 12px; padding: 8px 9px; border: 1px solid rgba(255,255,255,.05); border-radius: 10px; background: rgba(0,0,0,.15); color: var(--muted); font-size: 9px; line-height: 1.25; }
 .goal-reward-icon { width: 25px; height: 25px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; border-radius: 7px; background: rgba(255,255,255,.04); color: var(--muted); font-size: 12px; }
 .goal-reward strong { display: block; margin-top: 2px; color: #fff; font-size: 9px; }
-.goal-reward.unlocked { border-color: rgba(38,197,139,.2); background: linear-gradient(90deg,rgba(38,197,139,.08),rgba(255,255,255,.01)); color: #89bca9; }
-.goal-reward.unlocked .goal-reward-icon { background: rgba(38,197,139,.15); color: #60e5ad; box-shadow: 0 0 15px rgba(38,197,139,.15); }
-.goal-reward.unlocked strong { color: #6ce9b3; }
-.goal-reward.elite { border-color: rgba(0,133,202,.3); background: linear-gradient(90deg,rgba(0,133,202,.15),rgba(0,133,202,.03)); }
-.goal-reward.elite .goal-reward-icon { background: rgba(0,133,202,.2); color: var(--blue); box-shadow: 0 0 18px rgba(0,133,202,.3); }
-.goal-reward.elite strong { color: #a6e5ff; }
 
 /* METAS INDIVIDUAIS / RANKING E RECOMPENSAS VISUAIS */
 .individual-goals { margin-top: 0; }
@@ -518,18 +555,21 @@ function rewardForProgress(percent, indicator){
   if(t.includes("ligacoes")) { tiers = { elite: {l: "Call Center", d: "Volume absurdo de ligações diárias."}, max: {l: "Ritmo Certo", d: "Meta de ligações atingida."}, high: {l: "Tração de Voz", d: "Falta pouco na discagem."}, mid: {l: "Aquecendo as Linhas", d: "Metade das ligações feitas."}, low: {l: "Primeiros Alôs", d: "Primeiras ligações."} }; }
   else if(t.includes("follow up")) { tiers = { elite: {l: "Implacável", d: "Nenhum cliente escapa. Elite."}, max: {l: "Mestre do Retorno", d: "Todos os retornos garantidos."}, high: {l: "Radar Quente", d: "Acompanhamento forte."}, mid: {l: "Memória Ativa", d: "Metade dos follow ups."}, low: {l: "Iniciando Contato", d: "Primeiros retornos."} }; }
   else if(t.includes("efetivos")) { tiers = { elite: {l: "Máquina de Prospecção", d: "Volume insano de contatos. Elite Prime ✦"}, max: {l: "Mestre da Abordagem", d: "Meta de contatos 100% batida."}, high: {l: "Máquina de Tração", d: "Falta muito pouco para a meta."}, mid: {l: "Radar Ligado", d: "Metade do caminho nos contatos."}, low: {l: "Emissor Ativo", d: "Primeiros contatos realizados."} }; }
-  else if (t.includes("agendadas")) { tiers = { elite: {l: "Arquiteto de Oportunidades", d: "Agenda completamente lotada. Nível Elite ✦"}, max: {l: "Dominador de Agenda", d: "Meta de agendamentos 100% atingida."}, high: {l: "Calendário Quente", d: "Quase batendo a meta de agenda."}, mid: {l: "Tração de Agenda", d: "50% dos agendamentos concluídos."}, low: {l: "Agenda Iniciada", d: "Primeiros agendamentos marcados no mês."} }; }
+  else if (t.includes("agendadas")) { tiers = { superhuman: {l: "SOBRE-HUMANO 🚀", d: "Olimpo Comercial! Você é uma máquina de agendar!"}, elite: {l: "Arquiteto de Oportunidades", d: "Agenda completamente lotada. Nível Elite ✦"}, max: {l: "Dominador de Agenda", d: "Meta de agendamentos 100% atingida."}, high: {l: "Calendário Quente", d: "Quase batendo a meta de agenda."}, mid: {l: "Tração de Agenda", d: "50% dos agendamentos concluídos."}, low: {l: "Agenda Iniciada", d: "Primeiros agendamentos marcados no mês."} }; }
   else if (t.includes("realizadas")) { tiers = { elite: {l: "Linha de Frente", d: "Presença executiva massiva. Elite Prime ✦"}, max: {l: "Execução Impecável", d: "Meta de reuniões realizadas batida."}, high: {l: "Campo de Batalha", d: "Ritmo forte de apresentações diárias."}, mid: {l: "Conexão Estabelecida", d: "Metade das reuniões já aconteceram."}, low: {l: "Presença Marcada", d: "Primeiras reuniões executadas com sucesso."} }; }
   else if (t.includes("qualificadas")) { tiers = { elite: {l: "Fechador de Elite", d: "Altíssima conversão e foco. Nível máximo ✦"}, max: {l: "Sniper Corporativo", d: "Meta de qualificação rigorosamente atingida."}, high: {l: "Mira Laser", d: "Qualificação cirúrgica em nível avançado."}, mid: {l: "Filtro de Ouro", d: "Metade das grandes oportunidades geradas."}, low: {l: "Garimpeiro", d: "Primeiras oportunidades reais validadas."} }; }
   else if (t.includes("contratos")) { tiers = { elite: {l: "Lenda Comercial", d: "Resultados extraordinários e faturamento limpo. Elite Prime ✦"}, max: {l: "Rainmaker", d: "Meta de fechamentos atingida! Impressionante."}, high: {l: "Zona de Conversão", d: "A um único passo de bater a meta de contratos."}, mid: {l: "Aperto de Mão", d: "50% da agressiva meta de contratos garantida."}, low: {l: "Tinta no Papel", d: "Os primeiros fechamentos já estão em casa."} }; }
   else { tiers = { elite: {l: "Elite Prime", d: "Meta superada."}, max: {l: "Meta conquistada", d: "Objetivo atingido."}, high: {l: "Zona de fechamento", d: "Quase lá."}, mid: {l: "Ritmo de ataque", d: "Metade do caminho."}, low: {l: "Aquecendo a máquina", d: "Primeiro marco."} }; }
 
-  if(percent>100) return {label: tiers.elite.l, detail: tiers.elite.d, icon:"✦", unlocked:true, elite:true};
-  if(percent>=100) return {label: tiers.max.l, detail: tiers.max.d, icon:"✓", unlocked:true, elite:false};
-  if(percent>=75) return {label: tiers.high.l, detail: tiers.high.d, icon:"◆", unlocked:true, elite:false};
-  if(percent>=50) return {label: tiers.mid.l, detail: tiers.mid.d, icon:"↗", unlocked:true, elite:false};
-  if(percent>=25) return {label: tiers.low.l, detail: tiers.low.d, icon:"◈", unlocked:true, elite:false};
-  return {label: "Primeiro marco", detail: "Continue avançando na operação.", icon:"○", unlocked:false, elite:false};
+  // Condição para a Meta Vermelha e Extrema (Sobre-Humano) nas Agendadas!
+  if(t.includes("agendadas") && percent >= 400) return {label: tiers.superhuman.l, detail: tiers.superhuman.d, icon:"🔥", unlocked:true, elite:false, superhuman:true};
+  
+  if(percent>100) return {label: tiers.elite.l, detail: tiers.elite.d, icon:"✦", unlocked:true, elite:true, superhuman:false};
+  if(percent>=100) return {label: tiers.max.l, detail: tiers.max.d, icon:"✓", unlocked:true, elite:false, superhuman:false};
+  if(percent>=75) return {label: tiers.high.l, detail: tiers.high.d, icon:"◆", unlocked:true, elite:false, superhuman:false};
+  if(percent>=50) return {label: tiers.mid.l, detail: tiers.mid.d, icon:"↗", unlocked:true, elite:false, superhuman:false};
+  if(percent>=25) return {label: tiers.low.l, detail: tiers.low.d, icon:"◈", unlocked:true, elite:false, superhuman:false};
+  return {label: "Primeiro marco", detail: "Continue avançando na operação.", icon:"○", unlocked:false, elite:false, superhuman:false};
 }
 
 /* VISÃO DE TUDO */
@@ -630,8 +670,10 @@ function goalMilestones(percent){return [25,50,75,100].map(mark=>`<span class="g
 function goalCard(indicator,rows,periodicity,key,label,consultant=null){
   const actual=sumIndicator(rows,indicator),target=consultant?goalTargetForConsultant(indicator,periodicity,key,consultant):goalTargetForConsultant(indicator,periodicity,key,"Equipe");
   const percent=target?(actual/target)*100:0,width=Math.min(percent,100),reward=rewardForProgress(percent, indicator);
-  const cardClass=reward.elite?"goal-card goal-elite":reward.unlocked?"goal-card goal-achieved":"goal-card";
-  const rewardClass=reward.elite?"goal-reward unlocked elite":reward.unlocked?"goal-reward unlocked":"goal-reward";
+  
+  const cardClass = reward.superhuman ? "goal-card goal-superhuman" : reward.elite ? "goal-card goal-elite" : reward.unlocked ? "goal-card goal-achieved" : "goal-card";
+  const rewardClass = reward.superhuman ? "goal-reward unlocked superhuman" : reward.elite ? "goal-reward unlocked elite" : reward.unlocked ? "goal-reward unlocked" : "goal-reward";
+  
   return `<div class="${cardClass}"><div class="goal-top"><div><div class="goal-label">${escapeHTML(indicator)}</div><div class="goal-period">${escapeHTML(label)}</div></div><div class="goal-percent-badge">${target?formatPercent(percent):"—"}</div></div><div class="goal-numbers"><span class="goal-current">${formatNumber(actual)}</span><span class="goal-target">/ ${target?formatNumber(target):"meta não cadastrada"}</span></div><div class="goal-progress-wrap"><div class="goal-milestones">${goalMilestones(percent)}</div><div class="goal-bar"><div class="goal-fill" style="width:${width}%"></div></div></div><div class="${rewardClass}"><div class="goal-reward-icon">${reward.icon}</div><div><span>${reward.unlocked?"Recompensa desbloqueada":"Próxima recompensa"}</span><strong>${escapeHTML(reward.label)}</strong></div></div></div>`;
 }
 
@@ -642,8 +684,9 @@ function consultantAvatar(name){
 
 function consultantGoalMini(indicator,consultant,rows,periodicity,key){
   const actual=sumIndicator(rows,indicator),target=goalTargetForConsultant(indicator,periodicity,key,consultant),percent=target?(actual/target)*100:0,width=Math.min(percent,100);
-  const elite=percent>100,done=percent>=100;
-  return `<div class="mini-goal"><div class="mini-goal-top"><span class="mini-goal-name">${escapeHTML(indicator)}</span><span class="mini-goal-percent">${target?formatPercent(percent):"—"}</span></div><div class="mini-goal-bar"><div class="mini-goal-fill ${elite?"elite":done?"done":""}" style="width:${width}%"></div></div><div class="mini-goal-values"><span>${formatNumber(actual)} realizado</span><strong>${target?"Meta "+formatNumber(target):"Sem meta"}</strong></div></div>`;
+  const elite=percent>100,done=percent>=100, superhuman=(normalizeText(indicator).includes("agendadas") && percent>=400);
+  const fillClass = superhuman ? "superhuman" : elite ? "elite" : done ? "done" : "";
+  return `<div class="mini-goal"><div class="mini-goal-top"><span class="mini-goal-name">${escapeHTML(indicator)}</span><span class="mini-goal-percent">${target?formatPercent(percent):"—"}</span></div><div class="mini-goal-bar"><div class="mini-goal-fill ${fillClass}" style="width:${width}%"></div></div><div class="mini-goal-values"><span>${formatNumber(actual)} realizado</span><strong>${target?"Meta "+formatNumber(target):"Sem meta"}</strong></div></div>`;
 }
 
 function renderIndividualGoals(periodicity, key, label, allRows){
@@ -657,7 +700,7 @@ function renderIndividualGoals(periodicity, key, label, allRows){
       // Pega as linhas que já passaram pelo filtro Mestre de Tempo, e filtra pelo consultor
       const rows = allRows.filter(r => getConsultant(r) === name);
       
-      // NOVA PONTUAÇÃO APLICADA
+      // NOVA PONTUAÇÃO APLICADA (Com o novo requisito de agendadas pesando 2 e FUP 0)
       const score = (sumIndicator(rows, "Ligações") * 0.1) + 
                     (sumIndicator(rows, "Contatos Efetivos") * 0.5) + 
                     (sumIndicator(rows, "Reuniões Agendadas") * 2) + 
