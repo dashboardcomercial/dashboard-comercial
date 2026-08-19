@@ -154,7 +154,7 @@ body.sidebar-collapsed .sidebar-toggle:hover { transform: rotate(180deg) scale(1
 .goal-card.goal-elite:before { background: linear-gradient(180deg,#d7f5ff,var(--blue)); }
 .goal-card.goal-elite:after { content: ""; position: absolute; width: 140px; height: 140px; right: -70px; top: -70px; border-radius: 50%; border: 1px solid rgba(0,133,202,.2); box-shadow: 0 0 40px rgba(0,133,202,.2); }
 
-/* EFEITO SOBRE-HUMANO (400% AGENDADAS) */
+/* EFEITO SOBRE-HUMANO (400% AGENDADAS) - APLICA TANTO NA EQUIPE QUANTO NO INDIVIDUAL */
 @keyframes superhuman-pulse {
   0% { box-shadow: 0 0 20px rgba(255, 51, 51, 0.4), inset 0 0 15px rgba(255, 51, 51, 0.2); }
   50% { box-shadow: 0 0 50px rgba(255, 51, 51, 0.9), inset 0 0 25px rgba(255, 51, 51, 0.5); transform: scale(1.02); border-color: #ff6666; }
@@ -164,14 +164,16 @@ body.sidebar-collapsed .sidebar-toggle:hover { transform: rotate(180deg) scale(1
   0% { transform: translateY(0) rotate(-5deg) scale(1); filter: hue-rotate(0deg); }
   100% { transform: translateY(-15px) rotate(15deg) scale(1.3); filter: hue-rotate(45deg); text-shadow: 0 0 25px rgba(255, 255, 255, 0.8); }
 }
-.goal-superhuman {
+
+/* Card Geral */
+.goal-superhuman, .consultant-superhuman {
   border-color: #ff3333 !important;
   background: radial-gradient(circle at top right, rgba(255, 0, 0, 0.25), transparent 60%), linear-gradient(145deg, #3a0b16, #140206) !important;
   animation: superhuman-pulse 1.5s infinite;
   z-index: 20;
 }
 .goal-superhuman:before { background: linear-gradient(180deg, #ff9999, #ff0000) !important; }
-.goal-superhuman:after {
+.goal-superhuman:after, .consultant-superhuman:after {
   content: "🎆🎇";
   position: absolute;
   font-size: 60px;
@@ -181,23 +183,31 @@ body.sidebar-collapsed .sidebar-toggle:hover { transform: rotate(180deg) scale(1
   text-shadow: 0 0 20px rgba(255,255,255,0.5);
   pointer-events: none;
 }
-.goal-superhuman .goal-percent-badge {
-  background: rgba(255, 51, 51, 0.2) !important; border-color: #ff3333 !important; color: #ffcccc !important; text-shadow: 0 0 10px #ff3333;
-}
-.goal-superhuman .goal-fill {
-  background: linear-gradient(90deg, #cc0000, #ff4d4d) !important; box-shadow: 0 0 25px rgba(255, 51, 51, 0.8) !important;
-}
-.goal-reward.superhuman {
-  border-color: rgba(255, 51, 51, 0.5) !important; background: linear-gradient(90deg, rgba(255, 51, 51, 0.2), rgba(255, 0, 0, 0.05)) !important; color: #ffcccc !important;
-}
-.goal-reward.superhuman .goal-reward-icon {
-  background: rgba(255, 51, 51, 0.3) !important; color: #ff6666 !important; box-shadow: 0 0 20px rgba(255, 51, 51, 0.5) !important;
-}
+.goal-superhuman .goal-percent-badge { background: rgba(255, 51, 51, 0.2) !important; border-color: #ff3333 !important; color: #ffcccc !important; text-shadow: 0 0 10px #ff3333; }
+.goal-superhuman .goal-fill { background: linear-gradient(90deg, #cc0000, #ff4d4d) !important; box-shadow: 0 0 25px rgba(255, 51, 51, 0.8) !important; }
+.goal-reward.superhuman { border-color: rgba(255, 51, 51, 0.5) !important; background: linear-gradient(90deg, rgba(255, 51, 51, 0.2), rgba(255, 0, 0, 0.05)) !important; color: #ffcccc !important; }
+.goal-reward.superhuman .goal-reward-icon { background: rgba(255, 51, 51, 0.3) !important; color: #ff6666 !important; box-shadow: 0 0 20px rgba(255, 51, 51, 0.5) !important; }
 .goal-reward.superhuman strong { color: #fff !important; text-transform: uppercase; font-size: 10px; letter-spacing: 1px; }
 
-/* MINI METAS SOBRE-HUMANAS NO RANKING */
-.mini-goal-fill.superhuman {
-  background: linear-gradient(90deg, #cc0000, #ff4d4d); box-shadow: 0 0 15px rgba(255, 51, 51, 0.6);
+/* Mini barras no ranking */
+.mini-goal-fill.superhuman { background: linear-gradient(90deg, #cc0000, #ff4d4d); box-shadow: 0 0 15px rgba(255, 51, 51, 0.6); }
+
+/* Badges Exclusivos */
+.superhuman-badge {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(90deg, #cc0000, #ff0000);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 900;
+  padding: 4px 14px;
+  border-radius: 20px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  box-shadow: 0 4px 15px rgba(255, 51, 51, 0.6);
+  z-index: 10;
 }
 
 .goal-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
@@ -219,7 +229,7 @@ body.sidebar-collapsed .sidebar-toggle:hover { transform: rotate(180deg) scale(1
 .goal-reward-icon { width: 25px; height: 25px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; border-radius: 7px; background: rgba(255,255,255,.04); color: var(--muted); font-size: 12px; }
 .goal-reward strong { display: block; margin-top: 2px; color: #fff; font-size: 9px; }
 
-/* METAS INDIVIDUAIS / RANKING E RECOMPENSAS VISUAIS */
+/* METAS INDIVIDUAIS / RANKING */
 .individual-goals { margin-top: 0; }
 .individual-goals-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 11px; }
 .individual-goals-head h3 { margin: 0; font-size: 13px; }
@@ -228,7 +238,7 @@ body.sidebar-collapsed .sidebar-toggle:hover { transform: rotate(180deg) scale(1
 .consultant-goal-card { background: linear-gradient(145deg,var(--card),var(--bg2)); border: 1px solid var(--border); border-radius: 15px; padding: 15px; box-shadow: var(--shadow); min-width: 0; position: relative; overflow: visible; transition: .2s ease; }
 .consultant-goal-card.winner-card { border-color: #d4af37; box-shadow: 0 0 0 1px rgba(212, 175, 55, 0.4),var(--shadow); }
 
-/* ESTILOS PARA QUANDO BATE TODAS AS METAS (PERFECT E OVERPOWER) */
+/* ESTILOS DE PROGRESSÃO NO RANKING INDIVIDUAL */
 .consultant-goal-card.all-achieved {
   border-color: rgba(38, 197, 139, 0.8);
   box-shadow: 0 0 20px rgba(38, 197, 139, 0.25), inset 0 0 10px rgba(38, 197, 139, 0.1);
@@ -555,14 +565,14 @@ function rewardForProgress(percent, indicator){
   if(t.includes("ligacoes")) { tiers = { elite: {l: "Call Center", d: "Volume absurdo de ligações diárias."}, max: {l: "Ritmo Certo", d: "Meta de ligações atingida."}, high: {l: "Tração de Voz", d: "Falta pouco na discagem."}, mid: {l: "Aquecendo as Linhas", d: "Metade das ligações feitas."}, low: {l: "Primeiros Alôs", d: "Primeiras ligações."} }; }
   else if(t.includes("follow up")) { tiers = { elite: {l: "Implacável", d: "Nenhum cliente escapa. Elite."}, max: {l: "Mestre do Retorno", d: "Todos os retornos garantidos."}, high: {l: "Radar Quente", d: "Acompanhamento forte."}, mid: {l: "Memória Ativa", d: "Metade dos follow ups."}, low: {l: "Iniciando Contato", d: "Primeiros retornos."} }; }
   else if(t.includes("efetivos")) { tiers = { elite: {l: "Máquina de Prospecção", d: "Volume insano de contatos. Elite Prime ✦"}, max: {l: "Mestre da Abordagem", d: "Meta de contatos 100% batida."}, high: {l: "Máquina de Tração", d: "Falta muito pouco para a meta."}, mid: {l: "Radar Ligado", d: "Metade do caminho nos contatos."}, low: {l: "Emissor Ativo", d: "Primeiros contatos realizados."} }; }
-  else if (t.includes("agendadas")) { tiers = { superhuman: {l: "SOBRE-HUMANO 🚀", d: "Olimpo Comercial! Você é uma máquina de agendar!"}, elite: {l: "Arquiteto de Oportunidades", d: "Agenda completamente lotada. Nível Elite ✦"}, max: {l: "Dominador de Agenda", d: "Meta de agendamentos 100% atingida."}, high: {l: "Calendário Quente", d: "Quase batendo a meta de agenda."}, mid: {l: "Tração de Agenda", d: "50% dos agendamentos concluídos."}, low: {l: "Agenda Iniciada", d: "Primeiros agendamentos marcados no mês."} }; }
+  else if (t.includes("agendadas")) { tiers = { superhuman: {l: "SOBRE-HUMANO", d: "Olimpo Comercial! A máquina ativou!"}, elite: {l: "Arquiteto de Oportunidades", d: "Agenda completamente lotada. Nível Elite ✦"}, max: {l: "Dominador de Agenda", d: "Meta de agendamentos 100% atingida."}, high: {l: "Calendário Quente", d: "Quase batendo a meta de agenda."}, mid: {l: "Tração de Agenda", d: "50% dos agendamentos concluídos."}, low: {l: "Agenda Iniciada", d: "Primeiros agendamentos marcados no mês."} }; }
   else if (t.includes("realizadas")) { tiers = { elite: {l: "Linha de Frente", d: "Presença executiva massiva. Elite Prime ✦"}, max: {l: "Execução Impecável", d: "Meta de reuniões realizadas batida."}, high: {l: "Campo de Batalha", d: "Ritmo forte de apresentações diárias."}, mid: {l: "Conexão Estabelecida", d: "Metade das reuniões já aconteceram."}, low: {l: "Presença Marcada", d: "Primeiras reuniões executadas com sucesso."} }; }
   else if (t.includes("qualificadas")) { tiers = { elite: {l: "Fechador de Elite", d: "Altíssima conversão e foco. Nível máximo ✦"}, max: {l: "Sniper Corporativo", d: "Meta de qualificação rigorosamente atingida."}, high: {l: "Mira Laser", d: "Qualificação cirúrgica em nível avançado."}, mid: {l: "Filtro de Ouro", d: "Metade das grandes oportunidades geradas."}, low: {l: "Garimpeiro", d: "Primeiras oportunidades reais validadas."} }; }
   else if (t.includes("contratos")) { tiers = { elite: {l: "Lenda Comercial", d: "Resultados extraordinários e faturamento limpo. Elite Prime ✦"}, max: {l: "Rainmaker", d: "Meta de fechamentos atingida! Impressionante."}, high: {l: "Zona de Conversão", d: "A um único passo de bater a meta de contratos."}, mid: {l: "Aperto de Mão", d: "50% da agressiva meta de contratos garantida."}, low: {l: "Tinta no Papel", d: "Os primeiros fechamentos já estão em casa."} }; }
   else { tiers = { elite: {l: "Elite Prime", d: "Meta superada."}, max: {l: "Meta conquistada", d: "Objetivo atingido."}, high: {l: "Zona de fechamento", d: "Quase lá."}, mid: {l: "Ritmo de ataque", d: "Metade do caminho."}, low: {l: "Aquecendo a máquina", d: "Primeiro marco."} }; }
 
   // Condição para a Meta Vermelha e Extrema (Sobre-Humano) nas Agendadas!
-  if(t.includes("agendadas") && percent >= 400) return {label: tiers.superhuman.l, detail: tiers.superhuman.d, icon:"🔥", unlocked:true, elite:false, superhuman:true};
+  if(t.includes("agendadas") && percent >= 400) return {label: tiers.superhuman.l, detail: tiers.superhuman.d, icon:"💀", unlocked:true, elite:false, superhuman:true};
   
   if(percent>100) return {label: tiers.elite.l, detail: tiers.elite.d, icon:"✦", unlocked:true, elite:true, superhuman:false};
   if(percent>=100) return {label: tiers.max.l, detail: tiers.max.d, icon:"✓", unlocked:true, elite:false, superhuman:false};
@@ -712,6 +722,7 @@ function renderIndividualGoals(periodicity, key, label, allRows){
       let validTargetsCount = 0;
       let metTargetsCount = 0;
       let eliteTargetsCount = 0;
+      let isSuperhuman = false;
 
       indicators.forEach(ind => {
           const actual = sumIndicator(rows, ind);
@@ -720,13 +731,18 @@ function renderIndividualGoals(periodicity, key, label, allRows){
               validTargetsCount++;
               if (actual >= target) metTargetsCount++;
               if (actual > target) eliteTargetsCount++;
+              
+              // SE FOR REUNIÕES AGENDADAS E BATEU 400% -> ATIVA MODO SOBRE-HUMANO PARA O CARD INTEIRO
+              if (normalizeText(ind).includes("agendadas") && (actual / target) * 100 >= 400) {
+                  isSuperhuman = true;
+              }
           }
       });
 
       const isElite = validTargetsCount > 0 && eliteTargetsCount === validTargetsCount;
       const isPerfect = validTargetsCount > 0 && metTargetsCount === validTargetsCount && !isElite;
                     
-      return { name, score, rows, isElite, isPerfect };
+      return { name, score, rows, isElite, isPerfect, isSuperhuman };
   }).sort((a, b) => b.score - a.score);
 
   // Se houver um consultor específico no filtro mestre, o ranking mostra apenas ele
@@ -748,9 +764,9 @@ function renderIndividualGoals(periodicity, key, label, allRows){
           const medal = (c.score > 0 && filters.consultant === "all") ? (medals[index] || "") : "";
           const trophyHTML = isWinner ? `<div class="trophy-badge" title="1º Lugar do Período">🏆</div>` : "";
           
-          // Recompensas Visuais
-          const rewardClass = c.isElite ? "all-elite" : (c.isPerfect ? "all-achieved" : "");
-          const rewardBadge = c.isElite ? `<div class="elite-badge">✦ OVERPOWER ✦</div>` : (c.isPerfect ? `<div class="perfect-badge">✓ METAS BATIDAS</div>` : "");
+          // Recompensas Visuais - Se for Super Humano, ele ganha a classe consultant-superhuman que deixa o card vermelho infernal
+          const rewardClass = c.isSuperhuman ? "consultant-superhuman" : c.isElite ? "all-elite" : (c.isPerfect ? "all-achieved" : "");
+          const rewardBadge = c.isSuperhuman ? `<div class="superhuman-badge">💀 SOBRE-HUMANO 💀</div>` : c.isElite ? `<div class="elite-badge">✦ OVERPOWER ✦</div>` : (c.isPerfect ? `<div class="perfect-badge">✓ METAS BATIDAS</div>` : "");
           
           return `
             <div class="consultant-goal-card ${isWinner ? "winner-card" : ""} ${rewardClass}">
