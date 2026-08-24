@@ -154,7 +154,7 @@ body.sidebar-collapsed .sidebar-toggle:hover { transform: rotate(180deg) scale(1
 .goal-card.goal-elite:before { background: linear-gradient(180deg,#d7f5ff,var(--blue)); }
 .goal-card.goal-elite:after { content: ""; position: absolute; width: 140px; height: 140px; right: -70px; top: -70px; border-radius: 50%; border: 1px solid rgba(0,133,202,.2); box-shadow: 0 0 40px rgba(0,133,202,.2); }
 
-/* EFEITO SOBRE-HUMANO (400% AGENDADAS) - APLICA TANTO NA EQUIPE QUANTO NO INDIVIDUAL */
+/* EFEITO SOBRE-HUMANO (400% AGENDADAS) */
 @keyframes superhuman-pulse {
   0% { box-shadow: 0 0 20px rgba(255, 51, 51, 0.4), inset 0 0 15px rgba(255, 51, 51, 0.2); }
   50% { box-shadow: 0 0 50px rgba(255, 51, 51, 0.9), inset 0 0 25px rgba(255, 51, 51, 0.5); transform: scale(1.02); border-color: #ff6666; }
@@ -236,70 +236,35 @@ body.sidebar-collapsed .sidebar-toggle:hover { transform: rotate(180deg) scale(1
 .individual-goals-head span { color: var(--muted); font-size: 10px; }
 .individual-goals-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; padding-top: 10px; }
 .consultant-goal-card { background: linear-gradient(145deg,var(--card),var(--bg2)); border: 1px solid var(--border); border-radius: 15px; padding: 15px; box-shadow: var(--shadow); min-width: 0; position: relative; overflow: visible; transition: .2s ease; }
-.consultant-goal-card.winner-card { border-color: #d4af37; box-shadow: 0 0 0 1px rgba(212, 175, 55, 0.4),var(--shadow); }
 
 /* ESTILOS DE PROGRESSÃO NO RANKING INDIVIDUAL */
-.consultant-goal-card.all-achieved {
-  border-color: rgba(38, 197, 139, 0.8);
-  box-shadow: 0 0 20px rgba(38, 197, 139, 0.25), inset 0 0 10px rgba(38, 197, 139, 0.1);
-}
-.consultant-goal-card.all-elite {
-  border-color: #4dc0ff;
-  background: linear-gradient(145deg, #1b449c, #0d2250), radial-gradient(circle at top right, rgba(77, 192, 255, 0.15), transparent);
-  box-shadow: 0 0 25px rgba(77, 192, 255, 0.4), inset 0 0 15px rgba(77, 192, 255, 0.15);
-}
+.consultant-goal-card.all-achieved { border-color: rgba(38, 197, 139, 0.8); box-shadow: 0 0 20px rgba(38, 197, 139, 0.25), inset 0 0 10px rgba(38, 197, 139, 0.1); }
+.consultant-goal-card.all-elite { border-color: #4dc0ff; background: linear-gradient(145deg, #1b449c, #0d2250), radial-gradient(circle at top right, rgba(77, 192, 255, 0.15), transparent); box-shadow: 0 0 25px rgba(77, 192, 255, 0.4), inset 0 0 15px rgba(77, 192, 255, 0.15); }
 
-.perfect-badge {
-  position: absolute;
-  top: -12px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: var(--green);
-  color: #000;
-  font-size: 10px;
-  font-weight: 900;
-  padding: 4px 14px;
-  border-radius: 20px;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  box-shadow: 0 4px 10px rgba(38, 197, 139, 0.4);
-  z-index: 10;
-}
+.perfect-badge { position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: var(--green); color: #000; font-size: 10px; font-weight: 900; padding: 4px 14px; border-radius: 20px; text-transform: uppercase; letter-spacing: 1px; box-shadow: 0 4px 10px rgba(38, 197, 139, 0.4); z-index: 10; }
+.elite-badge { position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: linear-gradient(90deg, #4dc0ff, #0085ca); color: #fff; font-size: 10px; font-weight: 900; padding: 4px 14px; border-radius: 20px; text-transform: uppercase; letter-spacing: 1.5px; box-shadow: 0 4px 15px rgba(77, 192, 255, 0.5); z-index: 10; }
 
-.elite-badge {
+/* NOVO VISUAL DE MEDALHAS TOP 3 COM IMAGENS */
+.rank-badge {
   position: absolute;
-  top: -12px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: linear-gradient(90deg, #4dc0ff, #0085ca);
+  top: -15px;
+  right: -15px;
   color: #fff;
-  font-size: 10px;
-  font-weight: 900;
-  padding: 4px 14px;
-  border-radius: 20px;
-  text-transform: uppercase;
-  letter-spacing: 1.5px;
-  box-shadow: 0 4px 15px rgba(77, 192, 255, 0.5);
-  z-index: 10;
-}
-
-.trophy-badge {
-  position: absolute;
-  top: -12px;
-  right: -12px;
-  background: linear-gradient(135deg, #ffd700, #d4af37);
-  color: #000;
   border-radius: 50%;
-  width: 42px;
-  height: 42px;
+  width: 48px;
+  height: 48px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 20px;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.3), 0 0 0 4px var(--bg);
+  font-size: 18px;
+  font-weight: 900;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.4), 0 0 0 4px var(--bg);
   z-index: 10;
   transform: rotate(10deg);
+  overflow: hidden;
 }
+.rank-badge img { width: 100%; height: 100%; object-fit: cover; position: absolute; }
+.rank-badge span { z-index: 2; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
 
 .consultant-goal-head { display: flex; align-items: center; gap: 15px; padding-bottom: 12px; margin-bottom: 8px; border-bottom: 1px solid rgba(255,255,255,.05); }
 .consultant-goal-name { font-size: 15px; font-weight: 900; color: #fff; display: flex; align-items: center; }
@@ -392,7 +357,7 @@ th { position: sticky; top: 0; background: var(--card2); z-index: 10; font-size:
 
 <script>
 /* =====================================================
-   GOOGLE SHEETS & ESTADO GLOBAL
+   GOOGLE SHEETS E ESTADO GLOBAL
 ===================================================== */
 const PUBLISHED_ID = "2PACX-1vTag39UjwjAd6j3ypuq42D_wtFAqGzhwup9mkbgllj5ZrQnpl-u36zt7Si9fV2OjZSDYscQ1DTLSWuJ";
 const SHEETS = { lancamentos: "541100022", metas: "1903840577" };
@@ -401,12 +366,16 @@ let lancamentos = [];
 let metas = [];
 let currentPage = "overview";
 
-/* CONTROLE MESTRE E ABSOLUTO (Patch Focus: Minimal UI) */
+/* CONTROLE MESTRE DE FILTROS E SONS */
 let filters = { 
-  periodicity: "diario", // Abre sempre no diário focado no hoje
+  periodicity: "diario",
   periodValue: "current", 
   consultant: "all" 
 };
+
+let somAtivado = false;
+let lastContractsCount = -1;
+let lastMetasBatidasCount = -1;
 
 /* MAPEAMENTO DOS AVATARES */
 const AVATAR_MAP = {
@@ -414,6 +383,51 @@ const AVATAR_MAP = {
   "Edson": "assets/edson.jpg",
   "Gabriel": "assets/gabriel.jpg"
 };
+
+/* FUNÇÕES DE SOM E VERIFICAÇÃO INDIVIDUAL */
+function toggleSound() {
+    somAtivado = !somAtivado;
+    if (somAtivado) {
+        // Toca um bipe mudo só para desbloquear o motor de áudio no navegador
+        new Audio("data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEARKwAAIhYAQACABAAAABkYXRhAgAAAAEA").play().catch(()=>{});
+    }
+    render(false); // Re-renderiza para mudar o estilo do botão instantaneamente
+}
+
+function verifyAndPlaySounds(rows, periodicity, key, isAutoRefresh) {
+    if (!somAtivado || !isAutoRefresh) return;
+
+    let currentContracts = sumIndicator(rows, "Contratos");
+    
+    // Agora verifica as metas atingidas INDIVIDUALMENTE para cada consultor
+    let metasBatidasIndividuais = 0;
+    const indicators = ["Ligações", "Contatos Efetivos", "Reuniões Agendadas", "Reuniões Realizadas", "Reuniões Qualificadas", "Follow Up", "Contratos"];
+    const consultants = ["Matheus", "Edson", "Gabriel"];
+
+    consultants.forEach(name => {
+        const consultantRows = rows.filter(r => getConsultant(r) === name);
+        indicators.forEach(ind => {
+            const actual = sumIndicator(consultantRows, ind);
+            const target = goalTargetForConsultant(ind, periodicity, key, name);
+            if(target > 0 && actual >= target) {
+                metasBatidasIndividuais++;
+            }
+        });
+    });
+
+    // Se é a primeira vez que lê (quando liga), só anota os números
+    if (lastContractsCount !== -1 && lastMetasBatidasCount !== -1) {
+        if (currentContracts > lastContractsCount) {
+            new Audio("assets/contrato.mp3").play().catch(e => console.log(e));
+        }
+        if (metasBatidasIndividuais > lastMetasBatidasCount) {
+            new Audio("assets/missao.mp3").play().catch(e => console.log(e));
+        }
+    }
+
+    lastContractsCount = currentContracts;
+    lastMetasBatidasCount = metasBatidasIndividuais;
+}
 
 /* NORMALIZAÇÃO E PARSERS */
 function normalizeText(value){ return String(value ?? "").replace(/\uFEFF/g,"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/\s+/g," ").trim().toLowerCase(); }
@@ -448,35 +462,24 @@ function rowsToObjects(rows){
 }
 
 /* CARREGAMENTO */
-async function loadData(silent = false){
+async function loadData(isAutoRefresh = false){
   const app = document.getElementById("app");
-  if (!silent) {
+  if (!isAutoRefresh) {
     app.innerHTML=`<div style="margin-bottom: 25px;"><div class="skeleton skeleton-title"></div><div class="skeleton skeleton-text" style="width: 150px;"></div></div><div class="skeleton-grid"><div class="skeleton skeleton-box"></div><div class="skeleton skeleton-box"></div><div class="skeleton skeleton-box"></div><div class="skeleton skeleton-box"></div></div><div class="skeleton skeleton-box" style="height: 300px;"></div>`;
   }
   try{ 
-      const newLancamentos = await loadSheet(SHEETS.lancamentos); 
-      const newMetas = await loadSheet(SHEETS.metas); 
-      
-      lancamentos = newLancamentos;
-      metas = newMetas;
+      lancamentos = await loadSheet(SHEETS.lancamentos); 
+      metas = await loadSheet(SHEETS.metas); 
       
       if (filters.periodValue === "current") {
           filters.periodValue = getCurrentKey(filters.periodicity);
       }
-      render(); 
+      render(isAutoRefresh); 
   }
   catch(error){ 
       console.error(error); 
-      if (!silent) app.innerHTML=`<div class="empty"><h2>Erro ao carregar a planilha</h2><p>${escapeHTML(error.message)}</p><br><button class="refresh" onclick="loadData()">Tentar novamente</button></div>`; 
+      if (!isAutoRefresh) app.innerHTML=`<div class="empty"><h2>Erro ao carregar a planilha</h2><p>${escapeHTML(error.message)}</p><br><button class="refresh" onclick="loadData(false)">Tentar novamente</button></div>`; 
   }
-}
-
-async function loadSheet(gid){
-  const response = await fetch(csvUrl(gid) + "&cachebust=" + Date.now());
-  if(!response.ok) throw new Error("Erro HTTP " + response.status);
-  const text = await response.text();
-  if(text.includes("<!DOCTYPE html>") || text.includes("<html")) throw new Error("O Google retornou HTML em vez do CSV.");
-  return rowsToObjects(parseCSV(text));
 }
 
 /* DATAS E VALORES */
@@ -516,13 +519,11 @@ function filteredRows(){
       const date=parseDate(row.data); 
       if(!date) return false;
       
-      /* O FILTRO MESTRE UNIFICADO E ABSOLUTO */
       if(filters.periodValue !== "all") {
           let rowKey = "";
           if(filters.periodicity === "diario") rowKey = formatDateKey(date);
           else if(filters.periodicity === "semanal") rowKey = weekKey(date);
           else rowKey = monthKey(date);
-          
           if(rowKey !== filters.periodValue) return false;
       }
       
@@ -548,7 +549,19 @@ const ICONS={
   followup: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M1 4v6h6"/><path d="M23 20v-6h-6"/><path d="M20.49 9A9 9 0 005.64 5.64L1 10"/><path d="M3.51 15A9 9 0 0018.36 18.36L23 14"/></svg>`
 };
 
-function pageHeader(title, subtitle){ return `<div class="topbar"><div class="title"><h1>${title}</h1><p>${subtitle}</p></div><button class="refresh" onclick="loadData(false)">↻ Atualizar</button></div>`; }
+function pageHeader(title, subtitle){ 
+  const soundStyle = somAtivado ? "color: var(--green); border-color: var(--green); background: rgba(38, 197, 139, 0.1);" : "";
+  const soundText = somAtivado ? "🔊 Sons Ativados" : "🔇 Ativar Sons";
+
+  return `
+  <div class="topbar">
+    <div class="title"><h1>${title}</h1><p>${subtitle}</p></div>
+    <div style="display: flex; gap: 10px;">
+        <button class="refresh" onclick="toggleSound()" style="${soundStyle}">${soundText}</button>
+        <button class="refresh" onclick="loadData(false)">↻ Atualizar</button>
+    </div>
+  </div>`; 
+}
 
 function masterControlsHTML() {
   return `
@@ -573,13 +586,13 @@ function rewardForProgress(percent, indicator){
   if(t.includes("ligacoes")) { tiers = { elite: {l: "Call Center", d: "Volume absurdo de ligações diárias."}, max: {l: "Ritmo Certo", d: "Meta de ligações atingida."}, high: {l: "Tração de Voz", d: "Falta pouco na discagem."}, mid: {l: "Aquecendo as Linhas", d: "Metade das ligações feitas."}, low: {l: "Primeiros Alôs", d: "Primeiras ligações."} }; }
   else if(t.includes("follow up")) { tiers = { elite: {l: "Implacável", d: "Nenhum cliente escapa. Elite."}, max: {l: "Mestre do Retorno", d: "Todos os retornos garantidos."}, high: {l: "Radar Quente", d: "Acompanhamento forte."}, mid: {l: "Memória Ativa", d: "Metade dos follow ups."}, low: {l: "Iniciando Contato", d: "Primeiros retornos."} }; }
   else if(t.includes("efetivos")) { tiers = { elite: {l: "Máquina de Prospecção", d: "Volume insano de contatos. Elite Prime ✦"}, max: {l: "Mestre da Abordagem", d: "Meta de contatos 100% batida."}, high: {l: "Máquina de Tração", d: "Falta muito pouco para a meta."}, mid: {l: "Radar Ligado", d: "Metade do caminho nos contatos."}, low: {l: "Emissor Ativo", d: "Primeiros contatos realizados."} }; }
-  else if (t.includes("agendadas")) { tiers = { superhuman: {l: "SOBRE-HUMANO", d: "Olimpo Comercial! A máquina ativou!"}, elite: {l: "Arquiteto de Oportunidades", d: "Agenda completamente lotada. Nível Elite ✦"}, max: {l: "Dominador de Agenda", d: "Meta de agendamentos 100% atingida."}, high: {l: "Calendário Quente", d: "Quase batendo a meta de agenda."}, mid: {l: "Tração de Agenda", d: "50% dos agendamentos concluídos."}, low: {l: "Agenda Iniciada", d: "Primeiros agendamentos marcados no mês."} }; }
+  else if (t.includes("agendadas")) { tiers = { superhuman: {l: "SOBRE-HUMANO 💀", d: "Olimpo Comercial! Você é uma máquina de agendar!"}, elite: {l: "Arquiteto de Oportunidades", d: "Agenda completamente lotada. Nível Elite ✦"}, max: {l: "Dominador de Agenda", d: "Meta de agendamentos 100% atingida."}, high: {l: "Calendário Quente", d: "Quase batendo a meta de agenda."}, mid: {l: "Tração de Agenda", d: "50% dos agendamentos concluídos."}, low: {l: "Agenda Iniciada", d: "Primeiros agendamentos marcados no mês."} }; }
   else if (t.includes("realizadas")) { tiers = { elite: {l: "Linha de Frente", d: "Presença executiva massiva. Elite Prime ✦"}, max: {l: "Execução Impecável", d: "Meta de reuniões realizadas batida."}, high: {l: "Campo de Batalha", d: "Ritmo forte de apresentações diárias."}, mid: {l: "Conexão Estabelecida", d: "Metade das reuniões já aconteceram."}, low: {l: "Presença Marcada", d: "Primeiras reuniões executadas com sucesso."} }; }
   else if (t.includes("qualificadas")) { tiers = { elite: {l: "Fechador de Elite", d: "Altíssima conversão e foco. Nível máximo ✦"}, max: {l: "Sniper Corporativo", d: "Meta de qualificação rigorosamente atingida."}, high: {l: "Mira Laser", d: "Qualificação cirúrgica em nível avançado."}, mid: {l: "Filtro de Ouro", d: "Metade das grandes oportunidades geradas."}, low: {l: "Garimpeiro", d: "Primeiras oportunidades reais validadas."} }; }
   else if (t.includes("contratos")) { tiers = { elite: {l: "Lenda Comercial", d: "Resultados extraordinários e faturamento limpo. Elite Prime ✦"}, max: {l: "Rainmaker", d: "Meta de fechamentos atingida! Impressionante."}, high: {l: "Zona de Conversão", d: "A um único passo de bater a meta de contratos."}, mid: {l: "Aperto de Mão", d: "50% da agressiva meta de contratos garantida."}, low: {l: "Tinta no Papel", d: "Os primeiros fechamentos já estão em casa."} }; }
   else { tiers = { elite: {l: "Elite Prime", d: "Meta superada."}, max: {l: "Meta conquistada", d: "Objetivo atingido."}, high: {l: "Zona de fechamento", d: "Quase lá."}, mid: {l: "Ritmo de ataque", d: "Metade do caminho."}, low: {l: "Aquecendo a máquina", d: "Primeiro marco."} }; }
 
-  // Condição para a Meta Vermelha e Extrema (Sobre-Humano) nas Agendadas!
+  // Condição Especial Sobre-Humano para as Agendadas (>= 400%)
   if(t.includes("agendadas") && percent >= 400) return {label: tiers.superhuman.l, detail: tiers.superhuman.d, icon:"💀", unlocked:true, elite:false, superhuman:true};
   
   if(percent>100) return {label: tiers.elite.l, detail: tiers.elite.d, icon:"✦", unlocked:true, elite:true, superhuman:false};
@@ -716,18 +729,15 @@ function renderIndividualGoals(periodicity, key, label, allRows){
   const consultants = ["Edson","Gabriel","Matheus"];
   
   const scoredConsultants = consultants.map(name => {
-      // Pega as linhas que já passaram pelo filtro Mestre de Tempo, e filtra pelo consultor
       const rows = allRows.filter(r => getConsultant(r) === name);
       
-      // NOVA PONTUAÇÃO APLICADA (Com o novo requisito de agendadas pesando 2 e FUP 0)
       const score = (sumIndicator(rows, "Ligações") * 0.1) + 
                     (sumIndicator(rows, "Contatos Efetivos") * 0.5) + 
                     (sumIndicator(rows, "Reuniões Agendadas") * 2) + 
                     (sumIndicator(rows, "Reuniões Realizadas") * 5) + 
                     (sumIndicator(rows, "Reuniões Qualificadas") * 7) + 
-                    (sumIndicator(rows, "Contratos") * 20); // Follow up tem peso 0
+                    (sumIndicator(rows, "Contratos") * 20);
                     
-      // Verifica metas atingidas para as Recompensas Visuais Especiais
       let validTargetsCount = 0;
       let metTargetsCount = 0;
       let eliteTargetsCount = 0;
@@ -741,7 +751,6 @@ function renderIndividualGoals(periodicity, key, label, allRows){
               if (actual >= target) metTargetsCount++;
               if (actual > target) eliteTargetsCount++;
               
-              // SE FOR REUNIÕES AGENDADAS E BATEU 400% -> ATIVA MODO SOBRE-HUMANO PARA O CARD INTEIRO
               if (normalizeText(ind).includes("agendadas") && (actual / target) * 100 >= 400) {
                   isSuperhuman = true;
               }
@@ -754,10 +763,13 @@ function renderIndividualGoals(periodicity, key, label, allRows){
       return { name, score, rows, isElite, isPerfect, isSuperhuman };
   }).sort((a, b) => b.score - a.score);
 
-  // Se houver um consultor específico no filtro mestre, o ranking mostra apenas ele
   const consultantsToShow = filters.consultant === "all" ? scoredConsultants : scoredConsultants.filter(c => c.name === filters.consultant);
 
-  const medals = ["🥇", "🥈", "🥉"];
+  const rankColors = [
+    "linear-gradient(135deg, #ffd700, #d4af37)", // Ouro 1º
+    "linear-gradient(135deg, #e3e3e3, #a9a9a9)", // Prata 2º
+    "linear-gradient(135deg, #cd7f32, #8b4513)"  // Bronze 3º
+  ];
 
   return `
     <div class="individual-goals" style="margin-top: 0;">
@@ -769,22 +781,29 @@ function renderIndividualGoals(periodicity, key, label, allRows){
         ${consultantsToShow.map((c, index) => {
           const name = c.name;
           const rows = c.rows;
-          const isWinner = index === 0 && c.score > 0 && filters.consultant === "all";
-          const medal = (c.score > 0 && filters.consultant === "all") ? (medals[index] || "") : "";
-          const trophyHTML = isWinner ? `<div class="trophy-badge" title="1º Lugar do Período">🏆</div>` : "";
           
-          // Recompensas Visuais - Se for Super Humano, ele ganha a classe consultant-superhuman que deixa o card vermelho infernal
+          const isTop3 = index < 3 && c.score > 0 && filters.consultant === "all";
+          let badgeHTML = "";
+          if (isTop3) {
+             // O fallback exibe o texto se a imagem rank-1.png (por ex) não existir na pasta assets
+             badgeHTML = `
+             <div class="rank-badge" style="background: ${rankColors[index]};" title="${index+1}º Lugar">
+               <img src="assets/rank-${index+1}.png" alt="${index+1}º" onerror="this.style.display='none';this.nextElementSibling.style.display='block';">
+               <span style="display:none;">${index+1}º</span>
+             </div>`;
+          }
+          
           const rewardClass = c.isSuperhuman ? "consultant-superhuman" : c.isElite ? "all-elite" : (c.isPerfect ? "all-achieved" : "");
           const rewardBadge = c.isSuperhuman ? `<div class="superhuman-badge">💀 SOBRE-HUMANO 💀</div>` : c.isElite ? `<div class="elite-badge">✦ OVERPOWER ✦</div>` : (c.isPerfect ? `<div class="perfect-badge">✓ METAS BATIDAS</div>` : "");
           
           return `
-            <div class="consultant-goal-card ${isWinner ? "winner-card" : ""} ${rewardClass}">
+            <div class="consultant-goal-card ${index === 0 && isTop3 ? "winner-card" : ""} ${rewardClass}">
               ${rewardBadge}
-              ${trophyHTML}
+              ${badgeHTML}
               <div class="consultant-goal-head">
                 <div class="consultant-goal-avatar">${consultantAvatar(name)}</div>
                 <div>
-                  <div class="consultant-goal-name">${name} <span style="font-size: 18px; margin-left: 6px;" title="${index+1}º Lugar">${medal}</span></div>
+                  <div class="consultant-goal-name">${name}</div>
                   <div class="consultant-goal-role">Consultor • ${formatNumber(c.score)} pts</div>
                 </div>
               </div>
@@ -902,7 +921,7 @@ function bindSidebar() {
       if(btn) {
         const page = btn.getAttribute("data-page");
         if (page && page !== currentPage) {
-          currentPage = page; updateActiveMenu(); render();
+          currentPage = page; updateActiveMenu(); render(false);
         }
       }
     });
@@ -915,14 +934,22 @@ function updateActiveMenu() {
   });
 }
 
-function render(){
+function render(isAutoRefresh = false){
   const app=document.getElementById("app");
   if(currentPage==="overview") app.innerHTML=renderOverview();
   else if(STAGES[currentPage]) app.innerHTML=renderStage(currentPage);
   else if(currentPage==="metas") app.innerHTML=renderMetas();
   else if(currentPage==="consultores") app.innerHTML=renderConsultores();
   
-  populateFilters(); bindFilters(); bindSidebar(); updateActiveMenu();
+  populateFilters(); 
+  bindFilters(); 
+  bindSidebar(); 
+  updateActiveMenu();
+  
+  // Chama a verificação dos sons passando os dados atuais da tela
+  if (currentPage==="overview") {
+      verifyAndPlaySounds(filteredRows(), filters.periodicity, filters.periodValue, isAutoRefresh);
+  }
 }
 
 function populateFilters(){
@@ -938,7 +965,7 @@ function populateFilters(){
       }
   });
   
-  // Garante que o dia/semana/mês atual SEMPRE exista na lista, mesmo se não houver lançamentos ainda hoje.
+  // Garante que o dia/semana/mês atual SEMPRE exista na lista
   periodValues.add(currentKey);
 
   const periodSelect = document.getElementById("periodValueFilter");
@@ -976,22 +1003,22 @@ function bindFilters(){
       button.addEventListener("click", () => {
           filters.periodicity = button.dataset.periodicity;
           filters.periodValue = getCurrentKey(filters.periodicity); // Reseta a data para o "hoje" automático
-          render();
+          render(false);
       }); 
   });
 
   const periodValue = document.getElementById("periodValueFilter"); 
-  if(periodValue) periodValue.addEventListener("change", event => { filters.periodValue = event.target.value; render(); });
+  if(periodValue) periodValue.addEventListener("change", event => { filters.periodValue = event.target.value; render(false); });
   
   const consultant = document.getElementById("consultantFilter"); 
-  if(consultant) consultant.addEventListener("change", event => { filters.consultant = event.target.value; render(); });
+  if(consultant) consultant.addEventListener("change", event => { filters.consultant = event.target.value; render(false); });
 }
 
 /* INICIAR O SISTEMA COM AUTO REFRESH */
 loadData(false); // Primeiro carregamento (mostra o skeleton)
 
 setInterval(() => {
-    loadData(true); // A cada 45 segundos (45000ms), puxa os dados novos invisivelmente e atualiza os números na tela
+    loadData(true); // A cada 45 segundos, atualiza apenas números e verifica sons
 }, 45000); 
 
 </script>
