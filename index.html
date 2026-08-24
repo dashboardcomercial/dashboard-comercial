@@ -388,10 +388,9 @@ const AVATAR_MAP = {
 function toggleSound() {
     somAtivado = !somAtivado;
     if (somAtivado) {
-        // Toca um bipe mudo só para desbloquear o motor de áudio no navegador
         new Audio("data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEARKwAAIhYAQACABAAAABkYXRhAgAAAAEA").play().catch(()=>{});
     }
-    render(false); // Re-renderiza para mudar o estilo do botão instantaneamente
+    render(false); 
 }
 
 function verifyAndPlaySounds(rows, periodicity, key, isAutoRefresh) {
@@ -399,7 +398,7 @@ function verifyAndPlaySounds(rows, periodicity, key, isAutoRefresh) {
 
     let currentContracts = sumIndicator(rows, "Contratos");
     
-    // Agora verifica as metas atingidas INDIVIDUALMENTE para cada consultor
+    // Verifica as metas atingidas INDIVIDUALMENTE para cada consultor
     let metasBatidasIndividuais = 0;
     const indicators = ["Ligações", "Contatos Efetivos", "Reuniões Agendadas", "Reuniões Realizadas", "Reuniões Qualificadas", "Follow Up", "Contratos"];
     const consultants = ["Matheus", "Edson", "Gabriel"];
@@ -415,7 +414,6 @@ function verifyAndPlaySounds(rows, periodicity, key, isAutoRefresh) {
         });
     });
 
-    // Se é a primeira vez que lê (quando liga), só anota os números
     if (lastContractsCount !== -1 && lastMetasBatidasCount !== -1) {
         if (currentContracts > lastContractsCount) {
             new Audio("assets/contrato.mp3").play().catch(e => console.log(e));
@@ -462,6 +460,14 @@ function rowsToObjects(rows){
 }
 
 /* CARREGAMENTO */
+async function loadSheet(gid){
+  const response = await fetch(csvUrl(gid) + "&cachebust=" + Date.now());
+  if(!response.ok) throw new Error("Erro HTTP " + response.status);
+  const text = await response.text();
+  if(text.includes("<!DOCTYPE html>") || text.includes("<html")) throw new Error("O Google retornou HTML em vez do CSV.");
+  return rowsToObjects(parseCSV(text));
+}
+
 async function loadData(isAutoRefresh = false){
   const app = document.getElementById("app");
   if (!isAutoRefresh) {
@@ -592,7 +598,6 @@ function rewardForProgress(percent, indicator){
   else if (t.includes("contratos")) { tiers = { elite: {l: "Lenda Comercial", d: "Resultados extraordinários e faturamento limpo. Elite Prime ✦"}, max: {l: "Rainmaker", d: "Meta de fechamentos atingida! Impressionante."}, high: {l: "Zona de Conversão", d: "A um único passo de bater a meta de contratos."}, mid: {l: "Aperto de Mão", d: "50% da agressiva meta de contratos garantida."}, low: {l: "Tinta no Papel", d: "Os primeiros fechamentos já estão em casa."} }; }
   else { tiers = { elite: {l: "Elite Prime", d: "Meta superada."}, max: {l: "Meta conquistada", d: "Objetivo atingido."}, high: {l: "Zona de fechamento", d: "Quase lá."}, mid: {l: "Ritmo de ataque", d: "Metade do caminho."}, low: {l: "Aquecendo a máquina", d: "Primeiro marco."} }; }
 
-  // Condição Especial Sobre-Humano para as Agendadas (>= 400%)
   if(t.includes("agendadas") && percent >= 400) return {label: tiers.superhuman.l, detail: tiers.superhuman.d, icon:"💀", unlocked:true, elite:false, superhuman:true};
   
   if(percent>100) return {label: tiers.elite.l, detail: tiers.elite.d, icon:"✦", unlocked:true, elite:true, superhuman:false};
@@ -766,9 +771,9 @@ function renderIndividualGoals(periodicity, key, label, allRows){
   const consultantsToShow = filters.consultant === "all" ? scoredConsultants : scoredConsultants.filter(c => c.name === filters.consultant);
 
   const rankColors = [
-    "linear-gradient(135deg, #ffd700, #d4af37)", // Ouro 1º
-    "linear-gradient(135deg, #e3e3e3, #a9a9a9)", // Prata 2º
-    "linear-gradient(135deg, #cd7f32, #8b4513)"  // Bronze 3º
+    "linear-gradient(135deg, #ffd700, #d4af37)", 
+    "linear-gradient(135deg, #e3e3e3, #a9a9a9)", 
+    "linear-gradient(135deg, #cd7f32, #8b4513)"  
   ];
 
   return `
@@ -785,7 +790,6 @@ function renderIndividualGoals(periodicity, key, label, allRows){
           const isTop3 = index < 3 && c.score > 0 && filters.consultant === "all";
           let badgeHTML = "";
           if (isTop3) {
-             // O fallback exibe o texto se a imagem rank-1.png (por ex) não existir na pasta assets
              badgeHTML = `
              <div class="rank-badge" style="background: ${rankColors[index]};" title="${index+1}º Lugar">
                <img src="assets/rank-${index+1}.png" alt="${index+1}º" onerror="this.style.display='none';this.nextElementSibling.style.display='block';">
