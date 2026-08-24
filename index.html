@@ -154,7 +154,7 @@ body.sidebar-collapsed .sidebar-toggle:hover { transform: rotate(180deg) scale(1
 .goal-card.goal-elite:before { background: linear-gradient(180deg,#d7f5ff,var(--blue)); }
 .goal-card.goal-elite:after { content: ""; position: absolute; width: 140px; height: 140px; right: -70px; top: -70px; border-radius: 50%; border: 1px solid rgba(0,133,202,.2); box-shadow: 0 0 40px rgba(0,133,202,.2); }
 
-/* EFEITO SOBRE-HUMANO (400% AGENDADAS) */
+/* EFEITO SOBRE-HUMANO (400% AGENDADAS) - APLICA TANTO NA EQUIPE QUANTO NO INDIVIDUAL */
 @keyframes superhuman-pulse {
   0% { box-shadow: 0 0 20px rgba(255, 51, 51, 0.4), inset 0 0 15px rgba(255, 51, 51, 0.2); }
   50% { box-shadow: 0 0 50px rgba(255, 51, 51, 0.9), inset 0 0 25px rgba(255, 51, 51, 0.5); transform: scale(1.02); border-color: #ff6666; }
@@ -373,9 +373,15 @@ let filters = {
   consultant: "all" 
 };
 
-let somAtivado = false;
 let lastContractsCount = -1;
 let lastMetasBatidasCount = -1;
+
+/* Desbloqueia o motor de áudio invisivelmente no primeiro clique do usuário em qualquer lugar da tela */
+document.addEventListener('click', function unlockAudio() {
+    new Audio("data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEARKwAAIhYAQACABAAAABkYXRhAgAAAAEA").play().catch(()=>{});
+    document.removeEventListener('click', unlockAudio);
+}, { once: true });
+
 
 /* MAPEAMENTO DOS AVATARES */
 const AVATAR_MAP = {
@@ -384,17 +390,9 @@ const AVATAR_MAP = {
   "Gabriel": "assets/gabriel.jpg"
 };
 
-/* FUNÇÕES DE SOM E VERIFICAÇÃO INDIVIDUAL */
-function toggleSound() {
-    somAtivado = !somAtivado;
-    if (somAtivado) {
-        new Audio("data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEARKwAAIhYAQACABAAAABkYXRhAgAAAAEA").play().catch(()=>{});
-    }
-    render(false); 
-}
-
+/* FUNÇÃO DE VERIFICAÇÃO INDIVIDUAL E SOM */
 function verifyAndPlaySounds(rows, periodicity, key, isAutoRefresh) {
-    if (!somAtivado || !isAutoRefresh) return;
+    if (!isAutoRefresh) return; // Só checa isso se for atualização automática de fundo
 
     let currentContracts = sumIndicator(rows, "Contratos");
     
@@ -416,10 +414,10 @@ function verifyAndPlaySounds(rows, periodicity, key, isAutoRefresh) {
 
     if (lastContractsCount !== -1 && lastMetasBatidasCount !== -1) {
         if (currentContracts > lastContractsCount) {
-            new Audio("assets/contrato.mp3").play().catch(e => console.log(e));
+            new Audio("assets/contrato.mp3").play().catch(e => console.log("Áudio bloqueado:", e));
         }
         if (metasBatidasIndividuais > lastMetasBatidasCount) {
-            new Audio("assets/missao.mp3").play().catch(e => console.log(e));
+            new Audio("assets/missao.mp3").play().catch(e => console.log("Áudio bloqueado:", e));
         }
     }
 
@@ -484,7 +482,7 @@ async function loadData(isAutoRefresh = false){
   }
   catch(error){ 
       console.error(error); 
-      if (!isAutoRefresh) app.innerHTML=`<div class="empty"><h2>Erro ao carregar a planilha</h2><p>${escapeHTML(error.message)}</p><br><button class="refresh" onclick="loadData(false)">Tentar novamente</button></div>`; 
+      if (!isAutoRefresh) app.innerHTML=`<div class="empty"><h2>Erro ao carregar a planilha</h2><p>${escapeHTML(error.message)}</p></div>`; 
   }
 }
 
@@ -556,16 +554,9 @@ const ICONS={
 };
 
 function pageHeader(title, subtitle){ 
-  const soundStyle = somAtivado ? "color: var(--green); border-color: var(--green); background: rgba(38, 197, 139, 0.1);" : "";
-  const soundText = somAtivado ? "🔊 Sons Ativados" : "🔇 Ativar Sons";
-
   return `
   <div class="topbar">
     <div class="title"><h1>${title}</h1><p>${subtitle}</p></div>
-    <div style="display: flex; gap: 10px;">
-        <button class="refresh" onclick="toggleSound()" style="${soundStyle}">${soundText}</button>
-        <button class="refresh" onclick="loadData(false)">↻ Atualizar</button>
-    </div>
   </div>`; 
 }
 
