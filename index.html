@@ -704,7 +704,8 @@ function consultantGoalMini(indicator,consultant,rows,periodicity,key){
   const actual=sumIndicator(rows,indicator),target=goalTargetForConsultant(indicator,periodicity,key,consultant),percent=target?(actual/target)*100:0,width=Math.min(percent,100);
   const elite=percent>100,done=percent>=100, superhuman=(normalizeText(indicator).includes("agendadas") && percent>=400);
   const fillClass = superhuman ? "superhuman" : elite ? "elite" : done ? "done" : "";
-  return `<div class="mini-goal"><div class="mini-goal-top"><span class="mini-goal-name">${escapeHTML(indicator)}</span><span class="mini-goal-percent">${target?formatPercent(percent):"—"}</span></div><div class="mini-goal-bar"><div class="mini-goal-fill ${fillClass}" style="width:${width}%"></div></div><div class="mini-goal-values"><span>${formatNumber(actual)} realizado</span><strong>${target?"Meta "+formatNumber(target):"Sem meta"}</strong></div></div>`;
+  const labelRealizado = actual === 1 ? "realizado" : "realizados";
+  return `<div class="mini-goal"><div class="mini-goal-top"><span class="mini-goal-name">${escapeHTML(indicator)}</span><span class="mini-goal-percent">${target?formatPercent(percent):"—"}</span></div><div class="mini-goal-bar"><div class="mini-goal-fill ${fillClass}" style="width:${width}%"></div></div><div class="mini-goal-values"><span>${formatNumber(actual)} ${labelRealizado}</span><strong>${target?"Meta "+formatNumber(target):"Sem meta"}</strong></div></div>`;
 }
 
 function renderIndividualGoals(periodicity, key, label, allRows){
@@ -990,8 +991,8 @@ function bindFilters(){
 loadData(false); // Primeiro carregamento (mostra o skeleton)
 
 setInterval(() => {
-    loadData(true); // A cada 1 minuto (60000ms), puxa os dados novos invisivelmente e atualiza os números na tela
-}, 60000); 
+    loadData(true); // A cada 45 segundos (45000ms), puxa os dados novos invisivelmente e atualiza os números na tela
+}, 45000); 
 
 </script>
 </body>
