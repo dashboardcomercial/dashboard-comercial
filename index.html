@@ -152,7 +152,7 @@ body.sidebar-collapsed .sidebar-toggle:hover { transform: rotate(180deg) scale(1
 .goal-card.goal-elite:before { background: linear-gradient(180deg,#d7f5ff,var(--blue)); }
 .goal-card.goal-elite:after { content: ""; position: absolute; width: 140px; height: 140px; right: -70px; top: -70px; border-radius: 50%; border: 1px solid rgba(0,133,202,.2); box-shadow: 0 0 40px rgba(0,133,202,.2); }
 
-/* EFEITO SOBRE-HUMANO (400% AGENDADAS) */
+/* EFEITO SOBRE-HUMANO (400% AGENDADAS) - APLICA TANTO NA EQUIPE QUANTO NO INDIVIDUAL */
 @keyframes superhuman-pulse {
   0% { box-shadow: 0 0 20px rgba(255, 51, 51, 0.4), inset 0 0 15px rgba(255, 51, 51, 0.2); }
   50% { box-shadow: 0 0 50px rgba(255, 51, 51, 0.9), inset 0 0 25px rgba(255, 51, 51, 0.5); transform: scale(1.02); border-color: #ff6666; }
@@ -243,51 +243,27 @@ body.sidebar-collapsed .sidebar-toggle:hover { transform: rotate(180deg) scale(1
 .elite-badge { position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: linear-gradient(90deg, #4dc0ff, #0085ca); color: #fff; font-size: 10px; font-weight: 900; padding: 4px 14px; border-radius: 20px; text-transform: uppercase; letter-spacing: 1.5px; box-shadow: 0 4px 15px rgba(77, 192, 255, 0.5); z-index: 10; }
 
 /* =========================================================
-   NOVO VISUAL DE MEDALHAS TOP 3 (100% CSS PURO PREMIUM) 
+   NOVO SISTEMA DE BORDAS PULSANTES DE RANKING (1º, 2º e 3º)
    ========================================================= */
-.pure-badge {
-  position: absolute;
-  top: -15px;
-  right: -15px;
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 20px;
-  font-weight: 900;
-  z-index: 10;
-  transform: rotate(10deg);
-  box-shadow: 0 6px 12px rgba(0,0,0,0.5), inset 0 2px 4px rgba(255,255,255,0.6), inset 0 -4px 6px rgba(0,0,0,0.3);
-  text-shadow: 0 2px 4px rgba(0,0,0,0.5);
-  border: 3px solid rgba(255,255,255,0.2);
+@keyframes gold-pulse {
+  0% { box-shadow: 0 0 15px rgba(255, 215, 0, 0.2), inset 0 0 10px rgba(255, 215, 0, 0.1); border-color: rgba(255, 215, 0, 0.5); }
+  50% { box-shadow: 0 0 30px rgba(255, 215, 0, 0.7), inset 0 0 20px rgba(255, 215, 0, 0.3); border-color: #ffd700; transform: translateY(-3px); }
+  100% { box-shadow: 0 0 15px rgba(255, 215, 0, 0.2), inset 0 0 10px rgba(255, 215, 0, 0.1); border-color: rgba(255, 215, 0, 0.5); }
 }
-.pure-badge::before {
-  content: '';
-  position: absolute;
-  inset: 2px;
-  border-radius: 50%;
-  border: 1px dashed rgba(255,255,255,0.4);
+@keyframes silver-pulse {
+  0% { box-shadow: 0 0 15px rgba(192, 192, 192, 0.2), inset 0 0 10px rgba(192, 192, 192, 0.1); border-color: rgba(192, 192, 192, 0.5); }
+  50% { box-shadow: 0 0 30px rgba(192, 192, 192, 0.6), inset 0 0 20px rgba(192, 192, 192, 0.3); border-color: #e0e0e0; transform: translateY(-2px); }
+  100% { box-shadow: 0 0 15px rgba(192, 192, 192, 0.2), inset 0 0 10px rgba(192, 192, 192, 0.1); border-color: rgba(192, 192, 192, 0.5); }
 }
-/* Medalha de Ouro (1º) */
-.pure-badge-1 { background: linear-gradient(135deg, #FFDF73 0%, #D4AF37 50%, #996515 100%); border-color: #FFF2A8; color: #fff; }
-/* Medalha de Prata (2º) */
-.pure-badge-2 { background: linear-gradient(135deg, #E8E8E8 0%, #A9A9A9 50%, #696969 100%); border-color: #FFFFFF; color: #fff; }
-/* Medalha de Bronze (3º) */
-.pure-badge-3 { background: linear-gradient(135deg, #FFA07A 0%, #CD7F32 50%, #8B4513 100%); border-color: #FFDAB9; color: #fff; }
+@keyframes bronze-pulse {
+  0% { box-shadow: 0 0 15px rgba(205, 127, 50, 0.2), inset 0 0 10px rgba(205, 127, 50, 0.1); border-color: rgba(205, 127, 50, 0.5); }
+  50% { box-shadow: 0 0 30px rgba(205, 127, 50, 0.7), inset 0 0 20px rgba(205, 127, 50, 0.3); border-color: #cd7f32; transform: translateY(-1px); }
+  100% { box-shadow: 0 0 15px rgba(205, 127, 50, 0.2), inset 0 0 10px rgba(205, 127, 50, 0.1); border-color: rgba(205, 127, 50, 0.5); }
+}
 
-/* Coroa Exclusiva do 1º Lugar */
-.crown-svg {
-  position: absolute;
-  top: -16px;
-  left: 50%;
-  transform: translateX(-50%) rotate(-15deg);
-  width: 32px;
-  height: 32px;
-  filter: drop-shadow(0 4px 4px rgba(0,0,0,0.6));
-  z-index: 11;
-}
+.rank-1-card { animation: gold-pulse 2.5s infinite; z-index: 5; }
+.rank-2-card { animation: silver-pulse 2.5s infinite; z-index: 4; }
+.rank-3-card { animation: bronze-pulse 2.5s infinite; z-index: 3; }
 
 .consultant-goal-head { display: flex; align-items: center; gap: 15px; padding-bottom: 12px; margin-bottom: 8px; border-bottom: 1px solid rgba(255,255,255,.05); }
 .consultant-goal-name { font-size: 15px; font-weight: 900; color: #fff; display: flex; align-items: center; }
@@ -400,7 +376,7 @@ let lastContractsCount = -1;
 let lastMetasBatidasCount = -1;
 let audioDesbloqueado = false;
 
-/* Desbloqueia o motor de áudio invisível no primeiro clique do usuário na tela, para burlar o bloqueio do navegador */
+/* Desbloqueia o motor de áudio invisível no primeiro clique do usuário na tela */
 document.addEventListener('click', function unlockAudio() {
     if(!audioDesbloqueado) {
         new Audio("data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEARKwAAIhYAQACABAAAABkYXRhAgAAAAEA").play().catch(()=>{});
@@ -422,10 +398,9 @@ function verifyAndPlaySounds(rows, periodicity, key, isAutoRefresh) {
 
     let currentContracts = sumGroup(rows, ["Contratos", "Contrato"]);
     
-    // Verifica as metas atingidas INDIVIDUALMENTE para cada consultor
     let metasBatidasIndividuais = 0;
     
-    // Filtra quais indicadores estão ativos baseados no filtro de período (Para não bugar no diário)
+    // Filtra quais indicadores estão ativos baseados no filtro (Blindagem do Diário)
     let indicators = ["Ligações", "Contatos Efetivos", "Reuniões Agendadas"];
     if (periodicity === "semanal" || periodicity === "mensal") {
         indicators.push("Reuniões Realizadas", "Reuniões Qualificadas", "Follow Up");
@@ -455,7 +430,6 @@ function verifyAndPlaySounds(rows, periodicity, key, isAutoRefresh) {
         }
     }
 
-    // SEMPRE ATUALIZA OS CONTADORES
     lastContractsCount = currentContracts;
     lastMetasBatidasCount = metasBatidasIndividuais;
 }
@@ -573,12 +547,7 @@ function filteredRows(){
 }
 
 function sumIndicator(rows, indicator){ const target=normalizeText(indicator); return rows.filter(row => getIndicator(row)===target).reduce((total,row)=>total+getValue(row),0); }
-
-/* FUNÇÃO BLINDADA DE SOMA DE GRUPOS (Evita erros de plural/singular) */
-function sumGroup(rows, namesArray) {
-    return namesArray.reduce((tot, name) => tot + sumIndicator(rows, name), 0);
-}
-
+function sumGroup(rows, namesArray) { return namesArray.reduce((tot, name) => tot + sumIndicator(rows, name), 0); }
 function formatNumber(n){ return Number(n||0).toLocaleString("pt-BR"); }
 function formatPercent(n){ if(!isFinite(n)) return "0%"; return (n.toFixed(1).replace(".",",") + "%"); }
 function conversion(a,b){ if(!a) return 0; return (Number(b||0) / Number(a||0))*100; }
@@ -774,7 +743,7 @@ function renderIndividualGoals(periodicity, key, label, allRows){
   const scoredConsultants = consultants.map(name => {
       const rows = allRows.filter(r => getConsultant(r) === name);
       
-      // FUNÇÃO BLINDADA: Soma perfeitamente as variações de escrita (ex: Reunião vs Reuniões)
+      // FUNÇÃO BLINDADA: Soma perfeitamente as variações de escrita
       const ligacoes = sumGroup(rows, ["Ligações", "Ligação"]);
       const contatos = sumGroup(rows, ["Contatos Efetivos", "Contato Efetivo"]);
       const agendadas = sumGroup(rows, ["Reuniões Agendadas", "Reunião Agendada", "Reuniao Agendada"]);
@@ -840,26 +809,20 @@ function renderIndividualGoals(periodicity, key, label, allRows){
           const rows = c.rows;
           
           const isTop3 = index < 3 && c.score > 0 && filters.consultant === "all";
-          let badgeHTML = "";
+          let rankClass = "";
           
           if (isTop3) {
-             // SVG Premium Inline em Puro Código! Sem imagens baixadas.
-             const crown = index === 0 ? `<svg class="crown-svg" viewBox="0 0 24 24" fill="url(#goldGrad)" stroke="#664400" stroke-width="1"><defs><linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#FFF2A8"/><stop offset="50%" stop-color="#FFDF00"/><stop offset="100%" stop-color="#B8860B"/></linearGradient></defs><path d="M5 21h14v-2H5v2zm14-11l-3 4-4-5-4 5-3-4v7h14v-7z"/></svg>` : "";
-             
-             badgeHTML = `
-             <div class="pure-badge pure-badge-${index+1}" title="${index+1}º Lugar">
-               ${crown}
-               <span>${index+1}º</span>
-             </div>`;
+             if (index === 0) rankClass = "rank-1-card";
+             else if (index === 1) rankClass = "rank-2-card";
+             else if (index === 2) rankClass = "rank-3-card";
           }
           
           const rewardClass = c.isSuperhuman ? "consultant-superhuman" : c.isElite ? "all-elite" : (c.isPerfect ? "all-achieved" : "");
           const rewardBadge = c.isSuperhuman ? `<div class="superhuman-badge">💀 SOBRE-HUMANO 💀</div>` : c.isElite ? `<div class="elite-badge">✦ OVERPOWER ✦</div>` : (c.isPerfect ? `<div class="perfect-badge">✓ METAS BATIDAS</div>` : "");
           
           return `
-            <div class="consultant-goal-card ${index === 0 && isTop3 ? "winner-card" : ""} ${rewardClass}">
+            <div class="consultant-goal-card ${rankClass} ${rewardClass}">
               ${rewardBadge}
-              ${badgeHTML}
               <div class="consultant-goal-head">
                 <div class="consultant-goal-avatar">${consultantAvatar(name)}</div>
                 <div>
@@ -1024,6 +987,7 @@ function populateFilters(){
       }
   });
   
+  // Garante que o dia/semana/mês atual SEMPRE exista na lista
   periodValues.add(currentKey);
 
   const periodSelect = document.getElementById("periodValueFilter");
@@ -1060,7 +1024,7 @@ function bindFilters(){
   document.querySelectorAll("[data-periodicity]").forEach(button => { 
       button.addEventListener("click", () => {
           filters.periodicity = button.dataset.periodicity;
-          filters.periodValue = getCurrentKey(filters.periodicity); // Volta para "Hoje" ao trocar de guia
+          filters.periodValue = getCurrentKey(filters.periodicity); // Reseta a data para o "hoje" automático
           
           // Zera a memória de áudio para não tocar o som indevidamente ao trocar de guia
           lastContractsCount = -1;
